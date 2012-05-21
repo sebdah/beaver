@@ -115,7 +115,11 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    '%s/templates' % BEAVER_DIR,
 )
+
+AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',
+                            'core.backends.BeaverAuthenticationBackend',)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -124,8 +128,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'registration',
     'django.contrib.admin',
+    'core',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -168,6 +172,4 @@ EMAIL_HOST              = 'smtp.gmail.com'
 EMAIL_HOST_USER         = 'sebastian.dahlgren@gmail.com'
 EMAIL_HOST_PASSWORD     = 'fr4uSw1eH3'
 EMAIL_PORT              = '587'
-
-# Registration settings
-ACCOUNT_ACTIVATION_DAYS = 7
+BEAVER_NO_REPLY_ADDRESS = 'noreply@beaver.com'
