@@ -140,4 +140,5 @@ class Schedule(models.Model):
     """
     calendar        = models.ForeignKey(Calendar)
     owner           = models.ForeignKey(Account)
-    base_schedule   = models.ForeignKey(BaseSchedule, blank = True, null = True)
+    base_schedule   = models.ForeignKey(BaseSchedule, blank = True,
+                                        null = True, on_delete = models.SET_NULL)
