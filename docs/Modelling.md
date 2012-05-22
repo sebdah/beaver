@@ -25,38 +25,6 @@ Account
     registered      DateTime
     last_updated    DateTime
 
-Booking
--------
-
-    account         FK(Account)
-    start           DateTime
-    end             DateTime
-    price           Float
-
-BookingType
------------
-
-    calendar        FK(Calendar)
-    title           String
-    description     Text
-    price           Float
-
-Calendar
---------
-
-    schedule        FK(Schedule)
-    name            String
-    enabled         Boolean
-    logo            Image
-
-Schedule
---------
-    
-    account         FK(Account)
-    calendar        FK(Calendar)
-    baseschedule    FK(BaseSchedule)
-    enabled         Boolean
-
 BaseSchedule
 ------------
 
@@ -83,12 +51,46 @@ BaseSchedule
     sunday_bookable_timespan      Time-Time
     sunday_not_bookable           Time-Time,Time-Time
 
+Booking
+-------
+
+    account         FK(Account)
+    schedule        FK(Schedule)
+    title           String
+    start           DateTime
+    end             DateTime
+    comment         Text
+    price           Float
+
+BookingType
+-----------
+
+    calendar        FK(Calendar)
+    title           String
+    description     Text
+    length          Integer (minutes)
+    price           Float
+
+Calendar
+--------
+
+    title           String
+    enabled         Boolean
+
+Schedule
+--------
+
+    owner           FK(Account)
+    calendar        FK(Calendar)
+    baseschedule    FK(BaseSchedule)
+    enabled         Boolean
+
 ScheduleException
 -----------------
 
     schedule        FK(Schedule)
     type            String (TIMESPAN, FULL_DAY)
-    start           DateTime    
+    start           DateTime
     end             DateTime
 
 If `FULL_DAY` is defined we will only consider the date of `start`.
