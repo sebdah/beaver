@@ -65,12 +65,22 @@ The booking beaver team
         # Save the object
         super(Account, self).save(*args, **kwargs)
 
+class Calendar(models.Model):
+    """
+    A Calendar is a collection of Schedulesapp
+    """
+    def __unicode__(self):
+        return u'%s' % self.name
+    
+    title           = models.CharField(blank = False, max_length = 100)
+    enabled         = models.BooleanField(blank = False, default = True)
+
 class BaseSchedule(models.Model):
     """
     Defining a base schedule
     """
     calendar                    = models.ForeignKey(Calendar)
-    
+
     monday_enabled              = models.BooleanField(blank = False, default = False)
     monday_bookable_timespan    = models.CharField(blank = True, null = True, max_length = 40)
     monday_not_bookable         = models.CharField(blank = True, null = True, max_length = 200)
@@ -93,6 +103,15 @@ class BaseSchedule(models.Model):
     sunday_bookable_timespan    = models.CharField(blank = True, null = True, max_length = 40)
     sunday_not_bookable         = models.CharField(blank = True, null = True, max_length = 200)
 
+class Schedule(models.Model):
+    """
+    Definition of a schedule
+    """
+    calendar        = models.ForeignKey(Calendar)
+    owner           = models.ForeignKey(Account)
+    base_schedule   = models.ForeignKey(BaseSchedule, blank = True,
+                                        null = True, on_delete = models.SET_NULL)
+
 class Booking(models.Model):
     """
     Defines a made Booking
@@ -102,7 +121,7 @@ class Booking(models.Model):
 
     account         = models.ForeignKey(Account)
     schedule        = models.ForeignKey(Schedule)
-    
+
     title           = models.CharField(blank = False, max_length = 100)
     start           = models.DateTimeField(blank = False)
     end             = models.DateTimeField(blank = False)
@@ -123,22 +142,3 @@ class BookingType(models.Model):
     length          = models.IntegerField(  blank = False, max_length = 50,
                                             help_text = 'Length in minutes')
     price           = models.FloatField(blank = True, null = True)
-
-class Calendar(models.Model):
-    """
-    A Calendar is a collection of Schedulesapp
-    """
-    def __unicode__(self):
-        return u'%s' % self.name
-    
-    title           = models.CharField(blank = False)
-    enabled         = models.BooleanField(blank = False, default = True)
-
-class Schedule(models.Model):
-    """
-    Definition of a schedule
-    """
-    calendar        = models.ForeignKey(Calendar)
-    owner           = models.ForeignKey(Account)
-    base_schedule   = models.ForeignKey(BaseSchedule, blank = True,
-                                        null = True, on_delete = models.SET_NULL)
