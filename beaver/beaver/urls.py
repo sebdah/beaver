@@ -1,3 +1,4 @@
+from beaver import settings
 from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
@@ -5,9 +6,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'beaver.views.home', name='home'),
-    # url(r'^beaver/', include('beaver.foo.urls')),
+    # Media
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     
     # Index
     url(r'^$', 'core.views.index'),
