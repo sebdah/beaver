@@ -1,90 +1,78 @@
 <!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
 <html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="description" content="Your description goes here" />
-    <meta name="keywords" content="your,keywords,goes,here" />
-    <meta name="author" content="Your Name" />
-    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz|Droid+Sans' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" type="text/css" media="all" href="{{MEDIA_URL}}css/inland-earth.css" />
-    <script type="text/javascript" src="{{MEDIA_URL}}js/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.nivo.slider.js"></script>
-    <title>Bookd</title>
-</head>
-
-<body>
-<div id="wrapper960" class="clearfix">
-    <div id="toplinks">
-        <ul class="toplinks_links">
-            <li><a href="#">Login</a></li>
-        </ul>
-    </div>
-
-    <div id="header" class="clearfix shadow">
-        <div id="sitetitle" class="clearfix">
-            <h1><a href="index.html">inland</a></h1>
-        </div>
-
-        <div id="nav" class="clearfix">
-            <ul>
-                <li><a class="current" href="index.html">Default layout</a></li>
-                <li><a href="2-columns-left.html">2 columns (left)</a></li>
-                <li><a href="2-columns-right.html">2 columns (right)</a></li>
-                <li><a href="3-columns.html">3 columns</a></li>
-                <li><a href="full-width.html">Full width</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="slider-wrapper">
-        <div id="slider" class="nivoSlider">
-            <img src="{{MEDIA_URL}}img/slider3.jpg" alt="" />
-            <img src="{{MEDIA_URL}}img/slider1.jpg" alt="" />
-            <img src="{{MEDIA_URL}}img/slider2.jpg" alt="" />
-            <img src="{{MEDIA_URL}}img/slider0.jpg" alt="" />
-            <img src="{{MEDIA_URL}}img/slider4.jpg" alt="" />
-        </div>
-    </div>
-
-    <div id="content" class="clearfix shadow">
-        {% block data %}
-        <h2>The Inland Earth CSS template</h2>
-        <p>This is Inland Earth, the second in a new series of HTML/CSS templates from <a href="http://andreasviklund.com/">andreasviklund.com</a>. It is a multi-layout design, and the second andreasviklund.com template to feature an image slider. Inland Earth is made for template users who want a design that catches the attention of the website visitor and it is suitable for both personal websites and blogs, as well as for professional websites for companies and organizations. Like all templates by Andreas Viklund, it keeps the code simple, making the template easy to customize and build upon. To see the different layout options, click the main menu links above...</p>
-        {% endblock %}
-    </div>
-
-    <div id="extended" class="clearfix shadow">
-        <div id="trio1">
-            <div class="inner">
-                <h3>Standards-compliant code</h3>
-                <p>The Inland Earth template is written with standards-compliant HTML5 and CSS3.</p>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Xayona Website Template</title>
+        <link rel="stylesheet" href="{{MEDIA_URL}}css/style.css" type="text/css" />
+        <!--[if IE 7]>
+            <link rel="stylesheet" href="css/ie7.css" type="text/css" />
+        <![endif]-->
+    </head>
+    <body>
+        <div class="page">
+            <div class="header">
+                <a href="index.html" id="logo"><img src="{{MEDIA_URL}}images/logo.gif" alt=""/></a>
+                <ul>
+                    <li class="selected"><a href="/">Home</a></li>
+                    <li><a href="/out-offer">Our offer &amp; pricing</a></li>
+                    <li><a href="/accounts/register">Register</a></li>
+                    <li><a href="/accounts/login">Login</a></li>
+                    <li><a href="/contact-us">Contact us</a></li>
+                </ul>
+            </div>
+            <div class="body">
+                {% block content %}
+                <div id="featured">
+                    <h3>This is a FREE website template</h3>
+                    <p>This website template has been designed by Free Website Templates for you, for free. You can
+                    replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                    sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
+                    enim ad minim veniam, quis nostrud exerci tation ullamcorper</p>
+                    <input type="button" value="Read more" onClick="parent.location='blog.html'"/>
+                </div>
+                <ul class="blog">
+                    <li>
+                        <div>
+                            <a href="blog.html"><img src="{{MEDIA_URL}}images/pastries.jpg" alt=""/></a>
+                            <p>This website template has been designed by Free Website Templates for you, for free.
+                            You can replace all this text with your own text.</p>
+                            <a href="blog.html">Click to read more</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href="blog.html"><img src="{{MEDIA_URL}}images/fruits.jpg" alt=""/></a>
+                            <p>This website template has been designed by Free Website Templates for you, for free.
+                            You can replace all this text with your own text.</p>
+                            <a href="blog.html">Click to read more</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href="blog.html"><img src="{{MEDIA_URL}}images/cosmetics.jpg" alt=""/></a>
+                            <p>This website template has been designed by Free Website Templates for you, for free.
+                            You can replace all this text with your own text.</p>
+                            <a href="blog.html">Click to read more</a>
+                        </div>
+                    </li>
+                </ul>
+                {% endblock %}
+            </div>
+            <div class="footer">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="services.html">Gallery</a></li>
+                </ul>
+                <p>&#169; Copyright &#169; 2011. Company name all rights reserved</p>
+                <div class="connect">
+                    <a href="http://facebook.com/freewebsitetemplates" id="facebook">facebook</a>
+                    <a href="http://twitter.com/fwtemplates" id="twitter">twitter</a>
+                    <a href="http://www.youtube.com/fwtemplates" id="vimeo">vimeo</a>
+                </div>
             </div>
         </div>
-
-        <div id="trio2">
-            <div class="inner">
-                <h3>Slider included</h3>
-                <p>The slider is made with a jQuery plugin called <a href="http://nivo.dev7studios.com">Nivo Slider</a>, created by Gilbert Pellegrom of dev7studios and released under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT Licence</a>.</p>
-            </div>
-        </div>
-
-        <div id="trio3">
-            <div class="inner">
-                <h3>Multiple layout options</h3>
-                <p>Single-column, two columns with left or right sidebars, three columns - or a combination of any two layout options.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="footer" class="shadow">
-        <p>&copy; 2012 Sebastian Dahlgren | <a href="http://andreasviklund.com/templates/inland-earth/">Template design</a> by <a href="http://andreasviklund.com/">andreasviklund.com</a></p>
-    </div>
-</div>
-
-<script type="text/javascript">
-    $(window).load(function() {
-        $('#slider').nivoSlider();
-    });
-</script>
-</body>
-</html>
+    </body>
+</html>  
