@@ -32,6 +32,26 @@ def accounts_activate(request, activation_key):
 
     return direct_to_template(request, 'core/accounts/activate.html', { 'activated': activated })
 
+@login_required
+def accounts_delete(request):
+    """
+    Delete account
+    """
+    account = models.Account.objects.get(email = request.user.email)
+
+    if request.method == 'POST':
+        account.delete()
+        auth.logout(request)
+        return redirect('/accounts/delete/complete')
+    
+    return redirect('/accounts/settings')
+
+def accounts_delete_complete(request):
+    """
+    Delete account done
+    """
+    return direct_to_template(request, 'core/accounts/delete_complete.html', {'request': request})
+
 def accounts_login(request):
     """
     Method for logging in
@@ -82,6 +102,7 @@ def accounts_register(request):
         form = forms.AccountForm(request.POST)
         if form.is_valid():
             form.save()
+            auth.logout(request)
             return redirect('/accounts/register/complete')
     else:
         form = forms.AccountForm()
@@ -141,20 +162,13 @@ def accounts_register_complete(request):
     """
     return direct_to_template(request, 'core/accounts/register_complete.html', {'request': request})
 
-def index(request):
-    """
-    Index page
-    """
-    return direct_to_template(request, 'core/index.html', {'request': request})
-
 @login_required
 def accounts_settings(request):
     """
     Edit account information
     """
-    print request
     account = models.Account.objects.get(email = request.user.email)
-    
+
     account_updated = False
     if request.method == 'POST':
         form = forms.EditAccountForm(request.POST, instance = account)
@@ -169,3 +183,9 @@ def accounts_settings(request):
                                 {   'request': request,
                                     'form': form,
                                     'account_updated': account_updated })
+
+def index(request):
+    """
+    Index page
+    """
+    return direct_to_template(request, 'core/index.html', {'request': request})

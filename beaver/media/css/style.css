@@ -103,7 +103,7 @@ body{
     font-family: 'RokkittRegular';
     color: #000;
     font-size: 20px;
-    margin: 28px 0 0 90px;
+    margin: 28px 0 0 20px;
 }
 .body div#content th{
     height: 34px;
@@ -123,9 +123,27 @@ body{
     height:448px;
     padding:0 0 17px;
 }
-.body div#featured h3{
+.body div#featured h1{
     color:#f78117;
     font-size:36px;
+    font-family: 'RokkittRegular';
+    margin:0 0 30px;
+    width:490px;
+    padding:30px 0 0;
+    font-weight:normal;
+}
+.body div#featured h2{
+    color:#f78117;
+    font-size:24px;
+    font-family: 'RokkittRegular';
+    margin:0 0 30px;
+    width:490px;
+    padding:30px 0 0;
+    font-weight:normal;
+}
+.body div#featured h3{
+    color:#f78117;
+    font-size:18px;
     font-family: 'RokkittRegular';
     margin:0 0 30px;
     width:490px;

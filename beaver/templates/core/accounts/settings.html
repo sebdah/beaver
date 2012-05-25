@@ -2,6 +2,7 @@
 {% block content %}
 <div id="content">
     <h1>My Beaver account</h1>
+    <h2>Update account details</h2>
     {% if account_updated %}
         <p>
             Your account has been updated!
@@ -28,6 +29,15 @@
             </tr>
         </table>
         <p></p>
+    </form>
+    <h2>Delete account</h2>
+    <p>
+        WARNING!<br />
+        This will remove your account, your bookings, your schedules and all customer 
+        data you have. It is not possible to reverse this action.
+    </p>
+    <form method='post' action='/accounts/delete'>{% csrf_token %}
+        <input type='submit' value='DELETE MY ACCOUNT'>
     </form>
 </div>
 {% endblock %}
