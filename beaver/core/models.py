@@ -54,7 +54,7 @@ the below link in order to activate your account.
 %s/accounts/activate/%s?email=%s
 
 Best regards
-The booking beaver team
+The Booking Beaver team
 """ % ( self.first_name, self.email,
         settings.BEAVER_EXTERNAL_URL, self.activation_key, self.email)
 
@@ -72,7 +72,10 @@ class Calendar(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
     
+    owner           = models.ForeignKey(Account)
+    
     title           = models.CharField(blank = False, max_length = 100)
+    description     = models.TextField(blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True)
 
 class BaseSchedule(models.Model):

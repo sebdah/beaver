@@ -74,7 +74,9 @@ BookingType
 Calendar
 --------
 
+    owner           FK(Account)
     title           String
+    description     Text
     enabled         Boolean
 
 Schedule
