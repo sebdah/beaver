@@ -46,6 +46,11 @@ def accounts_login(request):
         if account:
             if account.is_active:
                 auth.login(request, account)
+                
+                # If the next parameter is set
+                if 'next' in request.GET:
+                    return redirect(request.GET['next'])
+                
                 return redirect("/")
             else:
                 error = True
@@ -141,7 +146,8 @@ def index(request):
     Index page
     """
     return direct_to_template(request, 'core/index.html', {'request': request})
-    
+
+@login_required
 def accounts_settings(request):
     """
     Edit account information
