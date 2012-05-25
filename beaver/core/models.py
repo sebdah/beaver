@@ -12,7 +12,7 @@ class Account(models.Model):
     Definition of an Account object
     """
     def __unicode__(self):
-        return u'%s' % self.email
+        return u'%s %s (%s)' % (self.first_name, self.last_name, self.email)
 
     email               = models.EmailField(blank = False, unique = True)
     password            = models.CharField(blank = False, max_length = 50)
@@ -113,10 +113,13 @@ class Schedule(models.Model):
     """
     Definition of a schedule
     """
+    def __unicode__(self):
+        return u'%s %s - %s' % (self.owner.first_name, self.owner.last_name, self.calendar.title)
+
     calendar        = models.ForeignKey(Calendar)
     owner           = models.ForeignKey(Account)
-    base_schedule   = models.ForeignKey(BaseSchedule, blank = True,
-                                        null = True, on_delete = models.SET_NULL)
+    base_schedule   = models.ForeignKey(BaseSchedule)
+    enabled         = models.BooleanField(default = True)
 
 class Booking(models.Model):
     """

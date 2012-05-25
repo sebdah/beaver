@@ -43,3 +43,7 @@ class BaseScheduleForm(forms.ModelForm):
     class Meta:
         model = models.BaseSchedule
         exclude = ('calendar')
+
+class ScheduleForm(forms.ModelForm):
+    class Meta:
+        model = models.Schedule

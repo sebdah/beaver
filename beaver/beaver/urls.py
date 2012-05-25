@@ -34,4 +34,5 @@ urlpatterns = patterns('',
     # Schedules
     url(r'^schedules/create/(?P<calendar_id>[\w-]+)$', 'core.views.schedules_create'),
     url(r'^schedules/created$', 'core.views.schedules_created'),
+    url(r'^schedules/edit/(?P<schedule_id>[\w-]+)$', 'core.views.schedules_edit'),
 )

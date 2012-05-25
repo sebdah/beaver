@@ -214,7 +214,9 @@ def calendars_edit(request, calendar_id):
     """
     account = models.Account.objects.get(email = request.user.email)
     calendar = models.Calendar.objects.get(id = calendar_id, owner = account)
-    
+    schedules = models.Schedule.objects.filter(calendar = calendar, owner = account)
+    print schedules
+
     if request.method == 'POST':
         form = forms.CalendarForm(request.POST, instance = calendar)
         if form.is_valid():
@@ -228,7 +230,8 @@ def calendars_edit(request, calendar_id):
                                 'core/calendars/edit.html',
                                 {   'request': request,
                                     'form': form,
-                                    'calendar': calendar, })
+                                    'calendar': calendar,
+                                    'schedules': schedules, })
 
 @login_required
 def calendars_list(request):
@@ -257,15 +260,27 @@ def index(request):
 @login_required
 def schedules_create(request, calendar_id):
     """
-    Create a new Schedule object
+    Create a new BaseSchedule object
     """
     account = models.Account.objects.get(email = request.user.email)
+    calendar = models.Calendar.objects.get(id = calendar_id)
+
     if request.method == 'POST':
         form = forms.BaseScheduleForm(request.POST)
         if form.is_valid():
+            # Create the BaseSchedule
+            base_schedule = form.save(commit = False)
+            base_schedule.calendar = calendar
+            base_schedule.save()
+
+            # Add new Schedule object
+            form = forms.ScheduleForm()
             schedule = form.save(commit = False)
-            schedule.calendar = models.Calendar.objects.get(id = calendar_id)
+            schedule.calendar = calendar
+            schedule.owner = account
+            schedule.base_schedule = base_schedule
             schedule.save()
+
             return redirect('/schedules/created')
     else:
         form = forms.BaseScheduleForm()
@@ -281,3 +296,27 @@ def schedules_created(request):
     Schedule created page
     """
     return direct_to_template(request, 'core/schedules/created.html', {'request': request})
+
+@login_required
+def schedules_edit(request, schedule_id):
+    """
+    Edit a Calendar object
+    """
+    account = models.Account.objects.get(email = request.user.email)
+    schedule = models.Schedule.objects.get(id = schedule_id, owner = account)
+    base_schedule = models.BaseSchedule.objects.get(id = schedule.base_schedule.id)
+
+    updated = False
+    if request.method == 'POST':
+        form = forms.BaseScheduleForm(request.POST, instance = base_schedule)
+        if form.is_valid():
+            form.save()
+            updated = True
+    else:
+        form = forms.BaseScheduleForm(instance = base_schedule)
+
+    return direct_to_template(  request,
+                                'core/schedules/edit.html',
+                                {   'request': request,
+                                    'form': form,
+                                    'updated': updated, })
