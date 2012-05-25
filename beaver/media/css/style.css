@@ -50,30 +50,11 @@ body{
     color:#f78117;
 }
 .header ul li a{
-    font-size:16px;
+    font-size: 16px;
     text-decoration: none;
-    color:#5e5e5e;
+    color: #5e5e5e;
     font-family: 'RokkittRegular';
-    outline:none;
-}
-.body div#content ul{
-    margin:0;
-    list-style: none;
-    padding:13px 0 0;
-}
-.body div#content ul li{
-    float:left;
-    margin:0 0 0 63px;
-}
-.body div#content ul li a:hover{
-    color:#f78117;
-}
-.body div#content ul li a{
-    font-size:16px;
-    text-decoration:none;
-    color:#5e5e5e;
-    font-family: 'RokkittRegular';
-    outline:none;
+    outline: none;
 }
 
 /*------------------------- Body ------------------------*/ 
@@ -144,6 +125,24 @@ body{
     font-family: 'RokkittRegular';
     color: #000;
     font-size: 20px;
+}
+.body div#content ul{
+    margin: 0;
+    list-style: none;
+    padding: 13px 0 0;
+}
+.body div#content ul li{
+    margin: 0 0 0 63px;
+}
+.body div#content ul li a:hover{
+    color: #f78117;
+}
+.body div#content ul li a{
+    font-size: 16px;
+    text-decoration: none;
+    color: #5e5e5e;
+    font-family: 'RokkittRegular';
+    outline: none;
 }
 .body div#featured{
     background:url(../images/house.jpg) no-repeat right top;
@@ -294,15 +293,7 @@ body{
     padding:0;
     overflow:hidden;
 }
-.body ul li:first-child{
-    background:none;
-    padding:0 0 30px;
-}
-.body ul li{
-    overflow:hidden;
-    background:url(../images/separator.jpg) no-repeat center top;
-    padding:30px 0;
-}
+
 .body ul li div.featured{
     background:url(../images/interface.jpg) no-repeat 0 -68px;
     width:281px;
