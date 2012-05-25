@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% block content %}
 <div id="content">
-    <h3>Register a new account</h3>
+    <h1>Register a new account</h1>
     <form method='post' action=''>{% csrf_token %}
         <table>
             {% for field in form %}

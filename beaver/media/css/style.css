@@ -67,9 +67,23 @@ body{
 .body div#content{
     padding:0 0 17px;
 }
-.body div#content h3{
+.body div#content h1{
     color:#f78117;
     font-size:36px;
+    font-family: 'RokkittRegular';
+    margin:0 0 30px;
+    font-weight:normal;
+}
+.body div#content h2{
+    color:#f78117;
+    font-size:24px;
+    font-family: 'RokkittRegular';
+    margin:0 0 30px;
+    font-weight:normal;
+}
+.body div#content h3{
+    color:#f78117;
+    font-size:18px;
     font-family: 'RokkittRegular';
     margin:0 0 30px;
     font-weight:normal;

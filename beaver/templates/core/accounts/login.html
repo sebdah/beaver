@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% block content %}
 <div id="content">
-    <h3>Login</h3>
+    <h1>Login</h1>
     <form method='post' action=''>{% csrf_token %}
     <table ="table">
         {% for field in form %}
@@ -22,7 +22,7 @@
         <tr>
             <td>&nbsp;</td>
             <td>Have you <a href="/accounts/lost_password">forgot your password?</a></td>
-        </tr>
+        </tr>account_updated
     </table>
     </form>
 </div>
