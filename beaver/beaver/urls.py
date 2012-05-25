@@ -25,4 +25,7 @@ urlpatterns = patterns('',
     url(r'^accounts/register$', 'core.views.accounts_register'),
     url(r'^accounts/register/complete$', 'core.views.accounts_register_complete'),
     url(r'^accounts/settings$', 'core.views.accounts_settings'),
+    
+    # Calendar URLs
+    url(r'^calendars/list$', 'core.views.calendars_list'),
 )

@@ -15,12 +15,13 @@
                 <!--a href="/" id="logo"><img src="{{MEDIA_URL}}images/logo.gif" alt=""/></a-->
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/out-offer">Our offer &amp; pricing</a></li>
-                    <li><a href="/contact-us">Contact us</a></li>
                     {% if request.user.is_authenticated %}
-                        <li><a href="/accounts/settings">My account</a></li>
+                        <li><a href="/calendars/list">My calendars</a></li>
+                        <li><a href="/accounts/settings">Settings</a></li>
                         <li><a href="/accounts/logout">Log out</a></li>
                     {% else %}
+                        <li><a href="/out-offer">Our offer &amp; pricing</a></li>
+                        <li><a href="/contact-us">Contact us</a></li>
                         <li><a href="/accounts/register">Register</a></li>
                         <li><a href="/accounts/login">Log in</a></li>
                     {% endif %}

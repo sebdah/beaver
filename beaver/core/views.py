@@ -184,6 +184,24 @@ def accounts_settings(request):
                                     'form': form,
                                     'account_updated': account_updated })
 
+@login_required
+def calendars_list(request):
+    """
+    List of an Accounts calendars
+    """
+    account = models.Account.objects.get(email = request.user.email)
+    calendars = models.Calendar.objects.filter(owner = account, enabled = True)
+    
+    has_calendars = False
+    if len(calendars) > 0:
+        has_calendars = True
+    
+    return direct_to_template(  request,
+                                'core/calendars/list.html',
+                                {   'request': request,
+                                    'has_calendars': has_calendars,
+                                    'calendards': calendars, })
+
 def index(request):
     """
     Index page

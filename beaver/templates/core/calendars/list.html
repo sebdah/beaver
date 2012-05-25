@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+{% block content %}
+<div id="featured">
+    <h1>Your calendars</h1>
+    {% if has_calendars %}
+        <ul>
+            {% for calendar in calendars %}
+                <li>{{calendar.title}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>
+            You do not have any calendars yet. Do you want to 
+            <a href='/calendars/create'>create one now?</a>
+        </p>
+    {% endif %}
+</div>
+{% endblock %}
