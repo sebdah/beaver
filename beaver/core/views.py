@@ -141,3 +141,25 @@ def index(request):
     Index page
     """
     return direct_to_template(request, 'core/index.html', {'request': request})
+    
+def accounts_settings(request):
+    """
+    Edit account information
+    """
+    print request
+    account = models.Account.objects.get(email = request.user.email)
+    
+    account_updated = False
+    if request.method == 'POST':
+        form = forms.EditAccountForm(request.POST, instance = account)
+        if form.is_valid():
+            form.save()
+            account_updated = True
+    else:
+        form = forms.EditAccountForm(instance = account)
+
+    return direct_to_template(  request,
+                                'core/accounts/settings.html',
+                                {   'request': request,
+                                    'form': form,
+                                    'account_updated': account_updated })

@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     url(r'^accounts/lost_password$', 'core.views.accounts_lost_password'),
     url(r'^accounts/register$', 'core.views.accounts_register'),
     url(r'^accounts/register/complete$', 'core.views.accounts_register_complete'),
+    url(r'^accounts/settings$', 'core.views.accounts_settings'),
 )
