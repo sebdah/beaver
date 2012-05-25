@@ -69,8 +69,11 @@ class Calendar(models.Model):
     """
     A Calendar is a collection of Schedulesapp
     """
+    class Meta:
+        unique_together = ('owner', 'title')
+    
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%s' % self.title
     
     owner           = models.ForeignKey(Account)
     

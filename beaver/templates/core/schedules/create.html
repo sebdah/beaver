@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+{% block content %}
+<div id="content">
+    <h1>Create a new schedule</h1>
+    <form method='post' action=''>{% csrf_token %}
+        <table>
+            {% for field in form %}
+                <tr>
+                    <th>{{field.label}}</th>
+                    <td>
+                        {{field}}
+                        {% for error in field.errors %}
+                            <br />{{error}}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type='submit' value='Create schedule'>
+                </td>
+            </tr>
+        </table>
+        <p></p>
+    </form>
+</div>
+{% endblock %}

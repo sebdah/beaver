@@ -26,6 +26,12 @@ urlpatterns = patterns('',
     url(r'^accounts/register/complete$', 'core.views.accounts_register_complete'),
     url(r'^accounts/settings$', 'core.views.accounts_settings'),
     
-    # Calendar URLs
+    # Calendars
+    url(r'^calendars/create$', 'core.views.calendars_create'),
+    url(r'^calendars/edit/(?P<calendar_id>[\w-]+)$', 'core.views.calendars_edit'),
     url(r'^calendars/list$', 'core.views.calendars_list'),
+    
+    # Schedules
+    url(r'^schedules/create/(?P<calendar_id>[\w-]+)$', 'core.views.schedules_create'),
+    url(r'^schedules/created$', 'core.views.schedules_created'),
 )

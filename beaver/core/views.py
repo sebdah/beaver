@@ -43,7 +43,7 @@ def accounts_delete(request):
         account.delete()
         auth.logout(request)
         return redirect('/accounts/delete/complete')
-    
+
     return redirect('/accounts/settings')
 
 def accounts_delete_complete(request):
@@ -66,11 +66,11 @@ def accounts_login(request):
         if account:
             if account.is_active:
                 auth.login(request, account)
-                
+
                 # If the next parameter is set
                 if 'next' in request.GET:
                     return redirect(request.GET['next'])
-                
+
                 return redirect("/")
             else:
                 error = True
@@ -185,25 +185,99 @@ def accounts_settings(request):
                                     'account_updated': account_updated })
 
 @login_required
+def calendars_create(request):
+    """
+    Create a new Calendar object
+    """
+    account = models.Account.objects.get(email = request.user.email)
+    if request.method == 'POST':
+        form = forms.CalendarForm(request.POST)
+        if form.is_valid():
+            new_calendar = form.save(commit = False)
+            new_calendar.owner = account
+            title = new_calendar.title
+            new_calendar.save()
+            calendar = models.Calendar.objects.get(owner = account, title = title)
+            return redirect('/schedules/create/%i' % calendar.id)
+    else:
+        form = forms.CalendarForm()
+
+    return direct_to_template(  request,
+                                'core/calendars/create.html',
+                                {   'request': request,
+                                    'form': form, })
+
+@login_required
+def calendars_edit(request, calendar_id):
+    """
+    Edit a Calendar object
+    """
+    account = models.Account.objects.get(email = request.user.email)
+    calendar = models.Calendar.objects.get(id = calendar_id, owner = account)
+    
+    if request.method == 'POST':
+        form = forms.CalendarForm(request.POST, instance = calendar)
+        if form.is_valid():
+            updated_calendar = form.save(commit = False)
+            updated_calendar.owner = account
+            updated_calendar.save()
+    else:
+        form = forms.CalendarForm(instance = calendar)
+
+    return direct_to_template(  request,
+                                'core/calendars/edit.html',
+                                {   'request': request,
+                                    'form': form,
+                                    'calendar': calendar, })
+
+@login_required
 def calendars_list(request):
     """
     List of an Accounts calendars
     """
     account = models.Account.objects.get(email = request.user.email)
     calendars = models.Calendar.objects.filter(owner = account, enabled = True)
-    
+
     has_calendars = False
     if len(calendars) > 0:
         has_calendars = True
-    
+
     return direct_to_template(  request,
                                 'core/calendars/list.html',
                                 {   'request': request,
                                     'has_calendars': has_calendars,
-                                    'calendards': calendars, })
+                                    'calendars': calendars, })
 
 def index(request):
     """
     Index page
     """
     return direct_to_template(request, 'core/index.html', {'request': request})
+
+@login_required
+def schedules_create(request, calendar_id):
+    """
+    Create a new Schedule object
+    """
+    account = models.Account.objects.get(email = request.user.email)
+    if request.method == 'POST':
+        form = forms.BaseScheduleForm(request.POST)
+        if form.is_valid():
+            schedule = form.save(commit = False)
+            schedule.calendar = models.Calendar.objects.get(id = calendar_id)
+            schedule.save()
+            return redirect('/schedules/created')
+    else:
+        form = forms.BaseScheduleForm()
+
+    return direct_to_template(  request,
+                                'core/schedules/create.html',
+                                {   'request': request,
+                                    'form': form, })
+
+@login_required
+def schedules_created(request):
+    """
+    Schedule created page
+    """
+    return direct_to_template(request, 'core/schedules/created.html', {'request': request})

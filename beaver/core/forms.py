@@ -19,6 +19,11 @@ class AuthenticationForm(forms.ModelForm):
             'password': forms.widgets.PasswordInput,
         }
 
+class CalendarForm(forms.ModelForm):
+    class Meta:
+        model = models.Calendar
+        fields = ('title', 'description')
+
 class EditAccountForm(forms.ModelForm):
     class Meta:
         model = models.Account
@@ -33,3 +38,8 @@ class LostPasswordForm(forms.ModelForm):
     class Meta:
         model = models.Account
         fields = ('email',)
+
+class BaseScheduleForm(forms.ModelForm):
+    class Meta:
+        model = models.BaseSchedule
+        exclude = ('calendar')
