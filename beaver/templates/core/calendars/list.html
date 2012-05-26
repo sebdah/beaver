@@ -2,6 +2,7 @@
 {% block content %}
 <div id="content">
     <h1>Your calendars</h1>
+    <p><a href='/calendars/create'>Create a new calendar</a></p>
     {% if has_calendars %}
         <ul>
             {% for calendar in calendars %}

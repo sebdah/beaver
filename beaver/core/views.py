@@ -215,14 +215,15 @@ def calendars_edit(request, calendar_id):
     account = models.Account.objects.get(email = request.user.email)
     calendar = models.Calendar.objects.get(id = calendar_id, owner = account)
     schedules = models.Schedule.objects.filter(calendar = calendar, owner = account)
-    print schedules
-
+    
+    updated = False
     if request.method == 'POST':
         form = forms.CalendarForm(request.POST, instance = calendar)
         if form.is_valid():
             updated_calendar = form.save(commit = False)
             updated_calendar.owner = account
             updated_calendar.save()
+            updated = True
     else:
         form = forms.CalendarForm(instance = calendar)
 
@@ -231,7 +232,8 @@ def calendars_edit(request, calendar_id):
                                 {   'request': request,
                                     'form': form,
                                     'calendar': calendar,
-                                    'schedules': schedules, })
+                                    'schedules': schedules,
+                                    'updated': updated, })
 
 @login_required
 def calendars_list(request):

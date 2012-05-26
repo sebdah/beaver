@@ -3,6 +3,9 @@
 <div id="content">
     <h1>{{calendar.title}}</h1>
     <h2>Edit calendar details</h2>
+    {% if updated %}
+        <p>Your calendar has been updated</p>
+    {% endif %}
     <form method='post' action=''>{% csrf_token %}
         <table>
             {% for field in form %}
