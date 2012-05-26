@@ -23,6 +23,7 @@ class Account(models.Model):
     is_active           = models.BooleanField(default = False)
     activation_key      = models.CharField(blank = True, null = True, max_length = 50)
     is_authenticated    = False
+    is_staff            = False # Should never be True
 
     def activate(self):
         """
@@ -77,6 +78,7 @@ class Calendar(models.Model):
     
     owner           = models.ForeignKey(Account)
     
+    url             = models.SlugField(blank = False, unique = True)
     title           = models.CharField(blank = False, max_length = 100)
     description     = models.TextField(blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True)

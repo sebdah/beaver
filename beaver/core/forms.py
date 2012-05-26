@@ -22,7 +22,7 @@ class AuthenticationForm(forms.ModelForm):
 class CalendarForm(forms.ModelForm):
     class Meta:
         model = models.Calendar
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'url')
 
 class EditAccountForm(forms.ModelForm):
     class Meta:
