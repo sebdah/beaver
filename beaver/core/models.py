@@ -108,6 +108,103 @@ class BaseSchedule(models.Model):
     sunday_enabled              = models.BooleanField(blank = False, default = False)
     sunday_bookable_timespan    = models.CharField(blank = True, null = True, max_length = 40)
     sunday_not_bookable         = models.CharField(blank = True, null = True, max_length = 200)
+    
+    def get_bookable_from(self, day):
+        """
+        Get the bookable from time for a given day
+        """
+        if day == 'monday':
+            return self.monday_bookable_timespan.split('-')[0]
+        elif day == 'tuesday':
+            return self.tuesday_bookable_timespan.split('-')[0]
+        elif day == 'wednesday':
+            return self.wednesday_bookable_timespan.split('-')[0]
+        elif day == 'thursday':
+            return self.thursday_bookable_timespan.split('-')[0]
+        elif day == 'friday':
+            return self.friday_bookable_timespan.split('-')[0]
+        elif day == 'saturday':
+            return self.saturday_bookable_timespan.split('-')[0]
+        elif day == 'sunday':
+            return self.sunday_bookable_timespan.split('-')[0]
+            
+    def get_bookable_to(self, day):
+        """
+        Get the bookable from time for a given day
+        """
+        if day == 'monday':
+            return self.monday_bookable_timespan.split('-')[1]
+        elif day == 'tuesday':
+            return self.tuesday_bookable_timespan.split('-')[1]
+        elif day == 'wednesday':
+            return self.wednesday_bookable_timespan.split('-')[1]
+        elif day == 'thursday':
+            return self.thursday_bookable_timespan.split('-')[1]
+        elif day == 'friday':
+            return self.friday_bookable_timespan.split('-')[1]
+        elif day == 'saturday':
+            return self.saturday_bookable_timespan.split('-')[1]
+        elif day == 'sunday':
+            return self.sunday_bookable_timespan.split('-')[1]
+
+    def get_not_bookable_from(self, day):
+        """
+        Get the bookable from time for a given day
+        """
+        if day == 'monday':
+            return self.monday_not_bookable.split('-')[0]
+        elif day == 'tuesday':
+            return self.tuesday_not_bookable.split('-')[0]
+        elif day == 'wednesday':
+            return self.wednesday_not_bookable.split('-')[0]
+        elif day == 'thursday':
+            return self.thursday_not_bookable.split('-')[0]
+        elif day == 'friday':
+            return self.friday_not_bookable.split('-')[0]
+        elif day == 'saturday':
+            return self.saturday_not_bookable.split('-')[0]
+        elif day == 'sunday':
+            return self.sunday_not_bookable.split('-')[0]
+
+    def get_not_bookable_to(self, day):
+        """
+        Get the bookable from time for a given day
+        """
+        if day == 'monday':
+            return self.monday_not_bookable.split('-')[1]
+        elif day == 'tuesday':
+            return self.tuesday_not_bookable.split('-')[1]
+        elif day == 'wednesday':
+            return self.wednesday_not_bookable.split('-')[1]
+        elif day == 'thursday':
+            return self.thursday_not_bookable.split('-')[1]
+        elif day == 'friday':
+            return self.friday_not_bookable.split('-')[1]
+        elif day == 'saturday':
+            return self.saturday_not_bookable.split('-')[1]
+        elif day == 'sunday':
+            return self.sunday_not_bookable.split('-')[1]
+
+    def get_enabled(self, day):
+        """
+        Get the bookable from time for a given day
+        """
+        if day == 'monday':
+            return self.monday_enabled
+        elif day == 'tuesday':
+            return self.tuesday_enabled
+        elif day == 'wednesday':
+            return self.wednesday_enabled
+        elif day == 'thursday':
+            return self.thursday_enabled
+        elif day == 'friday':
+            return self.friday_enabled
+        elif day == 'saturday':
+            return self.saturday_enabled
+        elif day == 'sunday':
+            return self.sunday_enabled
+        
+        return False
 
 class Schedule(models.Model):
     """

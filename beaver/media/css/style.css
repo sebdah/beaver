@@ -97,13 +97,55 @@ body{
     text-align: justify;
     margin: 0;
 }
-.body div#content input{
+.body div#content input {
     height: 34px;
     width: 260px;
     font-family: 'RokkittRegular';
     color: #000;
     font-size: 20px;
-    margin: 28px 0 0 20px;
+    margin: 0px 0px 0px 0px;
+}
+.body div#content input#id_monday_enabled,
+.body div#content input#id_monday_bookable_from, 
+.body div#content input#id_monday_bookable_to,
+.body div#content input#id_monday_not_bookable_from, 
+.body div#content input#id_monday_not_bookable_to,
+.body div#content input#id_tuesday_enabled,
+.body div#content input#id_tuesday_bookable_from, 
+.body div#content input#id_tuesday_bookable_to,
+.body div#content input#id_tuesday_not_bookable_from, 
+.body div#content input#id_tuesday_not_bookable_to,
+.body div#content input#id_wednesday_enabled,
+.body div#content input#id_wednesday_bookable_from, 
+.body div#content input#id_wednesday_bookable_to,
+.body div#content input#id_wednesday_not_bookable_from, 
+.body div#content input#id_wednesday_not_bookable_to,
+.body div#content input#id_thursday_enabled,
+.body div#content input#id_thursday_bookable_from, 
+.body div#content input#id_thursday_bookable_to,
+.body div#content input#id_thursday_not_bookable_from, 
+.body div#content input#id_thursday_not_bookable_to,
+.body div#content input#id_friday_enabled,
+.body div#content input#id_friday_bookable_from, 
+.body div#content input#id_friday_bookable_to,
+.body div#content input#id_friday_not_bookable_from, 
+.body div#content input#id_friday_not_bookable_to,
+.body div#content input#id_saturday_enabled,
+.body div#content input#id_saturday_bookable_from, 
+.body div#content input#id_saturday_bookable_to,
+.body div#content input#id_saturday_not_bookable_from, 
+.body div#content input#id_saturday_not_bookable_to,
+.body div#content input#id_sunday_enabled,
+.body div#content input#id_sunday_bookable_from, 
+.body div#content input#id_sunday_bookable_to,
+.body div#content input#id_sunday_not_bookable_from, 
+.body div#content input#id_sunday_not_bookable_to {
+    height: 34px;
+    width: 50px;
+    font-family: 'RokkittRegular';
+    color: #000;
+    font-size: 20px;
+    margin: 0px 0px 0px 0px;
 }
 .body div#content textarea{
     height: 140px;
@@ -111,7 +153,7 @@ body{
     font-family: 'RokkittRegular';
     color: #000;
     font-size: 20px;
-    margin: 28px 0 0 20px;
+    margin: 0px 0px 0px 0px;
 }
 .body div#content th{
     height: 34px;
@@ -125,6 +167,9 @@ body{
     font-family: 'RokkittRegular';
     color: #000;
     font-size: 20px;
+}
+.body div#content td.error {
+    color: #F00;
 }
 .body div#content ul{
     margin: 0;
@@ -456,4 +501,7 @@ body{
     text-indent:-9999px;
     background:url(../images/icons.gif) no-repeat 0 -96px;
     margin:0 0 0 73px;
+}
+.red_background {
+    background: #FF665A;
 }
