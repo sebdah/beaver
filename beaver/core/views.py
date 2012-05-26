@@ -205,7 +205,8 @@ def calendars_create(request):
     return direct_to_template(  request,
                                 'core/calendars/create.html',
                                 {   'request': request,
-                                    'form': form, })
+                                    'form': form,
+                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL })
 
 @login_required
 def calendars_edit(request, calendar_id):
@@ -268,7 +269,50 @@ def schedules_create(request, calendar_id):
     calendar = models.Calendar.objects.get(id = calendar_id)
 
     if request.method == 'POST':
-        form = forms.BaseScheduleForm(request.POST)
+        # Query Dict
+        query_dict = {}
+
+        # Make a new query list matching the model
+        for day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+            day_enabled = '%s_enabled' % (day)
+            day_bookable_timespan = '%s_bookable_timespan' % (day)
+            day_bookable_from = '%s_bookable_from' % (day)
+            day_bookable_to = '%s_bookable_to' % (day)
+            day_not_bookable = '%s_not_bookable' % (day)
+            day_not_bookable_from = '%s_not_bookable_from' % (day)
+            day_not_bookable_to = '%s_not_bookable_to' % (day)
+
+            if day_enabled not in request.POST:
+                query_dict[day_enabled] = False
+            else:
+                query_dict[day_enabled] = request.POST[day_enabled]
+
+            if day_bookable_from not in request.POST:
+                day_bookable_from_value = ''
+            else:
+                day_bookable_from_value = request.POST[day_bookable_from]
+                
+            if day_bookable_to not in request.POST:
+                day_bookable_to_value = ''
+            else:
+                day_bookable_to_value = request.POST[day_bookable_to]
+            
+            if day_not_bookable_from not in request.POST:
+                day_not_bookable_from_value = ''
+            else:
+                day_not_bookable_from_value = request.POST[day_not_bookable_from]
+            
+            if day_not_bookable_to not in request.POST:
+                day_not_bookable_to_value = ''
+            else:
+                day_not_bookable_to_value = request.POST[day_not_bookable_to]
+                
+            query_dict[day_bookable_timespan] = u'%s-%s' % (day_bookable_from_value,
+                                                            day_bookable_to_value)
+            query_dict[day_not_bookable] = u'%s-%s' % ( day_not_bookable_from_value,
+                                                        day_not_bookable_to_value)
+
+        form = forms.BaseScheduleForm(query_dict)
         if form.is_valid():
             # Create the BaseSchedule
             base_schedule = form.save(commit = False)
@@ -308,7 +352,6 @@ def schedules_edit(request, schedule_id):
     schedule = models.Schedule.objects.get(id = schedule_id, owner = account)
     
     updated = False
-    form_invalid = False
     if request.method == 'POST':
         base_schedule = models.BaseSchedule.objects.get(id = schedule.base_schedule.id)
         
@@ -348,7 +391,7 @@ def schedules_edit(request, schedule_id):
             if day_not_bookable_to not in request.POST:
                 day_not_bookable_to_value = ''
             else:
-                day_not_bookable_to_value = request.POST[day_not_bookable_from]
+                day_not_bookable_to_value = request.POST[day_not_bookable_to]
                 
             query_dict[day_bookable_timespan] = u'%s-%s' % (day_bookable_from_value,
                                                             day_bookable_to_value)

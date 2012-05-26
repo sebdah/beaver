@@ -1,10 +1,11 @@
 # Django settings for beaver project.
 
 # Used for building absolute paths
-BEAVER_DIR = '/Users/sebastian/git/bookd/beaver'
+BEAVER_DIR = u'/Users/sebastian/git/bookd/beaver'
 
 # Jeeves external URL
-BEAVER_EXTERNAL_URL = 'http://localhost:8000'
+BEAVER_EXTERNAL_URL = u'http://localhost:8000'
+BEAVER_EXTERNAL_CALENDAR_URL = u'%s/calendar/' % (BEAVER_EXTERNAL_URL)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
