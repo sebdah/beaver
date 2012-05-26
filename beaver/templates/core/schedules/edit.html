@@ -9,10 +9,10 @@
     * Validating bookable to fields
     */
     function validate_bookable_to(day) {
-        if($.timePicker("#id_" + day + "_bookable_from").getTime() > $.timePicker('#id_' + day +'_bookable_to').getTime()) {
+        if($.timePicker("#id_" + day + "_bookable_from").getTime() >= $.timePicker('#id_' + day +'_bookable_to').getTime()) {
             $("input[type=submit]").attr("disabled", "disabled");
             $('#id_' + day +'_bookable_to').addClass('red_background');
-            $('#' + day + '_error').html('Closing time cannot be earlier than opening time');
+            $('#' + day + '_error').html('Closing time cannot be earlier than or equal to the opening time');
         } else {
             $("input[type=submit]").removeAttr("disabled");
             $('#id_' + day +'_bookable_to').removeClass('red_background');
@@ -44,7 +44,7 @@
             $("#id_" + day + "_not_bookable_to").addClass('red_background');
             $('#' + day + '_error').html('Not bookable times cannot be outside opening hours');
         } else {
-            if($.timePicker("#id_" + day + "_not_bookable_to").getTime() < $.timePicker("#id_" + day + "_not_bookable_from").getTime()) {
+            if($.timePicker("#id_" + day + "_not_bookable_to").getTime() <= $.timePicker("#id_" + day + "_not_bookable_from").getTime()) {
                 $("input[type=submit]").attr("disabled", "disabled");
                 $("#id_" + day + "_not_bookable_to").addClass('red_background');
                 $('#' + day + '_error').html('End of timespan cannot be earlier that the start');
@@ -54,6 +54,34 @@
                 $('#' + day + '_error').html('&nbsp;');
             }
         }
+    }
+    
+    /*
+    * Grey out a given row
+    */
+    function grey_in(day){
+        $('#id_' + day + '_bookable_from').removeAttr("disabled");
+        $('#id_' + day + '_bookable_from').removeAttr("style");
+        $('#id_' + day + '_bookable_to').removeAttr("disabled");
+        $('#id_' + day + '_bookable_to').removeAttr("style");
+        $('#id_' + day + '_not_bookable_from').removeAttr("disabled");
+        $('#id_' + day + '_not_bookable_from').removeAttr("style");
+        $('#id_' + day + '_not_bookable_to').removeAttr("disabled");
+        $('#id_' + day + '_not_bookable_to').removeAttr("style");
+    }
+    
+    /*
+    * Grey out a given row
+    */
+    function grey_out(day){
+        $('#id_' + day + '_bookable_from').attr('disabled', 'disabled');
+        $('#id_' + day + '_bookable_from').attr('style', 'color:#999; background: #eee');
+        $('#id_' + day + '_bookable_to').attr('disabled', 'disabled');
+        $('#id_' + day + '_bookable_to').attr('style', 'color:#999; background: #eee');
+        $('#id_' + day + '_not_bookable_from').attr('disabled', 'disabled');
+        $('#id_' + day + '_not_bookable_from').attr('style', 'color:#999; background: #eee');
+        $('#id_' + day + '_not_bookable_to').attr('disabled', 'disabled');
+        $('#id_' + day + '_not_bookable_to').attr('style', 'color:#999; background: #eee');
     }
 
     jQuery(function() {
@@ -110,14 +138,68 @@
         $("#id_sunday_bookable_to").change(function() { validate_bookable_to('sunday'); });
         $("#id_sunday_not_bookable_from").change(function() { validate_not_bookable_from('sunday'); });
         $("#id_sunday_not_bookable_to").change(function() { validate_not_bookable_to('sunday'); });
+        
+        // Change the grey out and in effect
+        $('#id_monday_enabled').change(function(){
+            if ($('#id_monday_enabled').attr('checked')) {
+                grey_in('monday');
+            } else {
+                grey_out('monday');
+            }
+        });
+        $('#id_tuesday_enabled').change(function(){
+            if ($('#id_tuesday_enabled').attr('checked')) {
+                grey_in('tuesday');
+            } else {
+                grey_out('tuesday');
+            }
+        });
+        $('#id_wednesday_enabled').change(function(){
+            if ($('#id_wednesday_enabled').attr('checked')) {
+                grey_in('wednesday');
+            } else {
+                grey_out('wednesday');
+            }
+        });
+        $('#id_thursday_enabled').change(function(){
+            if ($('#id_thursday_enabled').attr('checked')) {
+                grey_in('thursday');
+            } else {
+                grey_out('thursday');
+            }
+        });
+        $('#id_friday_enabled').change(function(){
+            if ($('#id_friday_enabled').attr('checked')) {
+                grey_in('friday');
+            } else {
+                grey_out('friday');
+            }
+        });
+        $('#id_saturday_enabled').change(function(){
+            if ($('#id_saturday_enabled').attr('checked')) {
+                grey_in('saturday');
+            } else {
+                grey_out('saturday');
+            }
+        });
+        $('#id_sunday_enabled').change(function(){
+            if ($('#id_sunday_enabled').attr('checked')) {
+                grey_in('sunday');
+            } else {
+                grey_out('sunday');
+            }
+        });
     });
     
     // Disable times if the day is not enabled
     $(document).ready(function(){
-        if($('#id_monday_enabled').attr('checked') == true) {
-            alert('dfs');
-            $('#id_monday_bookable_to').attr('disabled', 'disabled')
-        }
+        if ( ! $('#id_monday_enabled').attr('checked')) { grey_out('monday') }
+        if ( ! $('#id_tuesday_enabled').attr('checked')) { grey_out('tuesday') }
+        if ( ! $('#id_wednesday_enabled').attr('checked')) { grey_out('wednesday') }
+        if ( ! $('#id_thursday_enabled').attr('checked')) { grey_out('thursday') }
+        if ( ! $('#id_friday_enabled').attr('checked')) { grey_out('friday') }
+        if ( ! $('#id_saturday_enabled').attr('checked')) { grey_out('saturday') }
+        if ( ! $('#id_sunday_enabled').attr('checked')) { grey_out('sunday') }
     });
     </script>
 {% endblock %}

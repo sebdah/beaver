@@ -330,10 +330,30 @@ def schedules_edit(request, schedule_id):
             else:
                 query_dict[day_enabled] = request.POST[day_enabled]
 
-            query_dict[day_bookable_timespan] = u'%s-%s' % (request.POST[day_bookable_from],
-                                                            request.POST[day_bookable_to])
-            query_dict[day_not_bookable] = u'%s-%s' % ( request.POST[day_not_bookable_from],
-                                                        request.POST[day_not_bookable_to])
+            if day_bookable_from not in request.POST:
+                day_bookable_from_value = ''
+            else:
+                day_bookable_from_value = request.POST[day_bookable_from]
+                
+            if day_bookable_to not in request.POST:
+                day_bookable_to_value = ''
+            else:
+                day_bookable_to_value = request.POST[day_bookable_to]
+            
+            if day_not_bookable_from not in request.POST:
+                day_not_bookable_from_value = ''
+            else:
+                day_not_bookable_from_value = request.POST[day_not_bookable_from]
+            
+            if day_not_bookable_to not in request.POST:
+                day_not_bookable_to_value = ''
+            else:
+                day_not_bookable_to_value = request.POST[day_not_bookable_from]
+                
+            query_dict[day_bookable_timespan] = u'%s-%s' % (day_bookable_from_value,
+                                                            day_bookable_to_value)
+            query_dict[day_not_bookable] = u'%s-%s' % ( day_not_bookable_from_value,
+                                                        day_not_bookable_to_value)
 
         form = forms.BaseScheduleForm(query_dict, instance = base_schedule)
         if form.is_valid():
