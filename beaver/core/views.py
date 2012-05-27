@@ -1,7 +1,7 @@
 import random
 
 from beaver import settings
-from core import forms, models
+from core import forms, models, definitions
 
 from django.contrib import auth
 from django.shortcuts import redirect
@@ -9,6 +9,8 @@ from django.core.mail import send_mail
 from django import forms as django_forms
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
+from django.shortcuts import get_object_or_404
+
 
 def accounts_activate(request, activation_key):
     """
@@ -184,6 +186,26 @@ def accounts_settings(request):
                                     'form': form,
                                     'account_updated': account_updated })
 
+def calendar_view(request, calendar_slug):
+    """
+    Show the public calendar
+    """
+    calendar = get_object_or_404(models.Calendar, url = calendar_slug)
+    schedules = models.Schedule.objects.filter(calendar = calendar.id)
+    
+    is_owner = False
+    if request.user.email == calendar.owner.email:
+        is_owner = True
+
+    return direct_to_template(  request,
+                                'core/calendar/view.html',
+                                {   'request': request,
+                                    'calendar': calendar,
+                                    'schedule': schedules[0],
+                                    'is_owner': is_owner,
+                                    'weekdays': definitions.WEEKDAYS_SHORT, 
+                                    'date_range': dates, })
+
 @login_required
 def calendars_create(request):
     """
@@ -252,7 +274,8 @@ def calendars_list(request):
                                 'core/calendars/list.html',
                                 {   'request': request,
                                     'has_calendars': has_calendars,
-                                    'calendars': calendars, })
+                                    'calendars': calendars,
+                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL })
 
 def index(request):
     """
@@ -271,9 +294,12 @@ def schedules_create(request, calendar_id):
     if request.method == 'POST':
         # Query Dict
         query_dict = {}
+        
+        # Add the timeslot
+        query_dict['timeslot_length'] = 60
 
         # Make a new query list matching the model
-        for day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+        for day in definitions.WEEKDAYS:
             day_enabled = '%s_enabled' % (day)
             day_bookable_timespan = '%s_bookable_timespan' % (day)
             day_bookable_from = '%s_bookable_from' % (day)
@@ -357,9 +383,12 @@ def schedules_edit(request, schedule_id):
         
         # Query Dict
         query_dict = {}
+        
+        # Add the timeslot
+        query_dict['timeslot_length'] = 60
 
         # Make a new query list matching the model
-        for day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+        for day in definitions.WEEKDAYS:
             day_enabled = '%s_enabled' % (day)
             day_bookable_timespan = '%s_bookable_timespan' % (day)
             day_bookable_from = '%s_bookable_from' % (day)
@@ -407,7 +436,7 @@ def schedules_edit(request, schedule_id):
     
     base_schedule = models.BaseSchedule.objects.get(id = schedule.base_schedule.id)
     values = {}
-    for day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+    for day in definitions.WEEKDAYS:
         day_enabled = '%s_enabled' % (day)
         day_bookable_from = '%s_bookable_from' % (day)
         day_bookable_to = '%s_bookable_to' % (day)
@@ -424,7 +453,6 @@ def schedules_edit(request, schedule_id):
         values[day_not_bookable_from]   = base_schedule.get_not_bookable_from(day)
         values[day_not_bookable_to]     = base_schedule.get_not_bookable_to(day)
     
-    print values
     return direct_to_template(  request,
                                 'core/schedules/edit.html',
                                 {   'request': request,

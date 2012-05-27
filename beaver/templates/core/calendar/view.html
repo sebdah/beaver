@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+{% load calendar %}
+{% block content %}
+<div id="content">
+    <div id="calendar">
+        <h2>Calendar</h2>
+        <div id="header">
+            &lt; Vecka 21 &gt;
+        </div>
+        {% for date in date_range %}
+            <div id="day">
+                <div id="day-header">{{date}}</div>
+                {% for timeslot, bookable in date|get_day_timeslots:schedule.id %}
+                    {% if bookable %}
+                        <div    id="timeslot"
+                                class='bookable'
+                                onclick="location.href='/calendar/{{calendar.id}}/book?timeslot={{timeslot}}&schedule={{schedule.id}}'">
+                    {% else %}
+                        <div id="timeslot" class='not-bookable'>
+                    {% endif %}
+                        {{timeslot}}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <div id="calendar-metadata">
+        <h2>{{calendar.title}}</h2>
+        {{calendar.description|linebreaks}}
+        {% if is_owner %}<p><a href='/calendars/edit/{{calendar.id}}'>Edit calendar</a></p><br />{% endif %}
+    </div>
+    <div id='clear'></div>
+</div>
+{% endblock %}

@@ -26,6 +26,9 @@ urlpatterns = patterns('',
     url(r'^accounts/register/complete$', 'core.views.accounts_register_complete'),
     url(r'^accounts/settings$', 'core.views.accounts_settings'),
     
+    # Customer's calendars URL
+    url(r'^calendar/(?P<calendar_slug>[\w-]+)$', 'core.views.calendar_view'),
+    
     # Calendars
     url(r'^calendars/create$', 'core.views.calendars_create'),
     url(r'^calendars/edit/(?P<calendar_id>[\w-]+)$', 'core.views.calendars_edit'),

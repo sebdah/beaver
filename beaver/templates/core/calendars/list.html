@@ -8,7 +8,10 @@
         </p>
         <ul>
             {% for calendar in calendars %}
-                <li><a href='/calendars/edit/{{calendar.id}}'>{{calendar.title}}</a></li>
+                <li>
+                    <a href='/calendars/edit/{{calendar.id}}'>{{calendar.title}}</a>
+                    (<a href='{{external_url}}{{calendar.url}}'>public view</a>)
+                </li>
             {% endfor %}
         </ul>
     {% else %}
