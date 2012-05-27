@@ -241,7 +241,8 @@ def calendar_view(request, calendar_slug):
                                     'weekdays': definitions.WEEKDAYS_SHORT,
                                     'date_range': dates,
                                     'previous_week_start': (datetime.datetime.strptime(dates[0], '%Y-%m-%d') - datetime.timedelta(days = 7)).strftime('%Y-%m-%d'),
-                                    'next_week_start': (datetime.datetime.strptime(dates[6], '%Y-%m-%d') + datetime.timedelta(days = 1)).strftime('%Y-%m-%d'), })
+                                    'next_week_start': (datetime.datetime.strptime(dates[6], '%Y-%m-%d') + datetime.timedelta(days = 1)).strftime('%Y-%m-%d'), 
+                                    'week_number': datetime.datetime.strptime(dates[0], '%Y-%m-%d').isocalendar()[1], })
 
 @login_required
 def calendars_create(request):

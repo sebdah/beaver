@@ -6,7 +6,7 @@
         <h2>Calendar</h2>
         <div id="header">
             <a href='/calendar/{{calendar.url}}?start_date={{previous_week_start}}'>&lt;</a>
-            Vecka 21
+            Week {{week_number}}
             <a href='/calendar/{{calendar.url}}?start_date={{next_week_start}}'>&gt;</a>
         </div>
         {% for date in date_range %}
