@@ -1,4 +1,5 @@
 import random
+import datetime
 
 from beaver import settings
 from core import forms, models, definitions
@@ -192,7 +193,41 @@ def calendar_view(request, calendar_slug):
     """
     calendar = get_object_or_404(models.Calendar, url = calendar_slug)
     schedules = models.Schedule.objects.filter(calendar = calendar.id)
+
+    # See if any other dates has been requested
+    if 'start_date' in request.GET:
+        start_date = datetime.datetime.strptime(request.GET['start_date'], '%Y-%m-%d')
+    else:
+        start_date = datetime.datetime.today()
     
+    # List of dates to show
+    dates = []
+    
+    # Get today's weekday
+    day_of_week = datetime.date.weekday(start_date)
+    
+    # Add days prior to today
+    i = day_of_week
+    while i > 0:
+        dates += [(start_date - datetime.timedelta(days = i)).strftime('%Y-%m-%d'),]
+        i -= 1
+    
+    # Add today
+    dates += [start_date.strftime('%Y-%m-%d')]
+    
+    # Handle mondays properly
+    i = day_of_week
+    last_day = 6
+    if i == 0:
+        i = 1
+        last_day = 7
+    
+    # Add days after today
+    while i < last_day:
+        dates += [(start_date + datetime.timedelta(days = i)).strftime('%Y-%m-%d'),]
+        i += 1
+
+    # Show a little edit link for calendar owners
     is_owner = False
     if request.user.email == calendar.owner.email:
         is_owner = True
@@ -203,8 +238,10 @@ def calendar_view(request, calendar_slug):
                                     'calendar': calendar,
                                     'schedule': schedules[0],
                                     'is_owner': is_owner,
-                                    'weekdays': definitions.WEEKDAYS_SHORT, 
-                                    'date_range': dates, })
+                                    'weekdays': definitions.WEEKDAYS_SHORT,
+                                    'date_range': dates,
+                                    'previous_week_start': (datetime.datetime.strptime(dates[0], '%Y-%m-%d') - datetime.timedelta(days = 7)).strftime('%Y-%m-%d'),
+                                    'next_week_start': (datetime.datetime.strptime(dates[6], '%Y-%m-%d') + datetime.timedelta(days = 1)).strftime('%Y-%m-%d'), })
 
 @login_required
 def calendars_create(request):
@@ -294,7 +331,7 @@ def schedules_create(request, calendar_id):
     if request.method == 'POST':
         # Query Dict
         query_dict = {}
-        
+
         # Add the timeslot
         query_dict['timeslot_length'] = 60
 
@@ -317,22 +354,22 @@ def schedules_create(request, calendar_id):
                 day_bookable_from_value = ''
             else:
                 day_bookable_from_value = request.POST[day_bookable_from]
-                
+
             if day_bookable_to not in request.POST:
                 day_bookable_to_value = ''
             else:
                 day_bookable_to_value = request.POST[day_bookable_to]
-            
+
             if day_not_bookable_from not in request.POST:
                 day_not_bookable_from_value = ''
             else:
                 day_not_bookable_from_value = request.POST[day_not_bookable_from]
-            
+
             if day_not_bookable_to not in request.POST:
                 day_not_bookable_to_value = ''
             else:
                 day_not_bookable_to_value = request.POST[day_not_bookable_to]
-                
+
             query_dict[day_bookable_timespan] = u'%s-%s' % (day_bookable_from_value,
                                                             day_bookable_to_value)
             query_dict[day_not_bookable] = u'%s-%s' % ( day_not_bookable_from_value,
@@ -376,14 +413,14 @@ def schedules_edit(request, schedule_id):
     """
     account = models.Account.objects.get(email = request.user.email)
     schedule = models.Schedule.objects.get(id = schedule_id, owner = account)
-    
+
     updated = False
     if request.method == 'POST':
         base_schedule = models.BaseSchedule.objects.get(id = schedule.base_schedule.id)
-        
+
         # Query Dict
         query_dict = {}
-        
+
         # Add the timeslot
         query_dict['timeslot_length'] = 60
 
@@ -406,22 +443,22 @@ def schedules_edit(request, schedule_id):
                 day_bookable_from_value = ''
             else:
                 day_bookable_from_value = request.POST[day_bookable_from]
-                
+
             if day_bookable_to not in request.POST:
                 day_bookable_to_value = ''
             else:
                 day_bookable_to_value = request.POST[day_bookable_to]
-            
+
             if day_not_bookable_from not in request.POST:
                 day_not_bookable_from_value = ''
             else:
                 day_not_bookable_from_value = request.POST[day_not_bookable_from]
-            
+
             if day_not_bookable_to not in request.POST:
                 day_not_bookable_to_value = ''
             else:
                 day_not_bookable_to_value = request.POST[day_not_bookable_to]
-                
+
             query_dict[day_bookable_timespan] = u'%s-%s' % (day_bookable_from_value,
                                                             day_bookable_to_value)
             query_dict[day_not_bookable] = u'%s-%s' % ( day_not_bookable_from_value,
@@ -433,7 +470,7 @@ def schedules_edit(request, schedule_id):
             updated_base_schedule.calendar_id = base_schedule.calendar_id
             updated_base_schedule.save()
             updated = True
-    
+
     base_schedule = models.BaseSchedule.objects.get(id = schedule.base_schedule.id)
     values = {}
     for day in definitions.WEEKDAYS:
@@ -442,17 +479,17 @@ def schedules_edit(request, schedule_id):
         day_bookable_to = '%s_bookable_to' % (day)
         day_not_bookable_from = '%s_not_bookable_from' % (day)
         day_not_bookable_to = '%s_not_bookable_to' % (day)
-        
+
         if base_schedule.get_enabled(day):
             values[day_enabled] = 'checked'
         else:
             values[day_enabled] = ''
-        
+
         values[day_bookable_from]       = base_schedule.get_bookable_from(day)
         values[day_bookable_to]         = base_schedule.get_bookable_to(day)
         values[day_not_bookable_from]   = base_schedule.get_not_bookable_from(day)
         values[day_not_bookable_to]     = base_schedule.get_not_bookable_to(day)
-    
+
     return direct_to_template(  request,
                                 'core/schedules/edit.html',
                                 {   'request': request,

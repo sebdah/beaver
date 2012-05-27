@@ -5,7 +5,9 @@
     <div id="calendar">
         <h2>Calendar</h2>
         <div id="header">
-            &lt; Vecka 21 &gt;
+            <a href='/calendar/{{calendar.url}}?start_date={{previous_week_start}}'>&lt;</a>
+            Vecka 21
+            <a href='/calendar/{{calendar.url}}?start_date={{next_week_start}}'>&gt;</a>
         </div>
         {% for date in date_range %}
             <div id="day">
@@ -14,7 +16,7 @@
                     {% if bookable %}
                         <div    id="timeslot"
                                 class='bookable'
-                                onclick="location.href='/calendar/{{calendar.id}}/book?timeslot={{timeslot}}&schedule={{schedule.id}}'">
+                                onclick="location.href='/calendar/{{calendar.url}}/book?timeslot={{timeslot}}&schedule={{schedule.id}}'">
                     {% else %}
                         <div id="timeslot" class='not-bookable'>
                     {% endif %}
