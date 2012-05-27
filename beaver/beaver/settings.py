@@ -170,6 +170,7 @@ LOGGING = {
 DATETIME_FORMAT     = "Y-m-d H:i:s"
 DATE_FORMAT         = "Y-m-d"
 TIME_FORMAT         = "H:i:s"
+SHORT_DATE_FORMAT   = "%d/%m"
 
 # Email settings
 EMAIL_BACKEND           = 'django.core.mail.backends.smtp.EmailBackend'

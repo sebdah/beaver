@@ -11,7 +11,7 @@
         </div>
         {% for date in date_range %}
             <div id="day">
-                <div id="day-header">{{date}}</div>
+                <div id="day-header">{{date|short_date_format}}</div>
                 {% for timeslot, bookable in date|get_day_timeslots:schedule.id %}
                     {% if bookable %}
                         <div    id="timeslot"
