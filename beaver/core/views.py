@@ -315,6 +315,12 @@ def calendars_list(request):
                                     'calendars': calendars,
                                     'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL })
 
+def handler404(request):
+    """
+    404 page
+    """
+    return direct_to_template(request, 'core/404.html', {'request': request})
+
 def index(request):
     """
     Index page

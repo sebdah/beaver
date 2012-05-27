@@ -5,6 +5,9 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+# 404 handler
+handler404 = 'core.views.handler404'
+
 urlpatterns = patterns('',
     # Media
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
