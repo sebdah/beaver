@@ -11,9 +11,13 @@
                 <span style='font-size: 1.5em;'>
                     <a href='/calendars/edit/{{calendar.id}}'>{{calendar.title}}</a>
                 </span>
-                (The calendar is {% if calendar.enabled %}published{% else %}not published{% endif %}, 
-                <a href='{{external_url}}{{calendar.url}}'>public link</a>)
-                </tr>
+                - The calendar is
+                {% if calendar.enabled %}
+                    published, see it live via the <a href='{{external_url}}{{calendar.url}}'>public link</a>
+                {% else %}
+                    not published
+                {% endif %}
+                <br />
             {% endfor %}
         </p>
     {% else %}
