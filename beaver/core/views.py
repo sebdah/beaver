@@ -187,6 +187,28 @@ def accounts_settings(request):
                                     'form': form,
                                     'account_updated': account_updated })
 
+def calendar_book(request, calendar_slug, schedule_id):
+    """
+    Create a booking
+    """
+    calendar = get_object_or_404(models.Calendar, url = calendar_slug)
+    schedule = get_object_or_404(models.Schedule, id = schedule_id)
+    
+    # Make sure we get the params we need
+    if 'timeslot' not in request.GET or 'date' not in request.GET:
+        return redirect('/404')
+    
+    timeslot = request.GET['timeslot']
+    date = request.GET['date']
+    
+    return direct_to_template(  request,
+                                'core/calendar/book.html',
+                                {   'request': request,
+                                    'schedule': schedule,
+                                    'calendar': calendar,
+                                    'timeslot': timeslot,
+                                    'date': date, })
+
 def calendar_view(request, calendar_slug):
     """
     Show the public calendar

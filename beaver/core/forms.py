@@ -19,6 +19,15 @@ class AuthenticationForm(forms.ModelForm):
             'password': forms.widgets.PasswordInput,
         }
 
+class BaseScheduleForm(forms.ModelForm):
+    class Meta:
+        model = models.BaseSchedule
+        exclude = ('calendar')
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = models.BaseSchedule
+
 class CalendarForm(forms.ModelForm):
     class Meta:
         model = models.Calendar
@@ -38,11 +47,6 @@ class LostPasswordForm(forms.ModelForm):
     class Meta:
         model = models.Account
         fields = ('email',)
-
-class BaseScheduleForm(forms.ModelForm):
-    class Meta:
-        model = models.BaseSchedule
-        exclude = ('calendar')
 
 class ScheduleForm(forms.ModelForm):
     class Meta:

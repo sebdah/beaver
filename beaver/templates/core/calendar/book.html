@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+{% block content %}
+<div id="content">
+    <div id="calendar">
+        <h1>Time booking - {{calendar.title}}</h1>
+        <h2>Description</h2>
+        <p>
+            Book your time here.
+        </p><br />
+        <h2>Make booking</h2>
+        <form method='post' action=''>{% csrf_token %}
+        <table>
+            <tr>
+                <th>Time</th>
+                <td>{{timeslot}}</td>
+            <tr>
+                <th>Date</th>
+                <td>{{date}}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td><textarea name='comment'></textarea></td>
+            </tr>
+            <tr><td colspan='2'>&nbsp;</td></tr>
+            <tr>
+                <td colspan='2'>
+                    <input type="button" value="Back to calendar" onClick="javascript: history.go(-1)"><input type='submit' value='Book time'>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div id="calendar-metadata">
+        <h2>{{calendar.title}}</h2>
+        {{calendar.description|linebreaks}}
+        {% if is_owner %}<p><a href='/calendars/edit/{{calendar.id}}'>Edit calendar</a></p><br />{% endif %}
+    </div>
+    <div id='clear'></div>
+</div>
+{% endblock %}

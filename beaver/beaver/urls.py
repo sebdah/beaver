@@ -15,6 +15,10 @@ urlpatterns = patterns('',
     # Media
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     
+    # 404/500 (not needed for Django 404/500 handling..)
+    url(r'^404$', 'core.views.handler404'),
+    url(r'^500$', 'core.views.handler500'),
+    
     # Index
     url(r'^$', 'core.views.index'),
     
@@ -34,6 +38,7 @@ urlpatterns = patterns('',
     
     # Customer's calendars URL
     url(r'^calendar/(?P<calendar_slug>[\w-]+)$', 'core.views.calendar_view'),
+    url(r'^calendar/(?P<calendar_slug>[\w-]+)/book/(?P<schedule_id>[\w-]+)$', 'core.views.calendar_book'),
     
     # Calendars
     url(r'^calendars/create$', 'core.views.calendars_create'),

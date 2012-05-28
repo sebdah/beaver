@@ -16,7 +16,7 @@
                     {% if bookable %}
                         <div    id="timeslot"
                                 class='bookable'
-                                onclick="location.href='/calendar/{{calendar.url}}/book?timeslot={{timeslot}}&schedule={{schedule.id}}'">
+                                onclick="location.href='/calendar/{{calendar.url}}/book/{{schedule.id}}?timeslot={{timeslot}}&date={{date}}'">
                     {% else %}
                         <div id="timeslot" class='not-bookable'>
                     {% endif %}
