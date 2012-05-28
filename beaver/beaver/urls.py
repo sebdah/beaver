@@ -38,6 +38,7 @@ urlpatterns = patterns('',
     
     # Booking type
     url(r'^bookingtypes/create/(?P<calendar_id>[\w-]+)$', 'core.views.bookingtypes_create'),
+    url(r'^bookingtypes/edit/(?P<bookingtype_id>[\w-]+)$', 'core.views.bookingtypes_edit'),
     
     # Customer's calendars URL
     url(r'^calendar/(?P<calendar_slug>[\w-]+)$', 'core.views.calendar_view'),

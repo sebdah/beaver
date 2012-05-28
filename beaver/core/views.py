@@ -192,7 +192,6 @@ def bookingtypes_create(request, calendar_id):
     """
     Create a new BookingType object
     """
-    account = models.Account.objects.get(email = request.user.email)
     calendar = models.Calendar.objects.get(id = calendar_id)
     
     if request.method == 'POST':
@@ -208,6 +207,27 @@ def bookingtypes_create(request, calendar_id):
 
     return direct_to_template(  request,
                                 'core/bookingtypes/create.html',
+                                {   'request': request,
+                                    'form': form, })
+
+@login_required
+def bookingtypes_edit(request, bookingtype_id):
+    """
+    Edit a BookingType object
+    """
+    booking_type = models.BookingType.objects.get(id = bookingtype_id)
+
+    if request.method == 'POST':
+        form = forms.BookingTypeForm(request.POST, instance = booking_type)
+        if form.is_valid():
+            form.save()
+
+            return redirect('/calendars/edit/%i' % booking_type.calendar.id)
+    else:
+        form = forms.BookingTypeForm(instance = booking_type)
+
+    return direct_to_template(  request,
+                                'core/bookingtypes/edit.html',
                                 {   'request': request,
                                     'form': form, })
 
