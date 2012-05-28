@@ -277,16 +277,17 @@ def calendars_create(request):
     """
     account = models.Account.objects.get(email = request.user.email)
     if request.method == 'POST':
-        form = forms.CalendarForm(request.POST)
+        form = forms.CalendarExceptEnabledForm(request.POST)
         if form.is_valid():
             new_calendar = form.save(commit = False)
             new_calendar.owner = account
+            new_calendar.enabled = False
             title = new_calendar.title
             new_calendar.save()
             calendar = models.Calendar.objects.get(owner = account, title = title)
             return redirect('/schedules/create/%i' % calendar.id)
     else:
-        form = forms.CalendarForm()
+        form = forms.CalendarExceptEnabledForm()
 
     return direct_to_template(  request,
                                 'core/calendars/create.html',
