@@ -321,6 +321,12 @@ def handler404(request):
     """
     return direct_to_template(request, 'core/404.html', {'request': request})
 
+def handler500(request):
+    """
+    500 page
+    """
+    return direct_to_template(request, 'core/500.html', {'request': request})
+
 def index(request):
     """
     Index page

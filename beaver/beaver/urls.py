@@ -8,6 +8,9 @@ admin.autodiscover()
 # 404 handler
 handler404 = 'core.views.handler404'
 
+# 500 handler
+handler500 = 'core.views.handler500'
+
 urlpatterns = patterns('',
     # Media
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
