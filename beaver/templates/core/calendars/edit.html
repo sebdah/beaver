@@ -12,6 +12,9 @@
                 <tr>
                     <th>{{field.label}}</th>
                     <td>
+                        {% if field.label == 'URL' %}
+                            {{external_url}}
+                        {% endif %}
                         {{field}}
                         {% for error in field.errors %}
                             <br />{{error}}

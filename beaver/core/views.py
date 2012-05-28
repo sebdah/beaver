@@ -293,7 +293,7 @@ def calendars_create(request):
                                 'core/calendars/create.html',
                                 {   'request': request,
                                     'form': form,
-                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL })
+                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL, })
 
 @login_required
 def calendars_edit(request, calendar_id):
@@ -321,7 +321,8 @@ def calendars_edit(request, calendar_id):
                                     'form': form,
                                     'calendar': calendar,
                                     'schedules': schedules,
-                                    'updated': updated, })
+                                    'updated': updated,
+                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL, })
 
 @login_required
 def calendars_list(request):
