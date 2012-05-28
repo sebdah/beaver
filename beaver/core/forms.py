@@ -28,6 +28,11 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = models.BaseSchedule
 
+class BookingTypeForm(forms.ModelForm):
+    class Meta:
+        model = models.BookingType
+        fields = ('title', 'description', 'length', 'price')
+
 class CalendarForm(forms.ModelForm):
     class Meta:
         model = models.Calendar

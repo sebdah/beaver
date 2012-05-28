@@ -187,6 +187,30 @@ def accounts_settings(request):
                                     'form': form,
                                     'account_updated': account_updated })
 
+@login_required
+def bookingtypes_create(request, calendar_id):
+    """
+    Create a new BookingType object
+    """
+    account = models.Account.objects.get(email = request.user.email)
+    calendar = models.Calendar.objects.get(id = calendar_id)
+    
+    if request.method == 'POST':
+        form = forms.BookingTypeForm(request.POST)
+        if form.is_valid():
+            bookingtype = form.save(commit = False)
+            bookingtype.calendar_id = calendar_id
+            bookingtype.save()
+            
+            return redirect('/calendars/edit/%i' % calendar.id)
+    else:
+        form = forms.BookingTypeForm()
+
+    return direct_to_template(  request,
+                                'core/bookingtypes/create.html',
+                                {   'request': request,
+                                    'form': form, })
+
 def calendar_book(request, calendar_slug, schedule_id):
     """
     Create a booking
@@ -303,6 +327,7 @@ def calendars_edit(request, calendar_id):
     account = models.Account.objects.get(email = request.user.email)
     calendar = models.Calendar.objects.get(id = calendar_id, owner = account)
     schedules = models.Schedule.objects.filter(calendar = calendar, owner = account).order_by('owner')
+    booking_types = models.BookingType.objects.filter(calendar = calendar).order_by('title')
 
     updated = False
     if request.method == 'POST':
@@ -320,9 +345,10 @@ def calendars_edit(request, calendar_id):
                                 {   'request': request,
                                     'form': form,
                                     'calendar': calendar,
-                                    'schedules': schedules,
+                                    'schedule': schedules[0],
                                     'updated': updated,
-                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL, })
+                                    'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL,
+                                    'booking_types': booking_types, })
 
 @login_required
 def calendars_list(request):

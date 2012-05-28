@@ -295,7 +295,7 @@ class BookingType(models.Model):
     Definition of a booking type
     """
     def __unicode__(self):
-        return u'%s, %i min' % (self.name, self.length)
+        return u'%s, %i min' % (self.title, self.length)
 
     calendar        = models.ForeignKey(Calendar)
 

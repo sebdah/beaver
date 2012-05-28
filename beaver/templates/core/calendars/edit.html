@@ -32,11 +32,24 @@
         <p></p>
     </form>
     <br />
-    <h2>Schedules linked to this calendar</h2>
-    <ul>
-        {% for schedule in schedules %}
-            <li><a href='/schedules/edit/{{schedule.id}}'>{{schedule.owner}}</li>
-        {% endfor %}
-    </ul>
+    <h2>Booking types</h2>
+    <p>
+        {% if booking_types|length > 0 %}
+            <ul>
+                {% for booking_type in booking_types %}
+                    <li><a href='/bookingtypes/edit/{{booking_type.id}}'>{{booking_type}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            You have no booking types yet. Do you want to 
+            <a href='/bookingtypes/create/{{calendar.id}}'>create a new booking type</a>?
+        {% endif %}
+    </p>
+    <br />
+    <h2>Schedule</h2>
+    <p>
+        Manage the opening times and lunch breaks in the 
+        <a href='/schedules/edit/{{schedule.id}}'>schedule editor</a>.
+    </p>
 </div>
 {% endblock %}
