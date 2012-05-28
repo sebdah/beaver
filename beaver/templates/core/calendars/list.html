@@ -6,14 +6,16 @@
         <p>
             <a href='/calendars/create'>Create a new calendar</a>
         </p>
-        <ul>
+        <p>
             {% for calendar in calendars %}
-                <li>
+                <span style='font-size: 1.5em;'>
                     <a href='/calendars/edit/{{calendar.id}}'>{{calendar.title}}</a>
-                    (<a href='{{external_url}}{{calendar.url}}'>public view</a>)
-                </li>
+                </span>
+                (The calendar is {% if calendar.enabled %}published{% else %}not published{% endif %}, 
+                <a href='{{external_url}}{{calendar.url}}'>public link</a>)
+                </tr>
             {% endfor %}
-        </ul>
+        </p>
     {% else %}
         <p>
             You do not have any calendars yet. Do you want to 

@@ -215,6 +215,10 @@ def calendar_view(request, calendar_slug):
     """
     calendar = get_object_or_404(models.Calendar, url = calendar_slug)
     schedules = models.Schedule.objects.filter(calendar = calendar.id)
+    
+    # If the calendar is not published
+    if not calendar.enabled:
+        return redirect('/404')
 
     # See if any other dates has been requested
     if 'start_date' in request.GET:
@@ -324,7 +328,7 @@ def calendars_list(request):
     List of an Accounts calendars
     """
     account = models.Account.objects.get(email = request.user.email)
-    calendars = models.Calendar.objects.filter(owner = account, enabled = True).order_by('title')
+    calendars = models.Calendar.objects.filter(owner = account).order_by('title')
 
     has_calendars = False
     if len(calendars) > 0:

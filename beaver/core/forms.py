@@ -31,7 +31,7 @@ class BookingForm(forms.ModelForm):
 class CalendarForm(forms.ModelForm):
     class Meta:
         model = models.Calendar
-        fields = ('title', 'description', 'url')
+        fields = ('title', 'description', 'url', 'enabled')
 
 class EditAccountForm(forms.ModelForm):
     class Meta:

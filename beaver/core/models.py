@@ -83,7 +83,7 @@ class Calendar(models.Model):
     url             = models.SlugField(blank = False, unique = True, verbose_name = 'URL', help_text = 'Short URL to your calendar')
     title           = models.CharField(blank = False, max_length = 100)
     description     = models.TextField(blank = True, null = True)
-    enabled         = models.BooleanField(blank = False, default = True)
+    enabled         = models.BooleanField(blank = False, default = True, verbose_name = 'Published')
 
 class BaseSchedule(models.Model):
     """
