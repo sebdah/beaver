@@ -24,14 +24,27 @@
     * Validating not bookable from fields
     */
     function validate_not_bookable_from(day) {
-        if($.timePicker("#id_" + day + "_not_bookable_from").getTime() < $.timePicker("#id_" + day + "_bookable_from").getTime() || $.timePicker("#id_" + day + "_not_bookable_from").getTime() > $.timePicker('#id_' + day +'_bookable_to').getTime()) {
-            $("input[type=submit]").attr("disabled", "disabled");
-            $("#id_" + day + "_not_bookable_from").addClass('red_background');
-            $('#' + day + '_error').html('Not bookable times cannot be outside opening hours');
+        if ($.timePicker("#id_" + day + "_not_bookable_from").getTime() != null ){
+            if($.timePicker("#id_" + day + "_not_bookable_from").getTime() < $.timePicker("#id_" + day + "_bookable_from").getTime() || $.timePicker("#id_" + day + "_not_bookable_from").getTime() > $.timePicker('#id_' + day +'_bookable_to').getTime()) {
+                $("input[type=submit]").attr("disabled", "disabled");
+                $("#id_" + day + "_not_bookable_from").addClass('red_background');
+                $('#' + day + '_error').html('Not bookable times cannot be outside opening hours');
+            } else {
+                $("input[type=submit]").removeAttr("disabled");
+                $("#id_" + day + "_not_bookable_from").removeClass('red_background');
+                $('#' + day + '_error').html('&nbsp;');
+            }
         } else {
-            $("input[type=submit]").removeAttr("disabled");
-            $("#id_" + day + "_not_bookable_from").removeClass('red_background');
-            $('#' + day + '_error').html('&nbsp;');
+            if ($.timePicker("#id_" + day + "_not_bookable_to").getTime() != null ) {
+                $("input[type=submit]").attr("disabled", "disabled");
+                $("#id_" + day + "_not_bookable_from").addClass('red_background');
+                $('#' + day + '_error').html('Both not bookable times be either empty or set');
+            } else {
+                $("input[type=submit]").removeAttr("disabled");
+                $("#id_" + day + "_not_bookable_from").removeClass('red_background');
+                $("#id_" + day + "_not_bookable_to").removeClass('red_background');
+                $('#' + day + '_error').html('&nbsp;');
+            }
         }
     }
     
@@ -39,17 +52,30 @@
     * Validating not bookable to fields
     */
     function validate_not_bookable_to(day) {
-        if($.timePicker("#id_" + day + "_not_bookable_to").getTime() < $.timePicker("#id_" + day + "_bookable_from").getTime() || $.timePicker("#id_" + day + "_not_bookable_to").getTime() > $.timePicker('#id_' + day +'_bookable_to').getTime()) {
-            $("input[type=submit]").attr("disabled", "disabled");
-            $("#id_" + day + "_not_bookable_to").addClass('red_background');
-            $('#' + day + '_error').html('Not bookable times cannot be outside opening hours');
-        } else {
-            if($.timePicker("#id_" + day + "_not_bookable_to").getTime() <= $.timePicker("#id_" + day + "_not_bookable_from").getTime()) {
+        if ($.timePicker("#id_" + day + "_not_bookable_to").getTime() != null ){
+            if($.timePicker("#id_" + day + "_not_bookable_to").getTime() < $.timePicker("#id_" + day + "_bookable_from").getTime() || $.timePicker("#id_" + day + "_not_bookable_to").getTime() > $.timePicker('#id_' + day +'_bookable_to').getTime()) {
                 $("input[type=submit]").attr("disabled", "disabled");
                 $("#id_" + day + "_not_bookable_to").addClass('red_background');
-                $('#' + day + '_error').html('End of timespan cannot be earlier that the start');
+                $('#' + day + '_error').html('Not bookable times cannot be outside opening hours');
+            } else {
+                if($.timePicker("#id_" + day + "_not_bookable_to").getTime() <= $.timePicker("#id_" + day + "_not_bookable_from").getTime()) {
+                    $("input[type=submit]").attr("disabled", "disabled");
+                    $("#id_" + day + "_not_bookable_to").addClass('red_background');
+                    $('#' + day + '_error').html('End of timespan cannot be earlier that the start');
+                } else {
+                    $("input[type=submit]").removeAttr("disabled");
+                    $("#id_" + day + "_not_bookable_to").removeClass('red_background');
+                    $('#' + day + '_error').html('&nbsp;');
+                }
+            }
+        } else {
+            if ($.timePicker("#id_" + day + "_not_bookable_from").getTime() != null ) {
+                $("input[type=submit]").attr("disabled", "disabled");
+                $("#id_" + day + "_not_bookable_to").addClass('red_background');
+                $('#' + day + '_error').html('Both not bookable times be either empty or set');
             } else {
                 $("input[type=submit]").removeAttr("disabled");
+                $("#id_" + day + "_not_bookable_from").removeClass('red_background');
                 $("#id_" + day + "_not_bookable_to").removeClass('red_background');
                 $('#' + day + '_error').html('&nbsp;');
             }
