@@ -1,4 +1,23 @@
 {% extends "template.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/jquery.dataTables.css" type="text/css" />
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#booking_type_table').dataTable({
+        "iDisplayLength": 20,
+        "aLengthMenu": [[1, 20, 50, -1], [1, 20, 50, "All"]],
+        "sPaginationType": "full_numbers",
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bFilter": false,
+    });
+} );
+</script>
+{% endblock %}
+
 {% block content %}
 <div id="content">
     <h1>{{calendar.title}}</h1>
@@ -34,12 +53,28 @@
     <br />
     <h2>Booking types</h2>
     <p>
+        <a href='/bookingtypes/create/{{calendar.id}}'>Add booking type</a>
+    </p>
+    <p>
         {% if booking_types|length > 0 %}
-            <ul>
-                {% for booking_type in booking_types %}
-                    <li><a href='/bookingtypes/edit/{{booking_type.id}}'>{{booking_type}}</a></li>
-                {% endfor %}
-            </ul>
+            <table id="booking_type_table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Length</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking_type in booking_types %}
+                        <tr onclick="location.href='/bookingtypes/edit/{{booking_type.id}}'">
+                            <td>{{booking_type.title}}</a></td>
+                            <td>{{booking_type.length}} minutes</td>
+                            <td>{{booking_type.price}} {{booking_type.currency}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% else %}
             You have no booking types yet. Do you want to 
             <a href='/bookingtypes/create/{{calendar.id}}'>create a new booking type</a>?
