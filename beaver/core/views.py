@@ -216,9 +216,21 @@ def bookingtypes_delete(request, bookingtype_id):
     Delete a given booking type
     """
     booking_type = models.BookingType.objects.get(id = bookingtype_id)
-    calendar_id =  booking_type.calendar.id
+    calendar = models.Calendar.objects.get(id = booking_type.calendar.id)
+    
+    # Delete the booking type
     booking_type.delete()
-    return redirect('/calendars/edit/%i' % (calendar_id))
+    
+    # If this is the last enabled booking type for the
+    # calendar, remove the published flag from the
+    # calendar
+    if len(models.BookingType.objects.filter(calendar = calendar.id, enabled = True)) == 0:
+        form = forms.CalendarForm(instance = calendar)
+        updated_calendar = form.save(commit = False)
+        updated_calendar.enabled = False
+        updated_calendar.save()
+    
+    return redirect('/calendars/edit/%i' % (calendar.id))
 
 @login_required
 def bookingtypes_edit(request, bookingtype_id):
@@ -366,10 +378,16 @@ def calendars_edit(request, calendar_id):
         if form.is_valid():
             updated_calendar = form.save(commit = False)
             updated_calendar.owner = account
+            
+            # Don't publish the calendar if it has no booking types
+            # associated
+            if len(models.BookingType.objects.filter(calendar = calendar, enabled = True)) == 0:
+                updated_calendar.enabled = False
+            
             updated_calendar.save()
             updated = True
-    else:
-        form = forms.CalendarForm(instance = calendar)
+    
+    form = forms.CalendarForm(instance = calendar)
 
     return direct_to_template(  request,
                                 'core/calendars/edit.html',
