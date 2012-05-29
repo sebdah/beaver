@@ -63,6 +63,7 @@ $(document).ready(function() {
                         <th>Title</th>
                         <th>Length</th>
                         <th>Price</th>
+                        <th>Enabled?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,6 +72,9 @@ $(document).ready(function() {
                             <td>{{booking_type.title}}</a></td>
                             <td>{{booking_type.length}} minutes</td>
                             <td>{{booking_type.price}} {{booking_type.currency}}</td>
+                            <td>
+                                {% if booking_type.enabled %}Yes{% else %}No{% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
