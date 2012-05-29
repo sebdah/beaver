@@ -211,6 +211,16 @@ def bookingtypes_create(request, calendar_id):
                                     'form': form, })
 
 @login_required
+def bookingtypes_delete(request, bookingtype_id):
+    """
+    Delete a given booking type
+    """
+    booking_type = models.BookingType.objects.get(id = bookingtype_id)
+    calendar_id =  booking_type.calendar.id
+    booking_type.delete()
+    return redirect('/calendars/edit/%i' % (calendar_id))
+
+@login_required
 def bookingtypes_edit(request, bookingtype_id):
     """
     Edit a BookingType object
@@ -229,7 +239,8 @@ def bookingtypes_edit(request, bookingtype_id):
     return direct_to_template(  request,
                                 'core/bookingtypes/edit.html',
                                 {   'request': request,
-                                    'form': form, })
+                                    'form': form,
+                                    'booking_type': booking_type, })
 
 def calendar_book(request, calendar_slug, schedule_id):
     """

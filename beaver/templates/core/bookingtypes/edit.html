@@ -1,4 +1,18 @@
 {% extends "template.html" %}
+
+{% block head %}
+<script type="text/javascript">
+<!--
+function confirm_delete(url){
+    var answer = confirm("Are you sure you want to delete this booking type?")
+    if ( answer ) {
+        location.href = url;
+    }
+}
+// -->
+</script>
+{% endblock %}
+
 {% block content %}
 <div id="content">
     <h1>Edit booking type</h1>
@@ -19,11 +33,18 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <input type='submit' value='Update booking type'>
+                    <input type="button" value="Back" onClick="javascript: history.go(-1)"><input type='submit' value='Update booking type'>
                 </td>
             </tr>
         </table>
         <p></p>
     </form>
+    <br />
+    <h2>Delete booking type</h2>
+    <p>
+        If you want to remove this booking type, please click
+        <span   style="text-decoration: underline; cursor: pointer;"
+                onclick="confirm_delete('/bookingtypes/delete/{{booking_type.id}}')">
+            DELTE THIS BOOKING TYPE</span>.
 </div>
 {% endblock %}

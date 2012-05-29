@@ -309,3 +309,4 @@ class BookingType(models.Model):
     currency        = models.CharField( blank = False,
                                         choices = definitions.CURRENCIES,
                                         max_length = 3)
+    enabled         = models.BooleanField(default = True)

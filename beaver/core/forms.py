@@ -31,7 +31,7 @@ class BookingForm(forms.ModelForm):
 class BookingTypeForm(forms.ModelForm):
     class Meta:
         model = models.BookingType
-        fields = ('title', 'description', 'length', 'price', 'currency')
+        fields = ('title', 'description', 'length', 'price', 'currency', 'enabled')
 
 class CalendarForm(forms.ModelForm):
     class Meta:

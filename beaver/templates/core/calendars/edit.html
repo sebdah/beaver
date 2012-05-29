@@ -52,11 +52,11 @@ $(document).ready(function() {
     </form>
     <br />
     <h2>Booking types</h2>
-    <p>
-        <a href='/bookingtypes/create/{{calendar.id}}'>Add booking type</a>
-    </p>
-    <p>
-        {% if booking_types|length > 0 %}
+    {% if booking_types|length > 0 %}
+        <p>
+            <a href='/bookingtypes/create/{{calendar.id}}'>Add booking type</a>
+        </p>
+        <p>
             <table id="booking_type_table">
                 <thead>
                     <tr>
@@ -75,11 +75,13 @@ $(document).ready(function() {
                     {% endfor %}
                 </tbody>
             </table>
-        {% else %}
+        </p>
+    {% else %}
+        <p>
             You have no booking types yet. Do you want to 
             <a href='/bookingtypes/create/{{calendar.id}}'>create a new booking type</a>?
-        {% endif %}
-    </p>
+        </p>
+    {% endif %}
     <br />
     <h2>Schedule</h2>
     <p>
