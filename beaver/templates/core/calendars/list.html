@@ -1,4 +1,23 @@
 {% extends "template.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/jquery.dataTables.css" type="text/css" />
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#calendar_table').dataTable({
+        "iDisplayLength": 20,
+        "aLengthMenu": [[1, 20, 50, -1], [1, 20, 50, "All"]],
+        "sPaginationType": "full_numbers",
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bFilter": false,
+    });
+} );
+</script>
+{% endblock %}
+
 {% block content %}
 <div id="content">
     <h1>Your calendars</h1>
@@ -7,18 +26,27 @@
             <a href='/calendars/create'>Create a new calendar</a>
         </p>
         <p>
-            {% for calendar in calendars %}
-                <span style='font-size: 1.5em;'>
-                    <a href='/calendars/edit/{{calendar.id}}'>{{calendar.title}}</a>
-                </span>
-                - The calendar is
-                {% if calendar.enabled %}
-                    published, see it live via the <a href='{{external_url}}{{calendar.url}}'>public link</a>
-                {% else %}
-                    not published
-                {% endif %}
-                <br />
-            {% endfor %}
+            <table id="calendar_table">
+                <thead>
+                    <tr>
+                        <th>Calendar</th>
+                        <th>Published?</th>
+                        <th>Public link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for calendar in calendars %}
+                        <tr>
+                            <td><a href='/calendars/edit/{{calendar.id}}'>{{calendar.title}}</a></td>
+                            {% if calendar.enabled %}
+                                <td>Yes</td><td><a href='{{external_url}}{{calendar.url}}'>public link</a></td>
+                            {% else %}
+                                <td>No</td><td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </p>
     {% else %}
         <p>
