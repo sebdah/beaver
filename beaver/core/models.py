@@ -6,6 +6,7 @@ import re
 import uuid
 import datetime
 from beaver import settings
+from core import definitions
 from django.db import models
 from django.core.mail import send_mail
 
@@ -295,7 +296,8 @@ class BookingType(models.Model):
     Definition of a booking type
     """
     def __unicode__(self):
-        return u'%s, %i min' % (self.title, self.length)
+        return u'%s, %i min (%0.2f %s)' % (self.title, self.length,
+                                        self.price, self.currency)
 
     calendar        = models.ForeignKey(Calendar)
 
@@ -304,3 +306,6 @@ class BookingType(models.Model):
     length          = models.IntegerField(  blank = False, max_length = 50,
                                             help_text = 'Length in minutes')
     price           = models.FloatField(blank = True, null = True)
+    currency        = models.CharField( blank = False,
+                                        choices = definitions.CURRENCIES,
+                                        max_length = 3)

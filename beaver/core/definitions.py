@@ -21,3 +21,9 @@ WEEKDAYS_SHORT = [
     'sat',
     'sun',
 ]
+
+CURRENCIES = (
+    ('GBP', 'GBP'),
+    ('SEK', 'SEK'),
+    ('USD', 'USD'),
+)
