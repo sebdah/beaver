@@ -507,41 +507,47 @@ body{
 }
 
 /*************************
-    CALENDAR
+    TWO COLUMNS
 *************************/
-div#content div#calendar {
+
+div#left-side-content {
     float: left;
     width: 600px;
-    
+}
+
+/*************************
+    CALENDAR
+*************************/
+div#left-side-content div#calendar {
     font-family: 'RokkittRegular';
     text-align: left;
     color: #000;
     font-size: 20px;
 }
 
-div#content div#header {
+div#left-side-content div#header {
     text-align: center;
 }
 
-div#content div#day {
+div#left-side-content div#day {
     float: left;
     text-align: center;
     margin-right: 5px;
     width: 80px;
 }
 
-div#content div#day div#day-header {
+div#left-side-content div#day div#day-header {
     text-transform: capitalize;
 }
 
-div#content div#day div#timeslot {
+div#left-side-content div#day div#timeslot {
     width: 100%;
     height: 50px;
     margin-top: 5px;
     font-size: 16px;
 }
 
-div#content div#day div#timeslot.bookable {
+div#left-side-content div#day div#timeslot.bookable {
     background: rgb(205,235,142); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(205,235,142,1) 0%, rgba(165,201,86,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(205,235,142,1)), color-stop(100%,rgba(165,201,86,1))); /* Chrome,Safari4+ */
@@ -551,14 +557,14 @@ div#content div#day div#timeslot.bookable {
     background: linear-gradient(top,  rgba(205,235,142,1) 0%,rgba(165,201,86,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 ); /* IE6-9 */
 }
-div#content div#day div#timeslot.bookable:hover {
+div#left-side-content div#day div#timeslot.bookable:hover {
     cursor: pointer;
     -webkit-box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    2px 2px 5px rgba(50, 50, 50, 0.75);
     box-shadow:         2px 2px 5px rgba(50, 50, 50, 0.75);
 }
 
-div#content div#day div#timeslot.not-bookable {
+div#left-side-content div#day div#timeslot.not-bookable {
     background: rgb(254,187,187); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(254,187,187,1) 0%, rgba(254,144,144,1) 45%, rgba(255,92,92,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,187,187,1)), color-stop(45%,rgba(254,144,144,1)), color-stop(100%,rgba(255,92,92,1))); /* Chrome,Safari4+ */

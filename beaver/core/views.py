@@ -282,48 +282,41 @@ def calendar_view(request, calendar_slug):
     """
     calendar = get_object_or_404(models.Calendar, url = calendar_slug)
     schedules = models.Schedule.objects.filter(calendar = calendar.id)
+    booking_types = models.BookingType.objects.filter(calendar = calendar.id)
     
     # If the calendar is not published
     if not calendar.enabled:
         return redirect('/404')
+        
+    # Check if the user has selected a booking type
+    booking_type = 'not-set'
+    if 'booking_type' in request.GET:
+        booking_type = int(request.GET['booking_type'])
 
     # See if any other dates has been requested
     if 'start_date' in request.GET:
         start_date = datetime.datetime.strptime(request.GET['start_date'], '%Y-%m-%d')
     else:
-        start_date = datetime.datetime.today()
+        # Get the date of this week's Monday
+        day_of_week = datetime.date.weekday(datetime.datetime.today())
+        start_date = datetime.datetime.today() - datetime.timedelta(days = day_of_week)
     
-    # List of dates to show
+    # Add dates to list
+    i = 0
     dates = []
-    
-    # Get today's weekday
-    day_of_week = datetime.date.weekday(start_date)
-    
-    # Add days prior to today
-    i = day_of_week
-    while i > 0:
-        dates += [(start_date - datetime.timedelta(days = i)).strftime('%Y-%m-%d'),]
-        i -= 1
-    
-    # Add today
-    dates += [start_date.strftime('%Y-%m-%d')]
-    
-    # Handle mondays properly
-    i = day_of_week
-    last_day = 6
-    if i == 0:
-        i = 1
-        last_day = 7
-    
-    # Add days after today
-    while i < last_day:
+    while i < 7:
         dates += [(start_date + datetime.timedelta(days = i)).strftime('%Y-%m-%d'),]
         i += 1
-
+    
     # Show a little edit link for calendar owners
     is_owner = False
     if request.user.email == calendar.owner.email:
         is_owner = True
+        
+    if booking_type != 'not-set':
+        timeslot_string = '%i,%i' % (schedules[0].id, (models.BookingType.objects.get(id = booking_type)).length)
+    else:
+        timeslot_string = '%i,%i' % (schedules[0].id, 60)
 
     return direct_to_template(  request,
                                 'core/calendar/view.html',
@@ -333,6 +326,9 @@ def calendar_view(request, calendar_slug):
                                     'is_owner': is_owner,
                                     'weekdays': definitions.WEEKDAYS_SHORT,
                                     'date_range': dates,
+                                    'booking_types': booking_types,
+                                    'booking_type': booking_type,
+                                    'timeslot_string': timeslot_string,
                                     'previous_week_start': (datetime.datetime.strptime(dates[0], '%Y-%m-%d') - datetime.timedelta(days = 7)).strftime('%Y-%m-%d'),
                                     'next_week_start': (datetime.datetime.strptime(dates[6], '%Y-%m-%d') + datetime.timedelta(days = 1)).strftime('%Y-%m-%d'), 
                                     'week_number': datetime.datetime.strptime(dates[0], '%Y-%m-%d').isocalendar()[1], })

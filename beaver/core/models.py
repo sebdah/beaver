@@ -224,16 +224,13 @@ class Schedule(models.Model):
     base_schedule   = models.ForeignKey(BaseSchedule)
     enabled         = models.BooleanField(default = True)
 
-    def get_timeslots(self, date):
+    def get_timeslots(self, date, timeslot_length):
         """
         Returns a list of ('from-to', True/False) where from is the start time and to is the end time
         of the timeslot. The second option is whether or not the timeslot is bookable
         """
-        def calculator(start_point, end_point):
+        def calculator(start_point, end_point, timeslot_length):
             timeslots = []
-            
-            # Length of the timeslots
-            timeslot_length = self.base_schedule.timeslot_length
 
             # Time format
             time_format = u'%H:%M'
@@ -248,7 +245,7 @@ class Schedule(models.Model):
             i = 0
             while i < num_timeslots:
                 end_time = datetime.datetime.strptime(last_end_time, time_format) + datetime.timedelta(minutes = timeslot_length)
-                end_time = end_time.strftime('%H:%S')
+                end_time = end_time.strftime('%H:%M')
                 timeslots += [(u'%s-%s' % (last_end_time, end_time), True)]
                 last_end_time = end_time
                 i += 1
@@ -265,14 +262,18 @@ class Schedule(models.Model):
 
         # Check if we should look at the not bookable times
         if not re.match('^[0-9]{2}:[0-9]{2}$', self.base_schedule.get_not_bookable_from(day_of_week)):
-            return calculator(  self.base_schedule.get_bookable_from(day_of_week),
-                                self.base_schedule.get_bookable_to(day_of_week))
+            timeslots = calculator(  self.base_schedule.get_bookable_from(day_of_week),
+                                self.base_schedule.get_bookable_to(day_of_week),
+                                timeslot_length)
+            return timeslots
         else:
             timeslots = []
             timeslots += calculator(self.base_schedule.get_bookable_from(day_of_week),
-                                    self.base_schedule.get_not_bookable_from(day_of_week))
+                                    self.base_schedule.get_not_bookable_from(day_of_week),
+                                    timeslot_length)
             timeslots += calculator(self.base_schedule.get_not_bookable_to(day_of_week),
-                                    self.base_schedule.get_bookable_to(day_of_week))
+                                    self.base_schedule.get_bookable_to(day_of_week),
+                                    timeslot_length)
             return timeslots
 
 class Booking(models.Model):
