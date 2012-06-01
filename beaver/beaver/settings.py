@@ -172,6 +172,9 @@ DATE_FORMAT         = "Y-m-d"
 TIME_FORMAT         = "H:i:s"
 SHORT_DATE_FORMAT   = "%d/%m"
 
+# Keep inactive accounts for n days
+BEAVER_INACTIVE_DAYS_LIMIT = 7
+
 # Email settings
 EMAIL_BACKEND           = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS           = True
