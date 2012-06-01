@@ -414,6 +414,31 @@ def calendars_list(request):
                                     'calendars': calendars,
                                     'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL })
 
+def contact_us(request):
+    """
+    Contact page
+    """
+    if request.method == 'POST':
+        form = forms.ContactForm(request.POST)
+        
+        if form.is_valid():
+            send_mail(  '[contact-us] %s' % (request.POST['subject']),
+                        request.POST['message'], 
+                        request.POST['email_address'],
+                        [settings.BEAVER_CONTACT_US_ADDRESS],
+                        fail_silently = False)
+            return redirect('/contact-us/done')
+                
+    form = forms.ContactForm()
+    
+    return direct_to_template(request, 'core/contact_us.html', {'request': request, 'form': form})
+
+def contact_us_done(request):
+    """
+    E-mail sent page for contact form
+    """
+    return direct_to_template(request, 'core/contact_us_done.html', {'request': request})
+
 def handler404(request):
     """
     404 page

@@ -43,6 +43,11 @@ class CalendarExceptEnabledForm(forms.ModelForm):
         model = models.Calendar
         fields = ('title', 'description', 'url')
 
+class ContactForm(forms.Form):
+    subject = forms.CharField(max_length = 150)
+    email_address = forms.EmailField()
+    message = forms.CharField(widget = forms.Textarea)
+
 class EditAccountForm(forms.ModelForm):
     class Meta:
         model = models.Account

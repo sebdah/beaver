@@ -49,6 +49,10 @@ urlpatterns = patterns('',
     url(r'^calendars/create$', 'core.views.calendars_create'),
     url(r'^calendars/edit/(?P<calendar_id>[\w-]+)$', 'core.views.calendars_edit'),
     url(r'^calendars/list$', 'core.views.calendars_list'),
+
+    # Contact us
+    url(r'^contact-us$', 'core.views.contact_us'),
+    url(r'^contact-us/done$', 'core.views.contact_us_done'),
     
     # Schedules
     url(r'^schedules/create/(?P<calendar_id>[\w-]+)$', 'core.views.schedules_create'),

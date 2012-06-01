@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+{% block content %}
+<div id="content">
+    <h1>Contact us</h1>
+    <p>
+        Feel free to contact us if you have any questions or problems. We will get 
+        back to you within two business days.
+    </p><br />
+    <form method='post' action=''>{% csrf_token %}
+    <table ="table">
+        {% for field in form %}
+            <tr>
+                <th>{{field.label}}</th>
+                <td>
+                    {{field}}
+                    {% if error %}
+                        <br />{{error_message}}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type='submit' value='Send e-mail'></td>
+        </tr>
+    </table>
+    </form>
+</div>
+{% endblock %}
