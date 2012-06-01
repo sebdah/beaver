@@ -1,3 +1,7 @@
+"""
+View for the core module
+"""
+
 import random
 import datetime
 
@@ -12,6 +16,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import get_object_or_404
 
+# Instanciate logging
+import logging
+logging.config.dictConfig(settings.LOGGING)
+logger = logging.getLogger('core.views')
 
 def accounts_activate(request, activation_key):
     """
@@ -26,12 +34,13 @@ def accounts_activate(request, activation_key):
         account = models.Account.objects.get(email = email_address)
         if account:
             if account.activation_key == activation_key:
+                logger.info('Activated account %s' % (account.email))
                 account.activate()
                 activated = True
     except django_forms.ValidationError:
-        pass
+        logger.warning('ValidationError when activating account')
     except models.Account.DoesNotExist:
-        pass
+        logger.warning('DoesNotExist when activating account')
 
     return direct_to_template(request, 'core/accounts/activate.html', { 'activated': activated })
 
@@ -43,6 +52,7 @@ def accounts_delete(request):
     account = models.Account.objects.get(email = request.user.email)
 
     if request.method == 'POST':
+        logger.info('Deleted account %s' % (account.email))
         account.delete()
         auth.logout(request)
         return redirect('/accounts/delete/complete')
@@ -68,6 +78,7 @@ def accounts_login(request):
 
         if account:
             if account.is_active:
+                logger.debug('Account %s logged in' % (account.email))
                 auth.login(request, account)
 
                 # If the next parameter is set
@@ -76,11 +87,13 @@ def accounts_login(request):
 
                 return redirect("/")
             else:
+                logger.debug('Account %s not logged in, it is disabled' % (account.email))
                 error = True
                 error_message = "Your account has been disabled!"
         else:
             error = True
             error_message = "Your username and password were incorrect."
+            logger.debug('Could not log in, username and password where incorrect')
 
     return direct_to_template(  request,
                                 'core/accounts/login.html',
@@ -94,6 +107,7 @@ def accounts_logout(request):
     """
     Logout an Account
     """
+    logger.debug('Logged out account %s' % request.user.email)
     auth.logout(request)
     return direct_to_template(request, 'core/accounts/logout.html', {'request': request})
 
@@ -105,6 +119,7 @@ def accounts_register(request):
         form = forms.AccountForm(request.POST)
         if form.is_valid():
             form.save()
+            logger.info('Registered new user %s' % request.user.email)
             auth.logout(request)
             return redirect('/accounts/register/complete')
     else:
@@ -146,11 +161,13 @@ The Booking Beaver Team
 
                 send_mail(  'Password reset', message, settings.BEAVER_NO_REPLY_ADDRESS,
                             [account.email], fail_silently = False)
+                logger.info('Sent password reset e-mail to %s' % account.email)
 
                 return direct_to_template(  request,
                                             'core/accounts/lost_password_done.html',
                                             {'request': request})
         except models.Account.DoesNotExist:
+            logger.warning('Password reset: e-mail address not found')
             pass
 
     return direct_to_template(  request,
@@ -178,6 +195,7 @@ def accounts_settings(request):
         if form.is_valid():
             form.save()
             account_updated = True
+            logger.debug('Settings updated for %s' % account.email)
     else:
         form = forms.EditAccountForm(instance = account)
 
@@ -200,6 +218,7 @@ def bookingtypes_create(request, calendar_id):
             bookingtype = form.save(commit = False)
             bookingtype.calendar_id = calendar_id
             bookingtype.save()
+            logger.debug('BookingType created for calendar %i' % calendar.id)
             
             return redirect('/calendars/edit/%i' % calendar.id)
     else:
@@ -220,6 +239,7 @@ def bookingtypes_delete(request, bookingtype_id):
     
     # Delete the booking type
     booking_type.delete()
+    logger.debug('Deleted BookingType %i' % booking_type.id)
     
     # If this is the last enabled booking type for the
     # calendar, remove the published flag from the
@@ -243,6 +263,7 @@ def bookingtypes_edit(request, bookingtype_id):
         form = forms.BookingTypeForm(request.POST, instance = booking_type)
         if form.is_valid():
             form.save()
+            logger.debug('BookingType %i updated' % (booking_type.id))
 
             return redirect('/calendars/edit/%i' % booking_type.calendar.id)
     else:
@@ -348,6 +369,7 @@ def calendars_create(request):
             title = new_calendar.title
             new_calendar.save()
             calendar = models.Calendar.objects.get(owner = account, title = title)
+            logger.debug('Calendar %i created' % (calendar.id))
             return redirect('/schedules/create/%i' % calendar.id)
     else:
         form = forms.CalendarExceptEnabledForm()
@@ -381,6 +403,7 @@ def calendars_edit(request, calendar_id):
                 updated_calendar.enabled = False
             
             updated_calendar.save()
+            logger.debug('Calendar %i updated' % (calendar.id))
             updated = True
     
     form = forms.CalendarForm(instance = calendar)
@@ -422,11 +445,16 @@ def contact_us(request):
         form = forms.ContactForm(request.POST)
         
         if form.is_valid():
-            send_mail(  '[contact-us] %s' % (request.POST['subject']),
-                        request.POST['message'], 
-                        request.POST['email_address'],
-                        [settings.BEAVER_CONTACT_US_ADDRESS],
-                        fail_silently = False)
+            try:
+                send_mail(  '[contact-us] %s' % (request.POST['subject']),
+                            request.POST['message'], 
+                            request.POST['email_address'],
+                            [settings.BEAVER_CONTACT_US_ADDRESS],
+                            fail_silently = False)
+                logger.info('Sent contact us e-mail to %s from %s' % ([settings.BEAVER_CONTACT_US_ADDRESS], request.POST['email_address']))
+            except:
+                logger.error('Error sending contact us email to %s from %s' % ([settings.BEAVER_CONTACT_US_ADDRESS],
+                                                                                request.POST['email_address']))
             return redirect('/contact-us/done')
                 
     form = forms.ContactForm()
@@ -526,6 +554,9 @@ def schedules_create(request, calendar_id):
             schedule.owner = account
             schedule.base_schedule = base_schedule
             schedule.save()
+            
+            logger.debug('Created new schedule for calendar %i (by account %s)' % ( calendar.id,
+                                                                                    account.email))
 
             return redirect('/schedules/created')
     else:

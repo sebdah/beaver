@@ -1,4 +1,3 @@
-
 """
 Command file managing accounts
 """
@@ -9,6 +8,11 @@ from optparse import make_option
 from core import models
 from beaver import settings
 from django.core.management.base import BaseCommand, CommandError
+
+# Instanciate logging
+import logging
+logging.config.dictConfig(settings.LOGGING)
+logger = logging.getLogger('core.management.commands.accounts')
 
 class Command(BaseCommand):
     args = ''
@@ -24,7 +28,9 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         if options.get('clean_inactive') != '':
+            logger.info('Started checking for old inactivated accounts to clean up')
             clean_inactive()
+            logger.info('Done removeing inactive accounts')
     
 def clean_inactive():
     """
@@ -38,5 +44,8 @@ def clean_inactive():
         
         # If the number of inactive days has been passed,
         # delete the account
-        if settings.BEAVER_INACTIVE_DAYS_LIMIT >= int((datetime.datetime.utcnow() - registered).total_seconds()/60/60/24):
-            account.delete()
+        logger.debug('Checking account %s' % account.email)
+        inactive_days = int((datetime.datetime.utcnow() - registered).total_seconds()/60/60/24)
+        if settings.BEAVER_INACTIVE_DAYS_LIMIT <= inactive_days:
+            logger.info('Account %s is inactive and too old (%i days)' % (account.email, inactive_days))
+            #account.delete()
