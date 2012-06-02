@@ -10,6 +10,11 @@ from core import definitions
 from django.db import models
 from django.core.mail import send_mail
 
+# Instanciate logging
+import logging
+logging.config.dictConfig(settings.LOGGING)
+logger = logging.getLogger('core.models')
+
 class Account(models.Model):
     """
     Definition of an Account object
@@ -61,10 +66,14 @@ Best regards
 The Booking Beaver team
 """ % ( self.first_name, self.email,
         settings.BEAVER_EXTERNAL_URL, self.activation_key, self.email)
-
-            send_mail(  'Activate your Beaver account', message,
-                        settings.BEAVER_NO_REPLY_ADDRESS, [self.email],
-                        fail_silently = False)
+        
+            try:
+                send_mail(  'Activate your Beaver account', message,
+                            settings.BEAVER_NO_REPLY_ADDRESS, [self.email],
+                            fail_silently = False)
+                logger.info('Sent registration/activation e-mail')
+            except:
+                logger.error('Failed sending registration/activation e-mail')
 
         # Save the object
         super(Account, self).save(*args, **kwargs)
