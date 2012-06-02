@@ -95,6 +95,20 @@ class Calendar(models.Model):
     description     = models.TextField(blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True, verbose_name = 'Published')
 
+class Company(models.Model):
+    """
+    Company information
+    """
+    def __unicode__(self):
+        return u'%s' % self.name
+    
+    account         = models.ForeignKey(Account)
+    
+    name            = models.CharField(max_length = 60)
+    description     = models.TextField()
+    logo            = models.ImageField(upload_to = u'uploads/%s/')
+    url             = models.URLField()
+
 class BaseSchedule(models.Model):
     """
     Defining a base schedule
