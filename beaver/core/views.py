@@ -119,7 +119,7 @@ def accounts_register(request):
         form = forms.AccountForm(request.POST)
         if form.is_valid():
             form.save()
-            logger.info('Registered new user %s' % request.user.email)
+            logger.info('Registered new user %s' % request.POST['email'])
             auth.logout(request)
             return redirect('/accounts/register/complete')
     else:
