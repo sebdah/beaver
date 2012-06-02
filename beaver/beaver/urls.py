@@ -19,6 +19,9 @@ urlpatterns = patterns('',
     url(r'^404$', 'core.views.handler404'),
     url(r'^500$', 'core.views.handler500'),
     
+    # Favicon
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/media/images/favicon.ico'}),
+    
     # Index
     url(r'^$', 'core.views.index'),
     
