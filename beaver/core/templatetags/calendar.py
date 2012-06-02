@@ -24,5 +24,22 @@ def short_date_format(date):
     """
     return datetime.datetime.strptime(date, '%Y-%m-%d').strftime(settings.SHORT_DATE_FORMAT)
 
+def day_name(date):
+    """
+    Returns a list of ('from-to', True/False) where from is the start time and to is the end time
+    of the timeslot. The second option is whether or not the timeslot is bookable
+    """
+    day = {
+        1: 'mon',
+        2: 'tue',
+        3: 'wed',
+        4: 'thu',
+        5: 'fri',
+        6: 'sat',
+        7: 'sun',
+    }
+    return day[datetime.date.isoweekday(datetime.datetime.strptime(date, '%Y-%m-%d'))]
+
+register.filter('day_name', day_name)
 register.filter('get_day_timeslots', get_day_timeslots)
 register.filter('short_date_format', short_date_format)

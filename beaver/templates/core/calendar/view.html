@@ -27,9 +27,13 @@
                     Week {{week_number}}
                     <a href='/calendar/{{calendar.url}}?start_date={{next_week_start}}&booking_type={{booking_type}}'>&gt;</a>
                 </div>
+                <br />
                 {% for date in date_range %}
                     <div id="day">
-                        <div id="day-header">{{date|short_date_format}}</div>
+                        <div id="day-header">
+                            {{date|day_name}}<br />
+                            {{date|short_date_format}}<br />
+                        </div>
                         {% for timeslot, bookable in date|get_day_timeslots:timeslot_string %}
                             {% if bookable %}
                                 <div    id="timeslot"
