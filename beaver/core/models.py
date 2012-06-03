@@ -90,7 +90,7 @@ class Calendar(models.Model):
 
     owner           = models.ForeignKey(Account)
 
-    url             = models.SlugField(blank = False, unique = True, verbose_name = 'URL', help_text = 'Short URL to your calendar')
+    slug            = models.SlugField(blank = False, unique = True, verbose_name = 'URL', help_text = 'Short URL to your calendar')
     title           = models.CharField(blank = False, max_length = 100)
     description     = models.TextField(blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True, verbose_name = 'Published')
@@ -101,13 +101,12 @@ class Company(models.Model):
     """
     def __unicode__(self):
         return u'%s' % self.name
-    
-    account         = models.ForeignKey(Account)
-    
+
+    calendar        = models.ForeignKey(Calendar)
+
     name            = models.CharField(max_length = 60)
-    description     = models.TextField()
     logo            = models.ImageField(upload_to = u'uploads/%s/')
-    url             = models.URLField()
+    url             = models.URLField(verbose_name = 'External website')
 
 class BaseSchedule(models.Model):
     """

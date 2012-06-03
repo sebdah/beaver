@@ -36,17 +36,12 @@ class BookingTypeForm(forms.ModelForm):
 class CalendarForm(forms.ModelForm):
     class Meta:
         model = models.Calendar
-        fields = ('title', 'description', 'url', 'enabled')
-
-class CompanyForm(forms.ModelForm):
-    class Meta:
-        model = models.Company
-        fields = ('name', 'description', 'logo', 'url')
+        fields = ('title', 'description', 'slug', 'enabled')
 
 class CalendarExceptEnabledForm(forms.ModelForm):
     class Meta:
         model = models.Calendar
-        fields = ('title', 'description', 'url')
+        fields = ('title', 'description', 'slug')
 
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length = 150)

@@ -301,7 +301,7 @@ def calendar_view(request, calendar_slug):
     """
     Show the public calendar
     """
-    calendar = get_object_or_404(models.Calendar, url = calendar_slug)
+    calendar = get_object_or_404(models.Calendar, slug = calendar_slug)
     schedules = models.Schedule.objects.filter(calendar = calendar.id)
     booking_types = models.BookingType.objects.filter(calendar = calendar.id)
     
@@ -406,6 +406,12 @@ def calendars_edit(request, calendar_id):
             logger.debug('Calendar %i updated' % (calendar.id))
             updated = True
     
+    # Build formset
+    from django.forms.models import inlineformset_factory
+    company_formset = inlineformset_factory(models.Calendar, models.Company, extra = 1)
+    formset = company_formset(instance = calendar)
+    
+    # Generate form
     form = forms.CalendarForm(instance = calendar)
 
     return direct_to_template(  request,
@@ -416,7 +422,8 @@ def calendars_edit(request, calendar_id):
                                     'schedule': schedules[0],
                                     'updated': updated,
                                     'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL,
-                                    'booking_types': booking_types, })
+                                    'booking_types': booking_types,
+                                    'formset': formset, })
 
 @login_required
 def calendars_list(request):
@@ -558,7 +565,7 @@ def schedules_create(request, calendar_id):
             logger.debug('Created new schedule for calendar %i (by account %s)' % ( calendar.id,
                                                                                     account.email))
 
-            return redirect('/schedules/created')
+            return redirect('/calendars/list')
     else:
         form = forms.BaseScheduleForm()
 

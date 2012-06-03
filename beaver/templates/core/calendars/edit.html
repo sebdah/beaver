@@ -21,13 +21,27 @@ $(document).ready(function() {
 {% block content %}
 <div id="content">
     <h1>{{calendar.title}}</h1>
-    <h2>Edit calendar details</h2>
     {% if updated %}
         <p>Your calendar has been updated</p>
     {% endif %}
     <form method='post' action=''>{% csrf_token %}
+        <h2>Edit calendar details</h2>
         <table>
             {% for field in form %}
+                <tr>
+                    <th>{{field.label}}</th>
+                    <td>
+                        {% if field.label == 'URL' %}
+                            {{external_url}}
+                        {% endif %}
+                        {{field}}
+                        {% for error in field.errors %}
+                            <br />{{error}}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for field in formset %}
                 <tr>
                     <th>{{field.label}}</th>
                     <td>
