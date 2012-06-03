@@ -21,7 +21,8 @@
                     <li><a href="/">Home</a></li>
                     {% if request.user.is_authenticated %}
                         <li><a href="/calendars/list">My calendars</a></li>
-                        <li><a href="/accounts/settings">Settings</a></li>
+                        <li><a href="/company/settings">Company details</a></li>
+                        <li><a href="/accounts/{{request.user.id}}/settings">Settings</a></li>
                         <li><a href="/accounts/logout">Log out</a></li>
                     {% else %}
                         <li><a href="/out-offer">Our offer &amp; pricing</a></li>

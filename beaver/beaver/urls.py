@@ -37,12 +37,12 @@ urlpatterns = patterns('',
     url(r'^accounts/lost_password$', 'core.views.accounts_lost_password'),
     url(r'^accounts/register$', 'core.views.accounts_register'),
     url(r'^accounts/register/complete$', 'core.views.accounts_register_complete'),
-    url(r'^accounts/settings$', 'core.views.accounts_settings'),
+    url(r'^accounts/(?P<account_id>[\w-]+)/settings$', 'core.views.accounts_settings'),
     
     # Booking type
     url(r'^bookingtypes/create/(?P<calendar_id>[\w-]+)$', 'core.views.bookingtypes_create'),
-    url(r'^bookingtypes/delete/(?P<bookingtype_id>[\w-]+)$', 'core.views.bookingtypes_delete'),
-    url(r'^bookingtypes/edit/(?P<bookingtype_id>[\w-]+)$', 'core.views.bookingtypes_edit'),
+    url(r'^bookingtypes/(?P<bookingtype_id>[\w-]+)/delete$', 'core.views.bookingtypes_delete'),
+    url(r'^bookingtypes/(?P<bookingtype_id>[\w-]+)/edit$', 'core.views.bookingtypes_edit'),
     
     # Customer's calendars URL
     url(r'^calendar/(?P<calendar_slug>[\w-]+)$', 'core.views.calendar_view'),
@@ -50,7 +50,7 @@ urlpatterns = patterns('',
     
     # Calendars
     url(r'^calendars/create$', 'core.views.calendars_create'),
-    url(r'^calendars/edit/(?P<calendar_id>[\w-]+)$', 'core.views.calendars_edit'),
+    url(r'^calendars/(?P<calendar_id>[\w-]+)/edit$', 'core.views.calendars_edit'),
     url(r'^calendars/list$', 'core.views.calendars_list'),
 
     # Contact us
@@ -60,5 +60,5 @@ urlpatterns = patterns('',
     # Schedules
     url(r'^schedules/create/(?P<calendar_id>[\w-]+)$', 'core.views.schedules_create'),
     url(r'^schedules/created$', 'core.views.schedules_created'),
-    url(r'^schedules/edit/(?P<schedule_id>[\w-]+)$', 'core.views.schedules_edit'),
+    url(r'^schedules/(?P<schedule_id>[\w-]+)/edit$', 'core.views.schedules_edit'),
 )

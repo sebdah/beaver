@@ -183,11 +183,11 @@ def accounts_register_complete(request):
     return direct_to_template(request, 'core/accounts/register_complete.html', {'request': request})
 
 @login_required
-def accounts_settings(request):
+def accounts_settings(request, account_id):
     """
     Edit account information
     """
-    account = models.Account.objects.get(email = request.user.email)
+    account = models.Account.objects.get(id = account_id)
 
     account_updated = False
     if request.method == 'POST':
@@ -220,7 +220,7 @@ def bookingtypes_create(request, calendar_id):
             bookingtype.save()
             logger.debug('BookingType created for calendar %i' % calendar.id)
             
-            return redirect('/calendars/edit/%i' % calendar.id)
+            return redirect('/calendars/%i/edit' % calendar.id)
     else:
         form = forms.BookingTypeForm()
 
@@ -238,8 +238,8 @@ def bookingtypes_delete(request, bookingtype_id):
     calendar = models.Calendar.objects.get(id = booking_type.calendar.id)
     
     # Delete the booking type
-    booking_type.delete()
     logger.debug('Deleted BookingType %i' % booking_type.id)
+    booking_type.delete()
     
     # If this is the last enabled booking type for the
     # calendar, remove the published flag from the
@@ -250,7 +250,7 @@ def bookingtypes_delete(request, bookingtype_id):
         updated_calendar.enabled = False
         updated_calendar.save()
     
-    return redirect('/calendars/edit/%i' % (calendar.id))
+    return redirect('/calendars/%i/edit' % (calendar.id))
 
 @login_required
 def bookingtypes_edit(request, bookingtype_id):
@@ -265,7 +265,7 @@ def bookingtypes_edit(request, bookingtype_id):
             form.save()
             logger.debug('BookingType %i updated' % (booking_type.id))
 
-            return redirect('/calendars/edit/%i' % booking_type.calendar.id)
+            return redirect('/calendars/%i/edit' % booking_type.calendar.id)
     else:
         form = forms.BookingTypeForm(instance = booking_type)
 

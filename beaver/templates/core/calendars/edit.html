@@ -68,7 +68,7 @@ $(document).ready(function() {
                 </thead>
                 <tbody>
                     {% for booking_type in booking_types %}
-                        <tr onclick="location.href='/bookingtypes/edit/{{booking_type.id}}'">
+                        <tr onclick="location.href='/bookingtypes/{{booking_type.id}}/edit'">
                             <td>{{booking_type.title}}</a></td>
                             <td>{{booking_type.length}} minutes</td>
                             <td>{{booking_type.price}} {{booking_type.currency}}</td>
@@ -90,7 +90,7 @@ $(document).ready(function() {
     <h2>Schedule</h2>
     <p>
         Manage the opening times and lunch breaks in the 
-        <a href='/schedules/edit/{{schedule.id}}'>schedule editor</a>.
+        <a href='/schedules/{{schedule.id}}/edit'>schedule editor</a>.
     </p>
 </div>
 {% endblock %}

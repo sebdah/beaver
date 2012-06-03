@@ -44,7 +44,7 @@ function confirm_delete(url){
     <p>
         If you want to remove this booking type, please click
         <span   style="text-decoration: underline; cursor: pointer;"
-                onclick="confirm_delete('/bookingtypes/delete/{{booking_type.id}}')">
+                onclick="confirm_delete('/bookingtypes/{{booking_type.id}}/delete')">
             DELTE THIS BOOKING TYPE</span>.
 </div>
 {% endblock %}
