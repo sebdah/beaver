@@ -38,6 +38,11 @@ class CalendarForm(forms.ModelForm):
         model = models.Calendar
         fields = ('title', 'description', 'url', 'enabled')
 
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = models.Company
+        fields = ('name', 'description', 'logo', 'url')
+
 class CalendarExceptEnabledForm(forms.ModelForm):
     class Meta:
         model = models.Calendar
