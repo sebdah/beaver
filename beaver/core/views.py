@@ -2,6 +2,7 @@
 View for the core module
 """
 
+import os
 import random
 import datetime
 
@@ -361,14 +362,33 @@ def calendars_create(request):
     """
     account = models.Account.objects.get(email = request.user.email)
     if request.method == 'POST':
-        form = forms.CalendarExceptEnabledForm(request.POST)
+        form = forms.CalendarExceptEnabledForm(request.POST, request.FILES)
         if form.is_valid():
+            # Create the new calendar object
             new_calendar = form.save(commit = False)
             new_calendar.owner = account
             new_calendar.enabled = False
             title = new_calendar.title
             new_calendar.save()
+            
             calendar = models.Calendar.objects.get(owner = account, title = title)
+            
+            # Handle the uploaded logo
+            def handle_uploaded_file(uploaded_file):
+                folder = u'%s/uploads/%i' % (settings.MEDIA_ROOT, calendar.id)
+                if not os.path.exists(folder):
+                    try:
+                        os.makedirs(folder)
+                    except:
+                        logger.error('Error creating directory %s' % folder)
+                
+                with open(u'%s/%s' % (folder, uploaded_file.name), 'wb+') as destination:
+                    for chunk in uploaded_file.chunks():
+                        destination.write(chunk)
+            
+            handle_uploaded_file(request.FILES['logo'])
+            
+            # Go to the schedule planner
             logger.debug('Calendar %i created' % (calendar.id))
             return redirect('/schedules/create/%i' % calendar.id)
     else:

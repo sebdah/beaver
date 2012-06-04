@@ -2,7 +2,7 @@
 {% block content %}
 <div id="content">
     <h1>Create a new calendar</h1>
-    <form method='post' action=''>{% csrf_token %}
+    <form enctype="multipart/form-data" method='post' action=''>{% csrf_token %}
         <table>
             {% for field in form %}
                 <tr>
