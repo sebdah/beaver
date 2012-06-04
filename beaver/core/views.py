@@ -406,11 +406,6 @@ def calendars_edit(request, calendar_id):
             logger.debug('Calendar %i updated' % (calendar.id))
             updated = True
     
-    # Build formset
-    from django.forms.models import inlineformset_factory
-    company_formset = inlineformset_factory(models.Calendar, models.Company, extra = 1)
-    formset = company_formset(instance = calendar)
-    
     # Generate form
     form = forms.CalendarForm(instance = calendar)
 
@@ -422,8 +417,7 @@ def calendars_edit(request, calendar_id):
                                     'schedule': schedules[0],
                                     'updated': updated,
                                     'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL,
-                                    'booking_types': booking_types,
-                                    'formset': formset, })
+                                    'booking_types': booking_types, })
 
 @login_required
 def calendars_list(request):
