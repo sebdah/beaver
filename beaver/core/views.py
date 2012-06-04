@@ -7,7 +7,7 @@ import random
 import datetime
 
 from beaver import settings
-from core import forms, models, definitions
+from core import forms, models, definitions, handlers
 
 from django.contrib import auth
 from django.shortcuts import redirect
@@ -372,21 +372,7 @@ def calendars_create(request):
             new_calendar.save()
             
             calendar = models.Calendar.objects.get(owner = account, title = title)
-            
-            # Handle the uploaded logo
-            def handle_uploaded_file(uploaded_file):
-                folder = u'%s/uploads/%i' % (settings.MEDIA_ROOT, calendar.id)
-                if not os.path.exists(folder):
-                    try:
-                        os.makedirs(folder)
-                    except:
-                        logger.error('Error creating directory %s' % folder)
-                
-                with open(u'%s/%s' % (folder, uploaded_file.name), 'wb+') as destination:
-                    for chunk in uploaded_file.chunks():
-                        destination.write(chunk)
-            
-            handle_uploaded_file(request.FILES['logo'])
+            handlers.file_upload_handler(request.FILES['logo'], calendar.id)
             
             # Go to the schedule planner
             logger.debug('Calendar %i created' % (calendar.id))
