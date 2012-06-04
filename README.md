@@ -1,10 +1,23 @@
-bookd
-=====
+Booking Beaver
+==============
 
-Setup
------
-* virtualenv
-* python 2.7
-* pylint (for code verification)
-* pip install django (1.4)
-* pip install pil
+Requirements
+------------
+* Python 2.7
+* Virtualenv
+* Django 1.4
+* Python Image Library
+
+Set up development environment
+------------------------------
+
+Initial setup:
+
+    cd beaver.git
+    virtualenv --prompt v -p python2.7 .ve
+    source .ve/bin/activate
+    pip install django pil
+
+Then each time you are developing, load the virtual Python environment with
+
+    source .ve/bin/activate
