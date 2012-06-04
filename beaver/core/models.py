@@ -93,7 +93,7 @@ class Calendar(models.Model):
     slug            = models.SlugField(blank = False, unique = True, verbose_name = 'URL', help_text = 'Short URL to your calendar')
     title           = models.CharField(blank = False, max_length = 100)
     description     = models.TextField(blank = True, null = True)
-    logo            = models.ImageField(upload_to = u'uploads' , blank = True, null = True)
+    logo            = models.ImageField(upload_to = u'uploads/%Y/%m/%d', blank = True, null = True)
     url             = models.URLField(verbose_name = 'External website', blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True, verbose_name = 'Published')
 

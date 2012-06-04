@@ -164,6 +164,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'core.handlers': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
         'django.request': {
             'handlers': ['console'],
             'level': 'DEBUG',
@@ -182,6 +187,9 @@ DATE_FORMAT         = "Y-m-d"
 TIME_FORMAT         = "H:i:s"
 SHORT_DATE_FORMAT   = "%d/%m"
 
+# Sunday = 0, Monday = 1
+FIRST_DAY_OF_WEEK   = 1
+
 # Keep inactive accounts for n days
 BEAVER_INACTIVE_DAYS_LIMIT = 7
 
@@ -194,3 +202,10 @@ EMAIL_HOST_PASSWORD     = 'fr4uSw1eH3'
 EMAIL_PORT              = '587'
 BEAVER_NO_REPLY_ADDRESS = 'noreply@beaver.com'
 BEAVER_CONTACT_US_ADDRESS = 'sebastian.dahlgren@gmail.com'
+
+
+# File upload size limit in bytes
+FILE_UPLOAD_MAX_MEMORY_SIZE = 2621440
+
+# File upload temp dir. Will default to /tmp on Linux
+#FILE_UPLOAD_TEMP_DIR = None

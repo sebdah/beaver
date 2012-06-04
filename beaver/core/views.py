@@ -7,15 +7,16 @@ import random
 import datetime
 
 from beaver import settings
-from core import forms, models, definitions, handlers
+from core import forms, models, definitions
 
 from django.contrib import auth
 from django.shortcuts import redirect
 from django.core.mail import send_mail
 from django import forms as django_forms
+from django.shortcuts import get_object_or_404
+from django.core.files.storage import default_storage
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
-from django.shortcuts import get_object_or_404
 
 # Instanciate logging
 import logging
@@ -371,13 +372,17 @@ def calendars_create(request):
             title = new_calendar.title
             new_calendar.save()
             
+            # Get the calendar object
             calendar = models.Calendar.objects.get(owner = account, title = title)
-            handlers.file_upload_handler(request.FILES['logo'], calendar.id)
+            
+            # Put the uploaded file in place
+            handlers.logo_upload_handler(request.FILES['logo'], calendar.id)
             
             # Go to the schedule planner
             logger.debug('Calendar %i created' % (calendar.id))
             return redirect('/schedules/create/%i' % calendar.id)
     else:
+        # Serve an empty form
         form = forms.CalendarExceptEnabledForm()
 
     return direct_to_template(  request,
@@ -398,7 +403,7 @@ def calendars_edit(request, calendar_id):
 
     updated = False
     if request.method == 'POST':
-        form = forms.CalendarForm(request.POST, instance = calendar)
+        form = forms.CalendarForm(request.POST, request.FILES, instance = calendar)
         if form.is_valid():
             updated_calendar = form.save(commit = False)
             updated_calendar.owner = account
@@ -411,9 +416,10 @@ def calendars_edit(request, calendar_id):
             updated_calendar.save()
             logger.debug('Calendar %i updated' % (calendar.id))
             updated = True
-    
-    # Generate form
-    form = forms.CalendarForm(instance = calendar)
+            form = forms.CalendarForm(instance = calendar)
+    else:
+        # Generate form
+        form = forms.CalendarForm(instance = calendar)
 
     return direct_to_template(  request,
                                 'core/calendars/edit.html',
@@ -423,6 +429,7 @@ def calendars_edit(request, calendar_id):
                                     'schedule': schedules[0],
                                     'updated': updated,
                                     'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL,
+                                    'media_url': settings.MEDIA_URL,
                                     'booking_types': booking_types, })
 
 @login_required
