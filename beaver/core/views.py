@@ -298,6 +298,14 @@ def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
                                             '%Y-%m-%d %H:%M')
     timeslot_end = (start_dt + datetime.timedelta(minutes = bookingtype.length)).strftime('%H:%M')
     
+    # Form
+    if request.POST:
+        form = forms.BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit = False)
+            booking.
+    form = forms.BookingForm()
+    
     return direct_to_template(  request,
                                 'core/calendar/book.html',
                                 {   'request': request,
@@ -306,6 +314,7 @@ def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
                                     'timeslot_start': timeslot_start,
                                     'timeslot_end': timeslot_end,
                                     'bookingtype': bookingtype,
+                                    'form': form,
                                     'date': date, })
 
 def calendar_view(request, calendar_slug):

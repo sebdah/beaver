@@ -32,14 +32,22 @@
                 <th>Price</th>
                 <td>{{bookingtype.price}} {{bookingtype.currency}}</td>
             </tr>
-            <tr>
-                <th>Comment</th>
-                <td><textarea name='comment'></textarea></td>
-            </tr>
+            {% for field in form %}
+                <tr>
+                    <th>{{field.label}}</th>
+                    <td>
+                        {{field}}
+                        {% if field.error %}
+                            {{field.error}}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
             <tr><td colspan='2'>&nbsp;</td></tr>
             <tr>
                 <td colspan='2'>
-                    <input type="button" value="Back to calendar" onClick="javascript: history.go(-1)"><input type='submit' value='Book time'>
+                    <input type="button" value="Back to calendar" onClick="javascript: history.go(-1)">
+                    <input type='submit' value='Book time'>
                 </td>
             </tr>
         </table>
