@@ -377,9 +377,6 @@ def calendars_create(request):
             # Get the calendar object
             calendar = models.Calendar.objects.get(owner = account, title = title)
             
-            # Put the uploaded file in place
-            handlers.logo_upload_handler(request.FILES['logo'], calendar.id)
-            
             # Go to the schedule planner
             logger.debug('Calendar %i created' % (calendar.id))
             return redirect('/schedules/create/%i' % calendar.id)

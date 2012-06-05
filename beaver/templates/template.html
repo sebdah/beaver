@@ -16,7 +16,9 @@
     <body>
         <div class="page">
             <div class="header">
+                {% block logo %}
                 <!--a href="/" id="logo"><img src="{{MEDIA_URL}}images/logo.gif" alt=""/></a-->
+                {% endblock %}
                 <ul>
                     <li><a href="/">Home</a></li>
                     {% if request.user.is_authenticated %}

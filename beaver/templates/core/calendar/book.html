@@ -1,4 +1,11 @@
 {% extends "template.html" %}
+
+{% block logo %}
+    {% if calendar.logo %} 
+        <a href="/" id="logo"><img src="{{MEDIA_URL}}{{calendar.logo}}" alt=""/></a>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div id="content">
     <div id="left-side-content">
@@ -40,8 +47,11 @@
     </div>
     <div id="right-side-content">
         <h2>{{calendar.title}}</h2>
-        {{calendar.description|linebreaks}}
-        {% if is_owner %}<p><a href='/calendars/edit/{{calendar.id}}'>Edit calendar</a></p><br />{% endif %}
+        <p>
+            {{calendar.description|linebreaks}}
+        </p>
+        
+        {% if calendar.url %}<br /><p>External webpage: <a href='{{calendar.url}}' target='_blank'>{{calendar.url}}</a></p>{% endif %}
     </div>
     <div id='clear'></div>
 </div>
