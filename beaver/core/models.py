@@ -12,7 +12,6 @@ from django.core.mail import send_mail
 
 # Instanciate logging
 import logging
-logging.config.dictConfig(settings.LOGGING)
 logger = logging.getLogger('core.models')
 
 class Account(models.Model):

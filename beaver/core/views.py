@@ -21,7 +21,6 @@ from django.views.generic.simple import direct_to_template
 
 # Instanciate logging
 import logging
-logging.config.dictConfig(settings.LOGGING)
 logger = logging.getLogger('core.views')
 
 def accounts_activate(request, activation_key):

@@ -164,7 +164,12 @@ LOGGING = {
         },
     },
     'loggers': {
-        'core.handlers': {
+        'core.views': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'core.models': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
