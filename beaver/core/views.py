@@ -467,6 +467,8 @@ def calendars_edit(request, calendar_id):
     calendar = models.Calendar.objects.get(id = calendar_id, owner = account)
     schedules = models.Schedule.objects.filter(calendar = calendar, owner = account).order_by('owner')
     booking_types = models.BookingType.objects.filter(calendar = calendar).order_by('title')
+    bookings = models.Booking.objects.filter(   schedule = schedules[0],
+                                                start__gte = datetime.datetime.utcnow())
 
     updated = False
     if request.method == 'POST':
@@ -497,7 +499,8 @@ def calendars_edit(request, calendar_id):
                                     'updated': updated,
                                     'external_url': settings.BEAVER_EXTERNAL_CALENDAR_URL,
                                     'media_url': settings.MEDIA_URL,
-                                    'booking_types': booking_types, })
+                                    'booking_types': booking_types,
+                                    'bookings': bookings, })
 
 @login_required
 def calendars_list(request):
