@@ -22,9 +22,9 @@
             </div><br />
             <div id="calendar">
                 <div id="header">
-                    <a href='/calendar/{{calendar.url}}?start_date={{previous_week_start}}&booking_type={{booking_type}}'>&lt;</a>
+                    <a href='/calendar/{{calendar.slug}}?start_date={{previous_week_start}}&booking_type={{booking_type}}'>&lt;</a>
                     Week {{week_number}}
-                    <a href='/calendar/{{calendar.url}}?start_date={{next_week_start}}&booking_type={{booking_type}}'>&gt;</a>
+                    <a href='/calendar/{{calendar.slug}}?start_date={{next_week_start}}&booking_type={{booking_type}}'>&gt;</a>
                 </div>
                 <br />
                 {% for date in date_range %}
@@ -37,7 +37,7 @@
                             {% if bookable %}
                                 <div    id="timeslot"
                                         class='bookable'
-                                        onclick="location.href='/calendar/{{calendar.url}}/book/{{schedule.id}}?timeslot={{timeslot}}&date={{date}}'">
+                                        onclick="location.href='/calendar/{{calendar.slug}}/book/{{schedule.id}}?timeslot={{timeslot}}&date={{date}}'">
                             {% else %}
                                 <div id="timeslot" class='not-bookable'>
                             {% endif %}
@@ -76,9 +76,9 @@
 <script type='text/javascript'>
     $('#booking_types_select').change(function(){
         if ($('#booking_types_select option:selected').val() != 'not-set') {
-            location.href = '/calendar/{{calendar.url}}?booking_type=' + $('#booking_types_select option:selected').val();
+            location.href = '/calendar/{{calendar.slug}}?booking_type=' + $('#booking_types_select option:selected').val();
         } else {
-            location.href = '/calendar/{{calendar.url}}';
+            location.href = '/calendar/{{calendar.slug}}';
         }   
     });
 </script>

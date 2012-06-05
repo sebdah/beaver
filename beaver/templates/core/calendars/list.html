@@ -39,7 +39,7 @@ $(document).ready(function() {
                         <tr>
                             <td><a href='/calendars/{{calendar.id}}/edit'>{{calendar.title}}</a></td>
                             {% if calendar.enabled %}
-                                <td>Yes</td><td><a href='{{external_url}}{{calendar.url}}'>public link</a></td>
+                                <td>Yes</td><td><a href='{{external_url}}{{calendar.slug}}'>public link</a></td>
                             {% else %}
                                 <td>No</td><td>&nbsp;</td>
                             {% endif %}
