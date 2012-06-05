@@ -17,6 +17,12 @@ def get_day_timeslots(date, input):
     
     return schedule.get_timeslots(date, timeslot_length)
 
+def get_timeslot_start(timeslot):
+    """
+    Returns the timeslot start time given a from-to timeslot string
+    """
+    return timeslot.split('-')[0]
+
 def short_date_format(date):
     """
     Returns a list of ('from-to', True/False) where from is the start time and to is the end time
@@ -42,4 +48,5 @@ def day_name(date):
 
 register.filter('day_name', day_name)
 register.filter('get_day_timeslots', get_day_timeslots)
+register.filter('get_timeslot_start', get_timeslot_start)
 register.filter('short_date_format', short_date_format)

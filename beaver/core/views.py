@@ -286,18 +286,25 @@ def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
     bookingtype = get_object_or_404(models.BookingType, id = bookingtype_id)
     
     # Make sure we get the params we need
-    if 'timeslot' not in request.GET or 'date' not in request.GET:
+    if 'timeslot_start' not in request.GET or 'date' not in request.GET:
         return redirect('/404')
     
-    timeslot = request.GET['timeslot']
+    # Store the GETs
+    timeslot_start = request.GET['timeslot_start']
     date = request.GET['date']
+    
+    # Calculate timeslot end
+    start_dt = datetime.datetime.strptime(  u'%s %s' % (date, timeslot_start),
+                                            '%Y-%m-%d %H:%M')
+    timeslot_end = (start_dt + datetime.timedelta(minutes = bookingtype.length)).strftime('%H:%M')
     
     return direct_to_template(  request,
                                 'core/calendar/book.html',
                                 {   'request': request,
                                     'schedule': schedule,
                                     'calendar': calendar,
-                                    'timeslot': timeslot,
+                                    'timeslot_start': timeslot_start,
+                                    'timeslot_end': timeslot_end,
                                     'bookingtype': bookingtype,
                                     'date': date, })
 
