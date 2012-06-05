@@ -26,7 +26,8 @@ class BaseScheduleForm(forms.ModelForm):
 
 class BookingForm(forms.ModelForm):
     class Meta:
-        model = models.BaseSchedule
+        model = models.Booking
+        fields = ('comment',)
 
 class BookingTypeForm(forms.ModelForm):
     class Meta:

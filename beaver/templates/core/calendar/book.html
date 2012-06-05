@@ -1,11 +1,11 @@
 {% extends "template.html" %}
 {% block content %}
 <div id="content">
-    <div id="calendar">
-        <h1>Time booking - {{calendar.title}}</h1>
+    <div id="left-side-content">
+        <h1>Time booking - {{bookingtype.title}}</h1>
         <h2>Description</h2>
         <p>
-            Book your time here.
+            {{bookingtype.description}}
         </p><br />
         <h2>Make booking</h2>
         <form method='post' action=''>{% csrf_token %}
@@ -16,6 +16,14 @@
             <tr>
                 <th>Date</th>
                 <td>{{date}}</td>
+            </tr>
+            <tr>
+                <th>Length</th>
+                <td>{{bookingtype.length}} min</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{bookingtype.price}} {{bookingtype.currency}}</td>
             </tr>
             <tr>
                 <th>Comment</th>
@@ -30,7 +38,7 @@
         </table>
         </form>
     </div>
-    <div id="calendar-metadata">
+    <div id="right-side-content">
         <h2>{{calendar.title}}</h2>
         {{calendar.description|linebreaks}}
         {% if is_owner %}<p><a href='/calendars/edit/{{calendar.id}}'>Edit calendar</a></p><br />{% endif %}

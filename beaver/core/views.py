@@ -277,12 +277,13 @@ def bookingtypes_edit(request, bookingtype_id):
                                     'form': form,
                                     'booking_type': booking_type, })
 
-def calendar_book(request, calendar_slug, schedule_id):
+def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
     """
     Create a booking
     """
     calendar = get_object_or_404(models.Calendar, slug = calendar_slug)
     schedule = get_object_or_404(models.Schedule, id = schedule_id)
+    bookingtype = get_object_or_404(models.BookingType, id = bookingtype_id)
     
     # Make sure we get the params we need
     if 'timeslot' not in request.GET or 'date' not in request.GET:
@@ -297,6 +298,7 @@ def calendar_book(request, calendar_slug, schedule_id):
                                     'schedule': schedule,
                                     'calendar': calendar,
                                     'timeslot': timeslot,
+                                    'bookingtype': bookingtype,
                                     'date': date, })
 
 def calendar_view(request, calendar_slug):

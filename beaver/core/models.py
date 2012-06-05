@@ -302,6 +302,10 @@ class Booking(models.Model):
     end             = models.DateTimeField(blank = False)
     comment         = models.TextField(blank = True)
     price           = models.FloatField(blank = True, null = True)
+    currency        = models.CharField( blank = False,
+                                        choices = definitions.CURRENCIES,
+                                        max_length = 3)
+    paid            = models.BooleanField(default = False)
 
 class BookingType(models.Model):
     """
