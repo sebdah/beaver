@@ -8,6 +8,7 @@ import datetime
 from beaver import settings
 from core import definitions
 from django.db import models
+from django.utils.timezone import utc
 from django.core.mail import send_mail
 
 # Instanciate logging
@@ -222,6 +223,26 @@ class BaseSchedule(models.Model):
 
         return False
 
+class BookingType(models.Model):
+    """
+    Definition of a booking type
+    """
+    def __unicode__(self):
+        return u'%s, %s min (%0.2f %s)' % ( self.title, self.length,
+                                            self.price, self.currency)
+
+    calendar        = models.ForeignKey(Calendar)
+
+    title           = models.CharField(blank = False, max_length = 100)
+    description     = models.TextField(blank = True)
+    length          = models.IntegerField(  blank = False, max_length = 4,
+                                            help_text = 'Length in minutes')
+    price           = models.FloatField(blank = False)
+    currency        = models.CharField( blank = False,
+                                        choices = definitions.CURRENCIES,
+                                        max_length = 3)
+    enabled         = models.BooleanField(default = True)
+
 class Schedule(models.Model):
     """
     Definition of a schedule
@@ -233,7 +254,107 @@ class Schedule(models.Model):
     owner           = models.ForeignKey(Account)
     base_schedule   = models.ForeignKey(BaseSchedule)
     enabled         = models.BooleanField(default = True)
+    
+    def timeslots(self, start_date, end_date, booking_type_id):
+        """
+        Method calculating timeslots for a given time period
+        
+        start_date          datetime.datetime object
+        end_date            datetime.datetime object
+        booking_type_id     id of a booking type to use
+        
+        Returns
+        timeslots = {
+            datetime.datetime(Y-m-d) : {
+                start:      datetime.time()
+                end:        datetime.time()
+                bookable:   boolean
+            }
+        }
+        """
+        # Instanciate the return dict
+        timeslots = {}
+        
+        # Get the booking_type
+        booking_type = BookingType.objects.get(id = booking_type_id)
+        
+        # Get all bookings for the period
+        bookings = Booking.objects.filter(  id = self.calendar.id,
+                                            start__gte = start_date.replace(tzinfo = utc),
+                                            start__lte = end_date.replace(tzinfo = utc))
+        
+        # Loop over all dates
+        delta_days = (end_date - start_date).days
+        while delta_days >= 0:
+            # date refers to the date we are currently calculating
+            date = end_date - datetime.timedelta(days = delta_days)
+            
+            # If the customer is closed this day,
+            # just go to next
+            if not self.base_schedule.get_enabled(date.weekday()):
+                # Go to the next day in the range
+                delta_days -= 1
+                continue
+            
+            # Instanciate this date in the return dict
+            timeslots[date] = {}
+            
+            #
+            # Calculate timespans that is of interest
+            #
+            booked_timespans = []
+            
+            # Get not bookable times from base schedule
+            booked_timespans += [
+                (int(self.base_schedule.get_not_bookable_from(date.weekday()).replace(':', '')),
+                 int(self.base_schedule.get_not_bookable_to(date.weekday()).replace(':', '')),)
+            ]
+            
+            # Insert bookings to the list
+            for booking in bookings:
+                booking_start   = int(booking.start.strftime('%H%M'))
+                booking_end     = int((booking.start + datetime.timedelta(minutes = booking.length)).strftime('%H%M'))
+                
+                booked_timespans += [(booking_start, booking_end)]
+            
+            # Sort the timespans and merge any overlaps
+            sorted_timespans = sorted(booked_timespans)
+            booked_timespans = []
+            for timespan in sorted_timespans:
+                if len(booked_timespans) == 0:
+                    booked_timespans += [timespan]
+                    continue
 
+                # Pseudo code:
+                # booked_timespans  = [(a, b)]
+                # timespan          = (a', b')
+                # if a' < b:
+                #    booked_timespans = [(a - b')]
+                if timespan[0] < booked_timespans[len(booked_timespans) - 1][1]:
+                    old = booked_timespans[len(booked_timespans) - 1]
+                    booked_timespans.pop()
+                    booked_timespans += [(old[0], timespan[1])]
+                else:
+                    booked_timespans += [timespan]
+            print booked_timespans
+            timespans = []
+            i = 0
+            for booked_timespan in booked_timespans:
+                if i == 0:
+                    timespans += [(
+                        int(self.base_schedule.get_bookable_from(date.weekday()).replace(':', '')),
+                        booked_timespan[0]
+                    )]
+                    
+                i += 1
+            print timespans
+            # Go to the next day in the range
+            delta_days -= 1
+        
+        
+
+        print timeslots
+        
     def get_timeslots(self, date, timeslot_length):
         """
         Returns a list of ('from-to', True/False) where from is the start time and to is the end time
@@ -285,26 +406,6 @@ class Schedule(models.Model):
                                     self.base_schedule.get_bookable_to(day_of_week),
                                     timeslot_length)
             return timeslots
-
-class BookingType(models.Model):
-    """
-    Definition of a booking type
-    """
-    def __unicode__(self):
-        return u'%s, %i min (%0.2f %s)' % (self.title, self.length,
-                                        self.price, self.currency)
-
-    calendar        = models.ForeignKey(Calendar)
-
-    title           = models.CharField(blank = False, max_length = 100)
-    description     = models.TextField(blank = True)
-    length          = models.IntegerField(  blank = False, max_length = 4,
-                                            help_text = 'Length in minutes')
-    price           = models.FloatField(blank = True, null = True)
-    currency        = models.CharField( blank = False,
-                                        choices = definitions.CURRENCIES,
-                                        max_length = 3)
-    enabled         = models.BooleanField(default = True)
 
 class Booking(models.Model):
     """

@@ -45,11 +45,13 @@
                                 <div    id="timeslot"
                                         class='bookable'
                                         onclick="location.href='/calendar/{{calendar.slug}}/book/{{schedule.id}}/{{booking_type}}?timeslot_start={{timeslot|get_timeslot_start}}&date={{date}}'">
+                                        {{timeslot}}
+                                    </div>
                             {% else %}
                                 <div id="timeslot" class='not-bookable'>
+                                    {{timeslot}}
+                                </div>
                             {% endif %}
-                                {{timeslot}}
-                            </div>
                         {% endfor %}
                     </div>
                 {% endfor %}

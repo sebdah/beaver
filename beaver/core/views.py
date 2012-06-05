@@ -467,7 +467,7 @@ def calendars_edit(request, calendar_id):
     schedules = models.Schedule.objects.filter(calendar = calendar, owner = account).order_by('owner')
     booking_types = models.BookingType.objects.filter(calendar = calendar).order_by('title')
     bookings = models.Booking.objects.filter(   schedule = schedules[0],
-                                                start__gte = datetime.datetime.utcnow())
+                                                start__gte = datetime.datetime.utcnow().replace(tzinfo = utc))
 
     updated = False
     if request.method == 'POST':
@@ -566,6 +566,10 @@ def index(request):
     """
     Index page
     """
+    schedule = models.Schedule.objects.get(id = 1)
+    schedule.timeslots( datetime.datetime.strptime('2012-06-01', '%Y-%m-%d'),
+                        datetime.datetime.strptime('2012-06-05', '%Y-%m-%d'),
+                        1)
     return direct_to_template(request, 'core/index.html', {'request': request})
 
 @login_required
