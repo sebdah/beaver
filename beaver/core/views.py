@@ -281,7 +281,7 @@ def calendar_book(request, calendar_slug, schedule_id):
     """
     Create a booking
     """
-    calendar = get_object_or_404(models.Calendar, url = calendar_slug)
+    calendar = get_object_or_404(models.Calendar, slug = calendar_slug)
     schedule = get_object_or_404(models.Schedule, id = schedule_id)
     
     # Make sure we get the params we need
