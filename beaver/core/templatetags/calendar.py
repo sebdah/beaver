@@ -30,6 +30,13 @@ def short_date_format(date):
     """
     return datetime.datetime.strptime(date, '%Y-%m-%d').strftime(settings.SHORT_DATE_FORMAT)
 
+def isodate_time_min(date):
+    """
+    Returns a list of ('from-to', True/False) where from is the start time and to is the end time
+    of the timeslot. The second option is whether or not the timeslot is bookable
+    """
+    return date.strftime('%Y-%m-%d %H:%M')
+
 def day_name(date):
     """
     Returns a list of ('from-to', True/False) where from is the start time and to is the end time
@@ -50,3 +57,4 @@ register.filter('day_name', day_name)
 register.filter('get_day_timeslots', get_day_timeslots)
 register.filter('get_timeslot_start', get_timeslot_start)
 register.filter('short_date_format', short_date_format)
+register.filter('isodate_time_min', isodate_time_min)

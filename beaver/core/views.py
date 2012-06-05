@@ -11,6 +11,7 @@ from core import forms, models, definitions
 
 from django.contrib import auth
 from django.shortcuts import redirect
+from django.utils.timezone import utc
 from django.core.mail import send_mail
 from django import forms as django_forms
 from django.shortcuts import get_object_or_404
@@ -295,14 +296,55 @@ def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
     
     # Calculate timeslot end
     start_dt = datetime.datetime.strptime(  u'%s %s' % (date, timeslot_start),
-                                            '%Y-%m-%d %H:%M')
+                                            '%Y-%m-%d %H:%M').replace(tzinfo = utc)
     timeslot_end = (start_dt + datetime.timedelta(minutes = bookingtype.length)).strftime('%H:%M')
     
     # Form
     if request.POST:
         form = forms.BookingForm(request.POST)
         if form.is_valid():
+            # Create the Booking object
             booking = form.save(commit = False)
+            booking.schedule = schedule
+            booking.booking_type = bookingtype
+            booking.title = bookingtype.title
+            booking.start = start_dt
+            booking.length = bookingtype.length
+            booking.price = bookingtype.price
+            booking.currency = bookingtype.currency
+            booking.paid = False
+            booking.save()
+            
+            message = u"""\
+Hello,
+
+This is you booking confirmation for %s. The price for this is %i %s, which should be paid at the cashier.
+
+Date: %s
+Time: %s - %s (%i minutes)
+Price: %i %s
+
+Thank you for booking with Booking Beaver!
+
+Best regards
+Booking Beaver
+""" % ( bookingtype.title, bookingtype.price, bookingtype.currency, 
+        date, timeslot_start, timeslot_end, bookingtype.length,
+        bookingtype.price, bookingtype.currency,)
+            
+            # Send an email confirmation email to the customer
+            try:
+                send_mail(  u'Booking confirmation - %s' % (bookingtype.title),
+                            message, 
+                            settings.BEAVER_NO_REPLY_ADDRESS,
+                            [form.cleaned_data['user_email']],
+                            fail_silently = False)
+                logger.info(u'Sent booking confirmation email to %s' % form.cleaned_data['user_email'])
+            except:
+                logger.error(u'Could not send confirmation email to %s' % form.cleaned_data['user_email'])
+            
+            return redirect(u'/calendar/%s/complete/%i' % (calendar.slug, booking.id))
+            
     form = forms.BookingForm()
     
     return direct_to_template(  request,
@@ -315,6 +357,17 @@ def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
                                     'bookingtype': bookingtype,
                                     'form': form,
                                     'date': date, })
+
+def calendar_complete(request, calendar_slug, booking_id):
+    """
+    Booking done
+    """
+    calendar = get_object_or_404(models.Calendar, slug = calendar_slug)
+    booking = models.Booking.objects.get(id = booking_id)
+    return direct_to_template(request, 'core/calendar/complete.html', 
+                                        {   'request': request,
+                                            'booking': booking,
+                                            'calendar': calendar, })
 
 def calendar_view(request, calendar_slug):
     """

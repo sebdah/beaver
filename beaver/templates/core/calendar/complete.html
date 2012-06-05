@@ -1,0 +1,35 @@
+{% extends "template.html" %}
+{% load calendar %}
+
+{% block logo %}
+    {% if calendar.logo %} 
+        <a href="/" id="logo"><img src="{{MEDIA_URL}}{{calendar.logo}}" alt=""/></a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div>
+        <h1>Booking complete</h1>
+        <p>
+            Thank you for booking with Booking Beaver. We have now sent you an email with all the details.
+        </p>
+        <br />
+        <h2>Booking details</h2>
+        <table>
+            <tr>
+                <th>Start time</th>
+                <td>{{booking.start|isodate_time_min}}</td>
+            </tr>
+            <tr>
+                <th>Length</th>
+                <td>{{booking.length}} minutes</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{booking.price}} {{booking.currency}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -47,6 +47,7 @@ urlpatterns = patterns('',
     # Customer's calendars URL
     url(r'^calendar/(?P<calendar_slug>[\w-]+)$', 'core.views.calendar_view'),
     url(r'^calendar/(?P<calendar_slug>[\w-]+)/book/(?P<schedule_id>[\w-]+)/(?P<bookingtype_id>[\w-]+)$', 'core.views.calendar_book'),
+    url(r'^calendar/(?P<calendar_slug>[\w-]+)/complete/(?P<booking_id>[\w-]+)$', 'core.views.calendar_complete'),
     
     # Calendars
     url(r'^calendars/create$', 'core.views.calendars_create'),
