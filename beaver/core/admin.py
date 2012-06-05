@@ -17,7 +17,7 @@ class ScheduleAdmin(admin.ModelAdmin):
     list_filter = ('enabled',)
     
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('account', 'schedule', 'title')
+    list_display = ('user_email', 'schedule', 'title')
 
 class BookingTypeAdmin(admin.ModelAdmin):
     list_display = ('calendar', 'title', 'length')

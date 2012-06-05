@@ -303,7 +303,6 @@ def calendar_book(request, calendar_slug, schedule_id, bookingtype_id):
         form = forms.BookingForm(request.POST)
         if form.is_valid():
             booking = form.save(commit = False)
-            booking.
     form = forms.BookingForm()
     
     return direct_to_template(  request,

@@ -27,7 +27,10 @@ class BaseScheduleForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = models.Booking
-        fields = ('comment',)
+        fields = ('user_email', 'user_passphrase', 'user_comment')
+        widgets = {
+            'user_passphrase': forms.widgets.PasswordInput,
+        }
 
 class BookingTypeForm(forms.ModelForm):
     class Meta:

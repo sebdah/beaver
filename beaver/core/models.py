@@ -287,26 +287,6 @@ class Schedule(models.Model):
                                     timeslot_length)
             return timeslots
 
-class Booking(models.Model):
-    """
-    Defines a made Booking
-    """
-    def __unicode__(self):
-        return u'%s - %s (%s - %s)' % (self.account, self.name, self.start_time, self.end_time)
-
-    account         = models.ForeignKey(Account)
-    schedule        = models.ForeignKey(Schedule)
-
-    title           = models.CharField(blank = False, max_length = 100)
-    start           = models.DateTimeField(blank = False)
-    end             = models.DateTimeField(blank = False)
-    comment         = models.TextField(blank = True)
-    price           = models.FloatField(blank = True, null = True)
-    currency        = models.CharField( blank = False,
-                                        choices = definitions.CURRENCIES,
-                                        max_length = 3)
-    paid            = models.BooleanField(default = False)
-
 class BookingType(models.Model):
     """
     Definition of a booking type
@@ -319,10 +299,30 @@ class BookingType(models.Model):
 
     title           = models.CharField(blank = False, max_length = 100)
     description     = models.TextField(blank = True)
-    length          = models.IntegerField(  blank = False, max_length = 50,
+    length          = models.IntegerField(  blank = False, max_length = 4,
                                             help_text = 'Length in minutes')
     price           = models.FloatField(blank = True, null = True)
     currency        = models.CharField( blank = False,
                                         choices = definitions.CURRENCIES,
                                         max_length = 3)
     enabled         = models.BooleanField(default = True)
+
+class Booking(models.Model):
+    """
+    Defines a made Booking
+    """
+    schedule        = models.ForeignKey(Schedule)
+    booking_type    = models.ForeignKey(BookingType)
+
+    title           = models.CharField(blank = False, max_length = 100)
+    start           = models.DateTimeField(blank = False)
+    length          = models.IntegerField(blank = False, max_length = 4)
+    price           = models.FloatField(blank = True, null = True)
+    currency        = models.CharField( blank = False,
+                                        choices = definitions.CURRENCIES,
+                                        max_length = 3)
+    paid            = models.BooleanField(default = False)
+
+    user_email      = models.EmailField(blank = False, verbose_name = 'E-mail')
+    user_passphrase = models.CharField(blank = False, max_length = 20, verbose_name = 'Password')
+    user_comment    = models.TextField(blank = True, verbose_name = 'Comment')
