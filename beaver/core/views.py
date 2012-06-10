@@ -330,8 +330,8 @@ Price: %i %s
                 message += u"""
 You can cancel your booking on the following link until %i hours before the booking starts. 
 
-%s/calendar/massage/cancel/%i
-""" % (calendar.cancellations_hours, settings.BEAVER_EXTERNAL_URL, booking.id)
+%s/calendar/%s/cancel/%i
+""" % (calendar.cancellations_hours, settings.BEAVER_EXTERNAL_URL, calendar.slug, booking.id)
         
             message += u"""
 Thank you for booking with Booking Beaver!
@@ -365,6 +365,108 @@ Booking Beaver
                                     'bookingtype': bookingtype,
                                     'form': form,
                                     'date': date, })
+
+def calendar_cancel(request, calendar_slug, booking_id):
+    """
+    Cancel a booking
+    """
+    calendar = get_object_or_404(models.Calendar, slug = calendar_slug)
+    booking = models.Booking.objects.get(id = booking_id)
+    
+    form = forms.BookingCancellationForm()
+    
+    # Check if cancellations is allowed
+    cancellations_allowed = False
+    if calendar.cancellations_allowed:
+        if (booking.start - datetime.timedelta(hours = calendar.cancellations_hours)).replace(tzinfo = utc) > datetime.datetime.utcnow().replace(tzinfo = utc):
+            cancellations_allowed = True
+    cancellations_allowed = True
+    user_mismatch = False
+    if request.method == 'POST' and cancellations_allowed:
+        form = forms.BookingCancellationForm(request.POST)
+        if form.is_valid():
+            # Check that the supplied password matches
+            if form.cleaned_data['passphrase'] == booking.user_passphrase and \
+                form.cleaned_data['email'] == booking.user_email:
+                # Redirect if email and password is ok
+                return redirect('/calendar/%s/cancel/%i/done' % (calendar.slug, booking.id))
+            else:
+                user_mismatch = True
+                logger.debug('The email address and passphrase did not match for this booking')
+    
+    return direct_to_template(request, 'core/calendar/cancel.html', 
+                                        {   'request': request,
+                                            'booking': booking,
+                                            'calendar': calendar,
+                                            'form': form,
+                                            'user_mismatch': user_mismatch,
+                                            'cancellations_allowed': cancellations_allowed,
+                                            })
+
+def calendar_cancel_done(request, calendar_slug, booking_id):
+    """
+    Booking cancellation done
+    """
+    calendar = get_object_or_404(models.Calendar, slug = calendar_slug)
+    booking = get_object_or_404(models.Booking, id = booking_id)
+    
+    end_user_message = u"""\
+Hello,
+
+We confirm that the following booking has been CANCELLED:
+
+Title: %s
+Date: %s (%i minutes)
+
+Best regards
+Booking Beaver
+""" % (booking.title, booking.start, booking.length)
+
+    customer_message = u"""\
+Hello,
+
+We confirm that the following booking has been CANCELLED by the customer:
+
+Customer e-mail: %s
+Title: %s
+Date: %s (%i minutes)
+
+Best regards
+Booking Beaver
+""" % (booking.user_email, booking.title, booking.start, booking.length)
+    
+    # Send an email confirmation email to the end user
+    try:
+        # Send to the end user
+        send_mail(  u'Cancellation confirmation - %s' % (booking.title),
+                    end_user_message, 
+                    settings.BEAVER_NO_REPLY_ADDRESS,
+                    [booking.user_email],
+                    fail_silently = False)
+        logger.info(u'Sent cancellation confirmation email to %s' % booking.user_email)
+    except:
+        logger.error(u'Could not cancellation confirmation email to %s' % booking.user_email)
+                    
+    # Send an email confirmation email to the customer
+    try:
+        # Send to the end user
+        send_mail(  u'Cancellation - %s' % (booking.title),
+                    customer_message, 
+                    settings.BEAVER_NO_REPLY_ADDRESS,
+                    [calendar.owner.email],
+                    fail_silently = False)
+        logger.info(u'Sent cancellation confirmation email to %s' % calendar.owner.email)
+    except:
+        logger.error(u'Could not cancellation confirmation email to %s' % calendar.owner.email)
+    
+    # Delete the booking
+    logger.info('Cancelled booking with ID %i for user %s' % (booking.id, booking.user_email))
+    booking.delete()
+
+    return direct_to_template(request, 'core/calendar/cancel_done.html', 
+                                        {   'request': request,
+                                            'booking': booking,
+                                            'calendar': calendar, })
 
 def calendar_complete(request, calendar_slug, booking_id):
     """

@@ -28,6 +28,9 @@ def short_date_format(date):
     """
     return datetime.datetime.strptime(date, '%Y-%m-%d').strftime(settings.SHORT_DATE_FORMAT)
 
+def datetime_format(date, format):
+    return date.strftime(format)
+
 def isodate_time_min(date):
     """
     Returns a list of ('from-to', True/False) where from is the start time and to is the end time
@@ -51,6 +54,7 @@ def day_name(date):
     }
     return day[datetime.date.isoweekday(datetime.datetime.strptime(date, '%Y-%m-%d'))]
 
+register.filter('datetime_format', datetime_format)
 register.filter('day_name', day_name)
 register.filter('get_day_timeslots', get_day_timeslots)
 register.filter('short_date_format', short_date_format)

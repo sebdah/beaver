@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+{% load calendar %}
+
+{% block logo %}
+    {% if calendar.logo %} 
+        <a href="/" id="logo"><img src="{{MEDIA_URL}}{{calendar.logo}}" alt=""/></a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <h1>Your booking has been cancelled</h1>
+    <p>
+        Your booking has now been cancelled. A confirmation e-mail was sent to you. Thank you for 
+        using our services and see you next time!
+    </p>
+</div>
+{% endblock %}

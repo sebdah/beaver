@@ -1,0 +1,48 @@
+{% extends "template.html" %}
+{% load calendar %}
+
+{% block logo %}
+    {% if calendar.logo %} 
+        <a href="/" id="logo"><img src="{{MEDIA_URL}}{{calendar.logo}}" alt=""/></a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    {% if cancellations_allowed %}
+        <h1>Do you want to cancel {{booking.title}}?</h1>
+        <p>
+            You can still cancel your booking <strong>{{booking.title}}</strong> that is booked
+            for <strong>{{booking.start|datetime_format:'%Y-%m-%d %H:%M'}}</strong> 
+            (<strong>{{booking.length}}</strong> minutes).
+        </p>
+        <br />
+        {% if user_mismatch %}
+        <p>
+            <h3>Email and passphrase did not match for this booking. Please try again.</h3>
+        </p>
+        {% endif %}
+        <p>
+            <form action='' method='POST'>{% csrf_token %}
+            <table>
+                {{ form.as_table}}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type='submit' value='Yes, I want to cancel my booking'></td>
+                </tr>
+            </table>
+            </form>
+        </p>
+    {% else %}
+        <h1>Cancellations is not allowed</h1>
+        <p>
+            {% if calendar.cancellations_allowed %}
+                Cancellations for this booking is no longer allowed. They must be submitted at least
+                {{calendar.cancellations_hours}} hours in advance.
+            {% else %}
+                It is unfortunately not possible to cancel this booking.
+            {% endif %}
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

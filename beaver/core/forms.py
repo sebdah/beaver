@@ -32,6 +32,10 @@ class BookingForm(forms.ModelForm):
             'user_passphrase': forms.widgets.PasswordInput,
         }
     confirm_password = forms.CharField(widget = forms.PasswordInput())
+    
+class BookingCancellationForm(forms.Form):
+    email       = forms.EmailField()
+    passphrase  = forms.CharField(widget = forms.widgets.PasswordInput)
 
 class BookingTypeForm(forms.ModelForm):
     class Meta:
