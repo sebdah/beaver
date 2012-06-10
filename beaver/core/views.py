@@ -322,14 +322,23 @@ This is you booking confirmation for %s. The price for this is %i %s, which shou
 Date: %s
 Time: %s - %s (%i minutes)
 Price: %i %s
+""" % ( bookingtype.title, bookingtype.price, bookingtype.currency, 
+        date, timeslot_start, timeslot_end, bookingtype.length,
+        bookingtype.price, bookingtype.currency,)
+        
+            if calendar.cancellations_allowed:
+                message += u"""
+You can cancel your booking on the following link until %i hours before the booking starts. 
 
+%s/calendar/massage/cancel/%i
+""" % (calendar.cancellations_hours, settings.BEAVER_EXTERNAL_URL, booking.id)
+        
+            message += u"""
 Thank you for booking with Booking Beaver!
 
 Best regards
 Booking Beaver
-""" % ( bookingtype.title, bookingtype.price, bookingtype.currency, 
-        date, timeslot_start, timeslot_end, bookingtype.length,
-        bookingtype.price, bookingtype.currency,)
+"""
             
             # Send an email confirmation email to the customer
             try:
