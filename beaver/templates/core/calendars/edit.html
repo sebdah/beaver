@@ -6,6 +6,7 @@
 <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+    /* dataTables settings */
     $('#booking_type_table').dataTable({
         "iDisplayLength": 20,
         "aLengthMenu": [[1, 20, 50, -1], [1, 20, 50, "All"]],
@@ -16,6 +17,7 @@ $(document).ready(function() {
         "bFilter": false,
     });
     
+    /* dataTables settings */
     $('#bookings_table').dataTable({
         "iDisplayLength": 20,
         "aLengthMenu": [[1, 20, 50, -1], [1, 20, 50, "All"]],
@@ -25,122 +27,152 @@ $(document).ready(function() {
         "bInfo": false,
         "bFilter": false,
     });
+    
+    /* Hide tabs per default */
+    $('div#upcoming-bookings').hide();
+    $('div#schedule').hide();
+    $('div#booking-types').hide();
+    
+    /* Toggle the tabs*/
+    function toggle_tab(tab_name) {
+        $('div#calendar-details').hide();
+        $('div#schedule').hide();
+        $('div#booking-types').hide();
+        $('div#upcoming-bookings').hide();
+        $('div#' + tab_name).fadeIn(300);
+    }
+    $('span#show-calendar-details').click(function() { toggle_tab('calendar-details'); });
+    $('span#show-schedule').click(function() { toggle_tab('schedule'); });
+    $('span#show-booking-types').click(function() { toggle_tab('booking-types'); });
+    $('span#show-upcoming-bookings').click(function() { toggle_tab('upcoming-bookings'); });
+    
 } );
 </script>
 {% endblock %}
 
 {% block content %}
 <div id="content">
-    <h1>{{calendar.title}}</h1>
-    {% if updated %}
-        <p>Your calendar has been updated</p>
-    {% endif %}
-    <form enctype="multipart/form-data" method='post' action=''>{% csrf_token %}
-        <h2>Edit calendar details</h2>
-        <table>
-            {% for field in form %}
-                <tr>
-                    <th>{{field.label}}</th>
-                    <td>
-                        {% if field.label == 'URL' %}
-                            {{external_url}}{{field}}
-                        {% else %}
-                            {% if field.label == 'Logo' %}
-                                {% if field.value %}<img src="{{media_url}}{{field.value}}" />{% endif %}
-                                <input type="file" name="logo" id="id_logo">
+    <div id='page-sub-menu'>
+        Menu:
+        <span id='show-calendar-details' class='pointer'>Details</span> | 
+        <span id='show-schedule' class='pointer'>Scheduler</span> | 
+        <span id='show-booking-types' class='pointer'>Booking types</span> | 
+        <span id='show-upcoming-bookings' class='pointer'>Upcoming bookings</span>
+    </div>
+    <div id="calendar-details">
+        {% if updated %}
+            <p>Your calendar has been updated</p>
+        {% endif %}
+        <form enctype="multipart/form-data" method='post' action=''>{% csrf_token %}
+            <h2>Edit calendar details</h2>
+            <table>
+                {% for field in form %}
+                    <tr>
+                        <th>{{field.label}}</th>
+                        <td>
+                            {% if field.label == 'URL' %}
+                                {{external_url}}{{field}}
                             {% else %}
-                                {{field}}
+                                {% if field.label == 'Logo' %}
+                                    {% if field.value %}<img src="{{media_url}}{{field.value}}" />{% endif %}
+                                    <input type="file" name="logo" id="id_logo">
+                                {% else %}
+                                    {{field}}
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
                         
-                        {% for error in field.errors %}
-                            <br />{{error}}
-                        {% endfor %}
-                    </td>
-                </tr>
-                {% if field.help_text %}
+                            {% for error in field.errors %}
+                                <br />{{error}}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% if field.help_text %}
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            {{field.help_text}}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
                 <tr>
                     <td>&nbsp;</td>
                     <td>
-                        {{field.help_text}}
+                        <input type='submit' value='Save changes'>
                     </td>
                 </tr>
-                {% endif %}
-            {% endfor %}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type='submit' value='Save changes'>
-                </td>
-            </tr>
-        </table>
-        <p></p>
-    </form>
-    <br />
-    <h2>Booking types</h2>
-    {% if booking_types|length > 0 %}
+            </table>
+            <p></p>
+        </form>
+    </div>
+    <div id="booking-types">
+        <h2>Booking types</h2>
+        {% if booking_types|length > 0 %}
+            <p>
+                <a href='/bookingtypes/create/{{calendar.id}}'>Add booking type</a>
+            </p>
+            <p>
+                <table id="booking_type_table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Length</th>
+                            <th>Price</th>
+                            <th>Enabled?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking_type in booking_types %}
+                            <tr onclick="location.href='/bookingtypes/{{booking_type.id}}/edit'">
+                                <td>{{booking_type.title}}</a></td>
+                                <td>{{booking_type.length}} minutes</td>
+                                <td>{{booking_type.price}} {{booking_type.currency}}</td>
+                                <td>
+                                    {% if booking_type.enabled %}Yes{% else %}No{% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </p>
+        {% else %}
+            <p>
+                You have no booking types yet. Do you want to 
+                <a href='/bookingtypes/create/{{calendar.id}}'>create a new booking type</a>?
+            </p>
+        {% endif %}
+    </div>
+    <div id="schedule">
+        <h2>Schedule</h2>
         <p>
-            <a href='/bookingtypes/create/{{calendar.id}}'>Add booking type</a>
+            Manage the opening times and lunch breaks in the 
+            <a href='/schedules/{{schedule.id}}/edit'>schedule editor</a>.
         </p>
-        <p>
-            <table id="booking_type_table">
+    </div>
+    {% if bookings|length > 0 %}
+        <div id="upcoming-bookings">
+            <h2>Upcoming bookings</h2>
+            <table id="bookings_table">
                 <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>Date</th>
                         <th>Length</th>
                         <th>Price</th>
-                        <th>Enabled?</th>
+                        <th>User</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for booking_type in booking_types %}
-                        <tr onclick="location.href='/bookingtypes/{{booking_type.id}}/edit'">
-                            <td>{{booking_type.title}}</a></td>
-                            <td>{{booking_type.length}} minutes</td>
-                            <td>{{booking_type.price}} {{booking_type.currency}}</td>
-                            <td>
-                                {% if booking_type.enabled %}Yes{% else %}No{% endif %}
-                            </td>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{booking.start|isodate_time_min}}</td>
+                            <td>{{booking.length}} minutes</td>
+                            <td>{{booking.price}} {{booking.currency}}</td>
+                            <td>{{booking.user_email}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        </p>
-    {% else %}
-        <p>
-            You have no booking types yet. Do you want to 
-            <a href='/bookingtypes/create/{{calendar.id}}'>create a new booking type</a>?
-        </p>
-    {% endif %}
-    <br />
-    <h2>Schedule</h2>
-    <p>
-        Manage the opening times and lunch breaks in the 
-        <a href='/schedules/{{schedule.id}}/edit'>schedule editor</a>.
-    </p>
-    {% if bookings|length > 0 %}
-        <h2>Upcoming bookings</h2>
-        <table id="bookings_table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Length</th>
-                    <th>Price</th>
-                    <th>User</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for booking in bookings %}
-                    <tr>
-                        <td>{{booking.start|isodate_time_min}}</td>
-                        <td>{{booking.length}} minutes</td>
-                        <td>{{booking.price}} {{booking.currency}}</td>
-                        <td>{{booking.user_email}}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+        </div>
     {% endif %}
 </div>
 {% endblock %}

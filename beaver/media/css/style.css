@@ -577,6 +577,28 @@ div#left-side-content div#day div#timeslot.not-bookable {
 
 #clear { clear: both; }
 
-.body div#content input.small-input{
-    width: 25px;
+.pointer {
+    cursor: pointer;
 }
+
+div#page-sub-menu {
+    font-family: 'RokkittRegular';
+    src: url('rokkitt-regular-webfont.eot');
+    src: url('rokkitt-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('rokkitt-regular-webfont.woff') format('woff'),
+         url('rokkitt-regular-webfont.ttf') format('truetype'),
+         url('rokkitt-regular-webfont.svg#RokkittRegular') format('svg');
+    font-style: normal;
+    font-size: 20px;
+    
+    margin-bottom: 20px;
+}
+
+div#page-sub-menu span {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #f78117;
+}
+
+div#page-sub-menu span:hover { color: #000; }
+
