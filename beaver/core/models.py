@@ -100,7 +100,9 @@ class Calendar(models.Model):
     url             = models.URLField(verbose_name = 'External website', blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True, verbose_name = 'Published')
     cancellations_allowed = models.BooleanField(blank = False, default = True)
-    cancellations_hours = models.IntegerField(blank = False, default = 24)
+    cancellations_hours = models.IntegerField(blank = False, default = 24,
+                        verbose_name = 'Notice period',
+                        help_text = 'How many hours in advance must a cancellation be submitted?')
 
 class BaseSchedule(models.Model):
     """

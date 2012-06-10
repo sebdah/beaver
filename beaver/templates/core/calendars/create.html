@@ -18,6 +18,14 @@
                         {% endfor %}
                     </td>
                 </tr>
+                {% if field.help_text %}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        {{field.help_text}}
+                    </td>
+                </tr>
+                {% endif %}
             {% endfor %}
             <tr>
                 <td>&nbsp;</td>
