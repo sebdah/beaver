@@ -82,7 +82,7 @@
         </p>
         
         {% if calendar.url %}<br /><p>External webpage: <a href='{{calendar.url}}' target='_blank'>{{calendar.url}}</a></p>{% endif %}        
-        {% if is_owner %}<br /><p><a href='/calendars/edit/{{calendar.id}}'>Edit calendar</a></p><br />{% endif %}
+        {% if is_owner %}<br /><p><a href='/calendars/{{calendar.id}}/edit'>Edit calendar</a></p><br />{% endif %}
     </div>
     <div id='clear'></div>
 </div>
