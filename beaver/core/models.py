@@ -278,7 +278,10 @@ class Schedule(models.Model):
         booking_type = BookingType.objects.get(id = booking_type_id)
 
         # Get all bookings for the period
-        bookings = Booking.objects.filter(  id = self.calendar.id)
+        bookings = Booking.objects.filter(  schedule = self.id,
+                                            start__gte = start_date.replace(tzinfo = utc))
+        for booking in bookings:
+            print booking
 
         # Loop over all dates
         delta_days = (end_date - start_date).days
@@ -316,7 +319,7 @@ class Schedule(models.Model):
                     booking_end     = booking_start + datetime.timedelta(minutes = booking.length)
 
                     booked_timespans += [(booking_start, booking_end)]
-
+            
             # Sort the timespans and merge any overlaps
             sorted_timespans = sorted(booked_timespans)
             booked_timespans = []
@@ -413,62 +416,13 @@ class Schedule(models.Model):
 
         return timeslots
 
-    def get_timeslots(self, date, timeslot_length):
-        """
-        Returns a list of ('from-to', True/False) where from is the start time and to is the end time
-        of the timeslot. The second option is whether or not the timeslot is bookable
-        """
-        def calculator(start_point, end_point, timeslot_length):
-            timeslots = []
-
-            # Time format
-            time_format = u'%H:%M'
-
-            # Find out how many minutes it is between the start and the end
-            time_delta = datetime.datetime.strptime(end_point, time_format) - datetime.datetime.strptime(start_point, time_format)
-            time_delta = time_delta.total_seconds() / 60
-
-            # Loop through all possible timeslots
-            last_end_time = start_point
-            num_timeslots = int(time_delta / timeslot_length)
-            i = 0
-            while i < num_timeslots:
-                end_time = datetime.datetime.strptime(last_end_time, time_format) + datetime.timedelta(minutes = timeslot_length)
-                end_time = end_time.strftime('%H:%M')
-                timeslots += [(u'%s-%s' % (last_end_time, end_time), True)]
-                last_end_time = end_time
-                i += 1
-
-            return timeslots
-
-        # Find out what day of week the given date is
-        year, month, day = date.split('-')
-        day_of_week = datetime.date(int(year), int(month), int(day)).weekday()
-
-        # Skip if the day is no enabled
-        if not self.base_schedule.get_enabled(day_of_week):
-            return []
-
-        # Check if we should look at the not bookable times
-        if not re.match('^[0-9]{2}:[0-9]{2}$', self.base_schedule.get_not_bookable_from(day_of_week)):
-            timeslots = calculator(  self.base_schedule.get_bookable_from(day_of_week),
-                                self.base_schedule.get_bookable_to(day_of_week),
-                                timeslot_length)
-            return timeslots
-        else:
-            timeslots = []
-            timeslots += calculator(self.base_schedule.get_bookable_from(day_of_week),
-                                    self.base_schedule.get_not_bookable_from(day_of_week),
-                                    timeslot_length)
-            timeslots += calculator(self.base_schedule.get_not_bookable_to(day_of_week),
-                                    self.base_schedule.get_bookable_to(day_of_week),
-                                    timeslot_length)
-            return timeslots
-
 class Booking(models.Model):
     """
     Defines a made Booking
     """
+    def __unicode__(self):
+        return u'%s, %s (%i min)' % (self.title, self.start.isoformat(), self.length)
+        
     schedule        = models.ForeignKey(Schedule)
     booking_type    = models.ForeignKey(BookingType)
 

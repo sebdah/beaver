@@ -15,7 +15,7 @@ def get_day_timeslots(date, attrs):
     """
     schedule_id = int(attrs.split(',')[0])
     schedule = models.Schedule.objects.get(id = schedule_id)
-    booking_type_id = int(attrs.split(',')[0])
+    booking_type_id = int(attrs.split(',')[1])
     timeslots = schedule.timeslots(  datetime.datetime.strptime(date, '%Y-%m-%d'),
                                 datetime.datetime.strptime(date, '%Y-%m-%d'),
                                 booking_type_id, return_strings = True)

@@ -406,9 +406,9 @@ def calendar_view(request, calendar_slug):
         is_owner = True
         
     if booking_type != 'not-set':
-        timeslot_string = '%i,%i' % (schedules[0].id, (models.BookingType.objects.get(id = booking_type)).length)
+        timeslot_string = '%i,%i' % (schedules[0].id, booking_type)
     else:
-        timeslot_string = '%i,%i' % (schedules[0].id, 60)
+        timeslot_string = '%i,%i' % (schedules[0].id, 0)
 
     return direct_to_template(  request,
                                 'core/calendar/view.html',
