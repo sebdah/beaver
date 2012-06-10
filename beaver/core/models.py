@@ -99,6 +99,8 @@ class Calendar(models.Model):
     logo            = models.ImageField(upload_to = u'uploads/%Y/%m/%d', blank = True, null = True)
     url             = models.URLField(verbose_name = 'External website', blank = True, null = True)
     enabled         = models.BooleanField(blank = False, default = True, verbose_name = 'Published')
+    cancellations_allowed = models.BooleanField(blank = False, default = True)
+    cancellations_hours = models.IntegerField(blank = False, default = 24)
 
 class BaseSchedule(models.Model):
     """
@@ -280,8 +282,6 @@ class Schedule(models.Model):
         # Get all bookings for the period
         bookings = Booking.objects.filter(  schedule = self.id,
                                             start__gte = start_date.replace(tzinfo = utc))
-        for booking in bookings:
-            print booking
 
         # Loop over all dates
         delta_days = (end_date - start_date).days

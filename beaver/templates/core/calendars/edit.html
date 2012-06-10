@@ -60,6 +60,15 @@ $(document).ready(function() {
                 </tr>
             {% endfor %}
             <tr>
+                <th>Are cancellations allowed?</th>
+                <td>
+                    <input checked="checked" type="checkbox" name="cancellations_allowed" id="id_cancellations_allowed" class='small-input'>
+                    Yes, if submitted
+                    <input type="text" name="cancellations_hours" value="24" id="id_cancellations_hours" class='small-input'>
+                    hours in advance
+                </td>
+            </tr>
+            <tr>
                 <td>&nbsp;</td>
                 <td>
                     <input type='submit' value='Save changes'>

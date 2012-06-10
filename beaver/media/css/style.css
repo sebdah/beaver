@@ -576,3 +576,7 @@ div#left-side-content div#day div#timeslot.not-bookable {
 }
 
 #clear { clear: both; }
+
+.body div#content input.small-input{
+    width: 25px;
+}
