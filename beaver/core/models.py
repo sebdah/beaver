@@ -321,6 +321,7 @@ class Schedule(models.Model):
             sorted_timespans = sorted(booked_timespans)
             booked_timespans = []
             for timespan in sorted_timespans:
+                # Always add the first timespan
                 if len(booked_timespans) == 0:
                     booked_timespans += [timespan]
                     continue
@@ -336,7 +337,7 @@ class Schedule(models.Model):
                     booked_timespans += [(old[0], timespan[1])]
                 else:
                     booked_timespans += [timespan]
-
+            
             # Calculate the actual bookable timespans
             timespans = []
             i = 0
@@ -362,7 +363,7 @@ class Schedule(models.Model):
 
                 ## Calculate how many timeslots that fits within timespan_end - timespan_start
                 # Then fill timeslots
-                num_slots = (timespan_end - timespan_start).total_seconds()/60/booking_type.length
+                num_slots = int((timespan_end - timespan_start).total_seconds()/60/booking_type.length)
                 while num_slots:
                     # Calculate new timeslot end
                     timespan_end = timespan_start + datetime.timedelta(minutes = booking_type.length)
@@ -403,7 +404,7 @@ class Schedule(models.Model):
                 
 
                 i += 1
-
+                
             # Add the timeslots to this day
             timeslots[date] = sorted(timespans)
 
