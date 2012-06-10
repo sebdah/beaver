@@ -270,8 +270,13 @@ class Schedule(models.Model):
 
         Returns
         timeslots = {
-            datetime.datetime(Y-m-d) : [(s, e), (s, e)]
+            datetime.datetime(Y-m-d) : [(s, e, b), (s, e, b)]
         }
+
+        Where:
+        s       Start time (datetime object)
+        e       End time (datetime object)
+        b       Bookable (0 = No, 1 = Yes, 2 = Time in the past)
         """
         # Instanciate the return dict
         timeslots = {}
@@ -319,7 +324,7 @@ class Schedule(models.Model):
                     booking_end     = booking_start + datetime.timedelta(minutes = booking.length)
 
                     booked_timespans += [(booking_start, booking_end)]
-            
+
             # Sort the timespans and merge any overlaps
             sorted_timespans = sorted(booked_timespans)
             booked_timespans = []
@@ -340,7 +345,7 @@ class Schedule(models.Model):
                     booked_timespans += [(old[0], timespan[1])]
                 else:
                     booked_timespans += [timespan]
-            
+
             # Calculate the actual bookable timespans
             timespans = []
             i = 0
@@ -375,22 +380,27 @@ class Schedule(models.Model):
                     # If we are implementing padding between timeslots, this is where it should
                     # be added.
 
+                    # If the time is in the past, it cannot be booked
+                    bookable = True
+                    if timespan_start < datetime.datetime.utcnow().replace(tzinfo = utc):
+                        bookable = False
+
                     # Add to list
                     if return_strings:
                         timespans += [(
                             timespan_start.strftime('%H:%M'),
                             timespan_end.strftime('%H:%M'),
-                            True
+                            bookable
                         )]
                     else:
-                        timespans += [(timespan_start, timespan_end, True)]
+                        timespans += [(timespan_start, timespan_end, bookable)]
 
                     # Update start time
                     timespan_start = timespan_end
                     num_slots -= 1
 
                 i += 1
-            
+
             ##
             ## Fill out the booked timespans
             ##
@@ -404,10 +414,8 @@ class Schedule(models.Model):
                         timespans[i + 1][0],
                         False
                     )]
-                
-
                 i += 1
-                
+
             # Add the timeslots to this day
             timeslots[date] = sorted(timespans)
 
@@ -422,7 +430,7 @@ class Booking(models.Model):
     """
     def __unicode__(self):
         return u'%s, %s (%i min)' % (self.title, self.start.isoformat(), self.length)
-        
+
     schedule        = models.ForeignKey(Schedule)
     booking_type    = models.ForeignKey(BookingType)
 
