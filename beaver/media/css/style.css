@@ -10,14 +10,7 @@ body{
 
 /*------------------------- Font ------------------------*/ 
 @font-face {
-    font-family: 'RokkittRegular';
-    src: url('rokkitt-regular-webfont.eot');
-    src: url('rokkitt-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('rokkitt-regular-webfont.woff') format('woff'),
-         url('rokkitt-regular-webfont.ttf') format('truetype'),
-         url('rokkitt-regular-webfont.svg#RokkittRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+    font-family: 'Pontano Sans', sans-serif;
 }
 
 /*------------------------- Header ------------------------*/ 
@@ -50,10 +43,10 @@ body{
     color:#f78117;
 }
 .header ul li a{
-    font-size: 16px;
+    font-size: 1em;
     text-decoration: none;
     color: #5e5e5e;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     outline: none;
 }
 
@@ -69,29 +62,28 @@ body{
 }
 .body div#content h1{
     color:#f78117;
-    font-size:36px;
-    font-family: 'RokkittRegular';
-    margin:0 0 30px;
+    font-size: 1.4em;
+    font-family: 'Pontano Sans', sans-serif;
     font-weight:normal;
 }
 .body div#content h2{
     color:#f78117;
-    font-size:24px;
-    font-family: 'RokkittRegular';
+    font-size: 1.2em;
+    font-family: 'Pontano Sans', sans-serif;
     margin:0 0 30px;
     font-weight:normal;
 }
 .body div#content h3{
     color:#f78117;
-    font-size:18px;
-    font-family: 'RokkittRegular';
+    font-size: 1.1em;
+    font-family: 'Pontano Sans', sans-serif;
     margin:0 0 30px;
     font-weight:normal;
 }
 .body div#content p{
     color: #5d5d5d;
-    font-family: 'RokkittRegular';
-    font-size: 16px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 1em;
     line-height: 25px;
     text-shadow: 0 1px 0 #fcfcfc;
     text-align: justify;
@@ -100,9 +92,9 @@ body{
 .body div#content input {
     height: 34px;
     width: 260px;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     color: #000;
-    font-size: 20px;
+    font-size: 1em;
     margin: 0px 0px 0px 0px;
 }
 .body div#content input#id_monday_enabled,
@@ -142,31 +134,30 @@ body{
 .body div#content input#id_sunday_not_bookable_to {
     height: 34px;
     width: 50px;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     color: #000;
-    font-size: 20px;
     margin: 0px 0px 0px 0px;
 }
 .body div#content textarea{
     height: 140px;
     width: 400px;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     color: #000;
-    font-size: 20px;
+    font-size: 1em;
     margin: 0px 0px 0px 0px;
 }
 .body div#content th{
     height: 34px;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     text-align: left;
     color: #000;
-    font-size: 20px;
+    font-size: 1em;
 }
 .body div#content td{
     height: 34px;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     color: #000;
-    font-size: 20px;
+    font-size: 1em;
 }
 .body div#content td.error {
     color: #F00;
@@ -174,7 +165,7 @@ body{
 .body div#content ul{
     margin: 0;
     list-style: none;
-    padding: 13px 0 0;
+    padding: 1em 0 0;
 }
 .body div#content ul li{
     margin: 0 0 0 63px;
@@ -183,21 +174,21 @@ body{
     color: #f78117;
 }
 .body div#content ul li a{
-    font-size: 16px;
+    font-size: 1em;
     text-decoration: none;
     color: #5e5e5e;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     outline: none;
 }
 .body div#featured{
-    background:url(../images/house.jpg) no-repeat right top;
-    height:448px;
-    padding:0 0 17px;
+    background: url(../images/house.jpg) no-repeat right top;
+    height: 448px;
+    padding: 0 0 17px;
 }
 .body div#featured h1{
-    color:#f78117;
-    font-size:36px;
-    font-family: 'RokkittRegular';
+    color: #f78117;
+    font-size: 1.4em;
+    font-family: 'Pontano Sans', sans-serif;
     margin:0 0 30px;
     width:490px;
     padding:30px 0 0;
@@ -205,8 +196,8 @@ body{
 }
 .body div#featured h2{
     color:#f78117;
-    font-size:24px;
-    font-family: 'RokkittRegular';
+    font-size: 1.2em;
+    font-family: 'Pontano Sans', sans-serif;
     margin:0 0 30px;
     width:490px;
     padding:30px 0 0;
@@ -214,8 +205,8 @@ body{
 }
 .body div#featured h3{
     color:#f78117;
-    font-size:18px;
-    font-family: 'RokkittRegular';
+    font-size: 1.1em;
+    font-family: 'Pontano Sans', sans-serif;
     margin:0 0 30px;
     width:490px;
     padding:30px 0 0;
@@ -224,8 +215,8 @@ body{
 .body div#featured p{
     width:480px;
     color:#5d5d5d;
-    font-family: 'RokkittRegular';
-    font-size:16px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 1em;
     line-height:25px;
     text-shadow: 0 1px 0 #fcfcfc;
     text-align:justify;
@@ -236,9 +227,9 @@ body{
     border:0;
     height:48px;
     width:216px;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     color:#fff;
-    font-size:30px;
+    font-size: 1.2em;
     margin:28px 0 0 125px;
     cursor:pointer;
     outline:none;
@@ -281,10 +272,10 @@ body{
     width:258px;
     text-align:justify;
     color:#828081;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     margin:17px 0 0 10px;
     line-height:20px;
-    font-size:14px;
+    font-size: 1em;
     background:none;
     padding:0;
 }
@@ -299,7 +290,7 @@ body{
 }
 .body ul.blog li div a{
     color:#606060;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     font-style:italic;
     text-decoration:none;
     padding:98px 0 0;
@@ -308,21 +299,21 @@ body{
     width: 150px;
     background:url(../images/button-more.jpg) no-repeat center top;
     outline:none;
-    font-size:16px;
+    font-size: 1em;
     font-weight:normal;
     text-shadow: 0 1px 0 #fcfcfc;
 }
 .body h3{
-    font-family: 'RokkittRegular';
-    font-size:16px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 1em;
     font-weight:bold;
     color:#636363;
     margin:15px 0 0;
     line-height:21px;
 }
 .body p{
-    font-family: 'RokkittRegular';
-    font-size:16px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 1em;
     text-align:justify;
     color:#636363;
     margin:0 0 20px;
@@ -377,8 +368,8 @@ body{
 .body ul li div.featured a{
     clear:both;
     display:block;
-    font-size:13px;
-    font-family: 'RokkittRegular';
+    font-size: 1em;
+    font-family: 'Pontano Sans', sans-serif;
     text-decoration:none;
     color:#8a8889;
     font-weight:bold;
@@ -394,16 +385,16 @@ body{
 }
 .body ul li div h3{
     margin:0;
-    font-size:20px;
+    font-size: 1em;
     font-weight:bold;
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     color:#f28220;
     line-height:22px;
 }
 .body ul li div p{
     line-height:22px;
-    font-family: 'RokkittRegular';
-    font-size:14px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 1em;
     color:#5D5D5D;
     padding:0 0 90px;
     margin:0;
@@ -456,7 +447,7 @@ body{
     border-color:#5b5b5b;
     border-style: none none none solid;
     color:#5b5b5b;
-    font-size:10px;
+    font-size: 1em;
     font-family: Trebuchet MS;
     text-decoration:none;
     font-weight:bold;
@@ -465,7 +456,7 @@ body{
 }
 .footer p{
     color:#5b5b5b;
-    font-size:10px;
+    font-size: 1em;
     font-family: Trebuchet MS;
     font-weight:bold;
     float:left;
@@ -519,14 +510,15 @@ div#left-side-content {
     CALENDAR
 *************************/
 div#left-side-content div#calendar {
-    font-family: 'RokkittRegular';
+    font-family: 'Pontano Sans', sans-serif;
     text-align: left;
     color: #000;
-    font-size: 20px;
+    font-size: 1em;
 }
 
 div#left-side-content div#header {
     text-align: center;
+    font-size: 1.1em;
 }
 
 div#left-side-content div#day {
@@ -534,6 +526,7 @@ div#left-side-content div#day {
     text-align: center;
     margin-right: 5px;
     width: 80px;
+    font-size: 0.8em;
 }
 
 div#left-side-content div#day div#day-header {
@@ -544,7 +537,7 @@ div#left-side-content div#day div#timeslot {
     width: 100%;
     height: 50px;
     margin-top: 5px;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 div#left-side-content div#day div#timeslot.bookable {
@@ -582,14 +575,8 @@ div#left-side-content div#day div#timeslot.not-bookable {
 }
 
 div#page-sub-menu {
-    font-family: 'RokkittRegular';
-    src: url('rokkitt-regular-webfont.eot');
-    src: url('rokkitt-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('rokkitt-regular-webfont.woff') format('woff'),
-         url('rokkitt-regular-webfont.ttf') format('truetype'),
-         url('rokkitt-regular-webfont.svg#RokkittRegular') format('svg');
-    font-style: normal;
-    font-size: 20px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 1em;
     
     margin-bottom: 20px;
 }
