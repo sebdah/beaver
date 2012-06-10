@@ -566,10 +566,6 @@ def index(request):
     """
     Index page
     """
-    schedule = models.Schedule.objects.get(id = 1)
-    schedule.timeslots( datetime.datetime.strptime('2012-06-01', '%Y-%m-%d'),
-                        datetime.datetime.strptime('2012-06-05', '%Y-%m-%d'),
-                        1)
     return direct_to_template(request, 'core/index.html', {'request': request})
 
 @login_required

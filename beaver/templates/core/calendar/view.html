@@ -40,16 +40,16 @@
                             {{date|day_name}}<br />
                             {{date|short_date_format}}<br />
                         </div>
-                        {% for timeslot, bookable in date|get_day_timeslots:timeslot_string %}
+                        {% for timeslot_start, timeslot_end, bookable in date|get_day_timeslots:timeslot_string %}
                             {% if bookable %}
                                 <div    id="timeslot"
                                         class='bookable'
-                                        onclick="location.href='/calendar/{{calendar.slug}}/book/{{schedule.id}}/{{booking_type}}?timeslot_start={{timeslot|get_timeslot_start}}&date={{date}}'">
-                                        {{timeslot}}
+                                        onclick="location.href='/calendar/{{calendar.slug}}/book/{{schedule.id}}/{{booking_type}}?timeslot_start={{timeslot_start}}&date={{date}}'">
+                                        {{timeslot_start}} - {{timeslot_end}}
                                     </div>
                             {% else %}
                                 <div id="timeslot" class='not-bookable'>
-                                    {{timeslot}}
+                                    {{timeslot_start}} - {{timeslot_end}}
                                 </div>
                             {% endif %}
                         {% endfor %}
