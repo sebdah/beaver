@@ -1,10 +1,10 @@
 /*------------------------- Layout styles ------------------------*/ 
-body{
-    margin:0;
-    background:url(../images/bg-body.jpg);
+body {
+    margin: 0;
+    background: url(../images/bg-body.jpg);
 }
-.page{
-    background:url(../images/bg-header.jpg) no-repeat center top;
+.page {
+    background: url(../images/bg-header.jpg) no-repeat center top;
 }
 
 /*------------------------- Font ------------------------*/ 
@@ -13,35 +13,35 @@ body{
 }
 
 /*------------------------- Header ------------------------*/ 
-.header{
-    background:url(../images/bg-navigation.jpg) no-repeat center 90px;
-    width:940px;
-    margin:0 auto;
-    height:105px;
-    padding:36px 10px 0;
+.header {
+    background: url(../images/bg-navigation.jpg) no-repeat center 90px;
+    width: 940px;
+    margin: 0 auto;
+    height: 105px;
+    padding: 36px 10px 0;
 }
-.header a#logo{
-    display:block;
-    float:left;
-    outline:none;
+.header a#logo {
+    display: block;
+    float: left;
+    outline: none;
 }
-.header a#logo img{
-    border:0;
+.header a#logo img {
+    border: 0;
 }
-.header ul{
-    margin:0;
-    list-style:none;
-    padding:13px 0 0;
-    float:right;
+.header ul {
+    margin: 0;
+    list-style: none;
+    padding: 13px 0 0;
+    float: right;
 }
 .header ul li{
     float:left;
     margin:0 0 0 63px;
 }
-.header ul li.selected a,.header ul li a:hover{
-    color:#f78117;
+.header ul li.selected a,.header ul li a:hover {
+    color: #f78117;
 }
-.header ul li a{
+.header ul li a {
     font-size: 1em;
     text-decoration: none;
     color: #5e5e5e;
@@ -50,22 +50,22 @@ body{
 }
 
 /*------------------------- Body ------------------------*/ 
-.body{
-    width:940px;
-    margin:0 auto;
-    padding:0 10px;
-    overflow:hidden;
+.body {
+    width: 940px;
+    margin: 0 auto;
+    padding: 0 10px;
+    overflow: hidden;
 }
-.body div#content{
-    padding:0 0 17px;
+.body div#content {
+    padding: 0 0 17px;
 }
-.body div#content h1{
-    color:#f78117;
+.body div#content h1 {
+    color: #f78117;
     font-size: 1.4em;
     font-family: 'Pontano Sans', sans-serif;
-    font-weight:normal;
+    font-weight: normal;
 }
-.body div#content h2{
+.body div#content h2 {
     color:#f78117;
     font-size: 1.2em;
     font-family: 'Pontano Sans', sans-serif;
@@ -233,23 +233,23 @@ body{
     margin:0 0 20px;
     line-height:21px;
 }
-.body p a{
-    outline:none;
-    color:#636363;
+.body p a {
+    outline: none;
+    color: #636363;
 }
-.body ul{
-    list-style:none;
-    margin:0;
-    padding:0;
-    overflow:hidden;
+.body ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.body ul li div.featured{
-    background:url(../images/interface.jpg) no-repeat 0 -68px;
-    width:281px;
-    height:292px;
+.body ul li div.featured {
+    background: url(../images/interface.jpg) no-repeat 0 -68px;
+    width: 281px;
+    height: 292px;
     text-align: center;
-    margin:0;
+    margin: 0;
 }
 .body ul li div.featured img{
     margin:10px 0 0 -3px;
@@ -258,7 +258,6 @@ body{
 .body ul li div.featured ul{
     overflow:hidden;
     margin:2px 0 0 10px;
-    
 }
 .body ul li div.featured ul li:first-child{
     margin:0;
@@ -274,10 +273,6 @@ body{
 }
 .body ul li div.featured ul li a img{
     margin:0;
-}
-.body ul li div.featured ul li a img:hover{
-    filter:alpha(opacity=80);
-    opacity:0.8;
 }
 .body ul li div.featured a{
     clear:both;
@@ -300,109 +295,29 @@ body{
     line-height:22px;
 }
 .body ul li div p{
-    line-height:22px;
+    line-height: 22px;
     font-family: 'Pontano Sans', sans-serif;
     font-size: 1em;
-    color:#5D5D5D;
-    padding:0 0 90px;
-    margin:0;
-}
-.body ul.paging{
-    margin:15px 0 10px 210px;
-}
-.body ul.paging li{
-    float:left;
-    padding:0 5px;
-    background:none;
-}
-.body ul.paging li a{
-    text-decoration:none;
-    color:#ff7e0d;
-    font-family: arial;
-    font-size:12px;
-}
-.body ul.paging li a:hover{
-    color:#5D5D5D;
+    color: #5D5D5D;
+    padding: 0 0 90px;
+    margin: 0;
 }
 
 /*------------------------- Footer ------------------------*/ 
-.footer{
-    width:940px;
-    background:url(../images/bg-footer.jpg) no-repeat center top;
-    padding:65px 10px 207px;
-    margin:0 auto;
-    overflow:hidden;
+.footer {
+    width: 940px;
+    background: url(../images/bg-footer.jpg) no-repeat center top;
+    padding: 65px 10px 30px;
+    margin: 0 auto;
+    overflow: hidden;
 }
-.footer ul{
-    list-style:none;
-    margin:0 0 0 60px;
-    padding:0;
-    overflow:hidden;
-    float:left;
-}
-.footer ul li:first-child a{
-    border:none;
-    padding:0 6px 0 0;
-}
-.footer ul li{
-    float:left;
-}
-.footer ul li a:hover{
-    color:#F78117;
-}
-.footer ul li a{
-    border-width: 1px;
-    border-color:#5b5b5b;
-    border-style: none none none solid;
-    color:#5b5b5b;
-    font-size: 1em;
-    font-family: Trebuchet MS;
-    text-decoration:none;
-    font-weight:bold;
-    padding:0 6px;
-    outline:none;
-}
-.footer p{
-    color:#5b5b5b;
-    font-size: 1em;
-    font-family: Trebuchet MS;
-    font-weight:bold;
-    float:left;
-    margin:6px 0 0 135px;
-}
-.footer div.connect{
-    float:left;
-    margin:0 0 0 92px;
-}
-.footer div.connect a{
-    float:left;
-    outline:none;
-}
-.footer div.connect a#facebook{
-    width:27px;
-    height:28px;
-    display:block;
-    text-indent:-9999px;
-    background:url(../images/icons.gif) no-repeat;
-}
-.footer div.connect a#twitter{
-    width:36px;
-    height:28px;
-    display:block;
-    text-indent:-9999px;
-    background:url(../images/icons.gif) no-repeat 0 -48px;
-    margin:0 0 0 68px;
-}
-.footer div.connect a#vimeo{
-    width:32px;
-    height:28px;
-    display:block;
-    text-indent:-9999px;
-    background:url(../images/icons.gif) no-repeat 0 -96px;
-    margin:0 0 0 73px;
-}
-.red_background {
-    background: #FF665A;
+.footer p {
+    color: #5b5b5b;
+    font-size: 0.7em;
+    font-family: 'Pontano Sans', sans-serif;
+    font-weight: bold;
+    float: left;
+    margin: 6px 0 0 100px;
 }
 
 /*************************
