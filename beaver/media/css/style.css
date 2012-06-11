@@ -90,7 +90,6 @@ body{
     margin: 0;
 }
 .body div#content input {
-    height: 34px;
     width: 260px;
     font-family: 'Pontano Sans', sans-serif;
     color: #000;
@@ -132,7 +131,6 @@ body{
 .body div#content input#id_sunday_bookable_to,
 .body div#content input#id_sunday_not_bookable_from, 
 .body div#content input#id_sunday_not_bookable_to {
-    height: 34px;
     width: 50px;
     font-family: 'Pontano Sans', sans-serif;
     color: #000;
@@ -147,14 +145,12 @@ body{
     margin: 0px 0px 0px 0px;
 }
 .body div#content th{
-    height: 34px;
     font-family: 'Pontano Sans', sans-serif;
     text-align: left;
     color: #000;
     font-size: 1em;
 }
 .body div#content td{
-    height: 34px;
     font-family: 'Pontano Sans', sans-serif;
     color: #000;
     font-size: 1em;
@@ -173,135 +169,65 @@ body{
 .body div#content ul li a:hover{
     color: #f78117;
 }
-.body div#content ul li a{
+.body div#content ul li a {
     font-size: 1em;
     text-decoration: none;
     color: #5e5e5e;
     font-family: 'Pontano Sans', sans-serif;
     outline: none;
 }
-.body div#featured{
+.body div#featured {
     background: url(../images/house.jpg) no-repeat right top;
     height: 448px;
     padding: 0 0 17px;
 }
-.body div#featured h1{
+.body div#featured h1 {
     color: #f78117;
     font-size: 1.4em;
     font-family: 'Pontano Sans', sans-serif;
-    margin:0 0 30px;
-    width:490px;
-    padding:30px 0 0;
-    font-weight:normal;
+    margin: 0 0 30px;
+    width: 490px;
+    padding: 30px 0 0;
+    font-weight: normal;
 }
 .body div#featured h2{
-    color:#f78117;
+    color: #f78117;
     font-size: 1.2em;
     font-family: 'Pontano Sans', sans-serif;
-    margin:0 0 30px;
-    width:490px;
-    padding:30px 0 0;
-    font-weight:normal;
+    margin: 0 0 30px;
+    width: 490px;
+    padding: 30px 0 0;
+    font-weight: normal;
 }
 .body div#featured h3{
-    color:#f78117;
+    color: #f78117;
     font-size: 1.1em;
     font-family: 'Pontano Sans', sans-serif;
-    margin:0 0 30px;
-    width:490px;
-    padding:30px 0 0;
-    font-weight:normal;
+    margin: 0 0 30px;
+    width: 490px;
+    padding: 30px 0 0;
+    font-weight: normal;
 }
 .body div#featured p{
-    width:480px;
-    color:#5d5d5d;
+    width: 480px;
+    color: #5d5d5d;
     font-family: 'Pontano Sans', sans-serif;
     font-size: 1em;
-    line-height:25px;
+    line-height: 25px;
     text-shadow: 0 1px 0 #fcfcfc;
-    text-align:justify;
-    margin:0;
+    text-align: justify;
+    margin: 0;
 }
 .body div#featured input {
-    background:url(../images/interface.jpg) no-repeat;
-    border:0;
-    height:48px;
-    width:216px;
+    background: url(../images/interface.jpg) no-repeat;
+    border: 0;
+    width: 216px;
     font-family: 'Pontano Sans', sans-serif;
-    color:#fff;
+    color: #fff;
     font-size: 1.2em;
-    margin:28px 0 0 125px;
-    cursor:pointer;
-    outline:none;
-}
-.body ul.blog{
-    list-style:none;
-    margin:40px 0 0;
-    padding:0 0 50px;
-    background:url(../images/separator.jpg) no-repeat center top;
-    overflow:hidden;
-}
-.body ul.blog li:first-child{
-    margin:60px 0 0;
-}
-.body ul.blog li{
-    float:left;
-    background:url(../images/interface.jpg) no-repeat 0 -68px!important;
-    margin:60px 0 0 48px;
-    height:400px;
-    padding:0;
-}
-.body ul.blog li div{
-    width:281px;
-    height:380px;
-    text-align:center;
-    padding: 8px 0 20px 0;
-    float:none;
-    margin:0;
-    background:none;
-}
-.body ul.blog li div a img{
-    border:0;
-    margin:0 0 0 -3px;
-}
-.body ul.blog li div a img:hover{
-    filter:alpha(opacity=80);
-    opacity:0.8;
-}
-.body ul.blog li div p{
-    width:258px;
-    text-align:justify;
-    color:#828081;
-    font-family: 'Pontano Sans', sans-serif;
-    margin:17px 0 0 10px;
-    line-height:20px;
-    font-size: 1em;
-    background:none;
-    padding:0;
-}
-.body ul.blog li div a:first-child{
-    margin:0;
-    padding:0;
-    background:none;
-    width:auto;
-}
-.body ul.blog li div a:hover{
-    color:#F78117;
-}
-.body ul.blog li div a{
-    color:#606060;
-    font-family: 'Pontano Sans', sans-serif;
-    font-style:italic;
-    text-decoration:none;
-    padding:98px 0 0;
-    margin:32px auto 0;
-    display:block;
-    width: 150px;
-    background:url(../images/button-more.jpg) no-repeat center top;
-    outline:none;
-    font-size: 1em;
-    font-weight:normal;
-    text-shadow: 0 1px 0 #fcfcfc;
+    margin: 28px 0 0 125px;
+    cursor: pointer;
+    outline: none;
 }
 .body h3{
     font-family: 'Pontano Sans', sans-serif;
@@ -588,4 +514,3 @@ div#page-sub-menu span {
 }
 
 div#page-sub-menu span:hover { color: #000; }
-
