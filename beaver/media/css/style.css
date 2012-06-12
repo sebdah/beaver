@@ -1,10 +1,10 @@
 /*------------------------- Layout styles ------------------------*/ 
 body {
     margin: 0;
-    background: url(../images/bg-body.jpg);
+    background: #fff;
 }
 .page {
-    background: url(../images/bg-header.jpg) no-repeat center top;
+    background: #fff;
 }
 
 /*------------------------- Font ------------------------*/ 
@@ -14,7 +14,7 @@ body {
 
 /*------------------------- Header ------------------------*/ 
 .header {
-    background: url(../images/bg-navigation.jpg) no-repeat center 90px;
+    background: #fff;
     width: 940px;
     margin: 0 auto;
     height: 105px;
@@ -306,7 +306,7 @@ body {
 /*------------------------- Footer ------------------------*/ 
 .footer {
     width: 940px;
-    background: url(../images/bg-footer.jpg) no-repeat center top;
+    background: #fff;
     padding: 65px 10px 30px;
     margin: 0 auto;
     overflow: hidden;
