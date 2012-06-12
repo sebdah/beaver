@@ -1,4 +1,19 @@
 {% extends "template.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/jquery.dataTables.css" type="text/css" />
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    /* Update the URL as the user types */
+    $('input#id_slug').keyup(function(){
+        $('span#calendar-url').html($('input#id_slug').val());
+    });
+
+} );
+</script>
+{% endblock %}
+
 {% block content %}
 <div id="content">
     <h1>Create a new calendar</h1>
@@ -9,10 +24,10 @@
                     <th>{{field.label}}</th>
                     <td>
                         {% if field.label == 'URL' %}
-                            {{external_url}}
+                            {{field}} {{external_url}}<span id="calendar-url">{% if field.value %}{{field.value}}{% endif %}</span>
+                        {% else %}
+                            {{field}}
                         {% endif %}
-                        {{field}}
-                        {{field.help_text}}
                         {% for error in field.errors %}
                             <br />{{error}}
                         {% endfor %}
