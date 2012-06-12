@@ -32,9 +32,8 @@
     </form>
     <h2>Delete account</h2>
     <p>
-        WARNING!<br />
-        This will remove your account, your bookings, your schedules and all customer 
-        data you have. It is not possible to reverse this action.
+        <strong>WARNING!</strong> This will remove your account, your bookings, your schedules<br />
+        and all customer data you have. It is not possible to reverse this action.
     </p>
     <form method='post' action='/accounts/delete'>{% csrf_token %}
         <input type='submit' value='DELETE MY ACCOUNT'>

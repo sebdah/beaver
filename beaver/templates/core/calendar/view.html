@@ -78,11 +78,11 @@
     <div id="right-side-content">
         <h2>{{calendar.title}}</h2>
         <p>
+            <strong>Description</strong>
             {{calendar.description|linebreaks}}
         </p>
-        
-        {% if calendar.url %}<br /><p>External webpage: <a href='{{calendar.url}}' target='_blank'>{{calendar.url}}</a></p>{% endif %}        
-        {% if is_owner %}<br /><p><a href='/calendars/{{calendar.id}}/edit'>Edit calendar</a></p><br />{% endif %}
+        {% if calendar.url %}<p>External webpage: <a href='{{calendar.url}}' target='_blank'>{{calendar.url}}</a></p>{% endif %}        
+        {% if is_owner %}<p><a href='/calendars/{{calendar.id}}/edit'>Edit calendar</a></p>{% endif %}
     </div>
     <div id='clear'></div>
 </div>

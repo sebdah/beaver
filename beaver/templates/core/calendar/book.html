@@ -13,7 +13,7 @@
         <h2>Description</h2>
         <p>
             {{bookingtype.description}}
-        </p><br />
+        </p>
         <h2>Make booking</h2>
         <form method='post' action=''>{% csrf_token %}
         <table>
@@ -55,8 +55,7 @@
         <p>
             {{calendar.description|linebreaks}}
         </p>
-        
-        {% if calendar.url %}<br /><p>External webpage: <a href='{{calendar.url}}' target='_blank'>{{calendar.url}}</a></p>{% endif %}
+        {% if calendar.url %}<p>External webpage: <a href='{{calendar.url}}' target='_blank'>{{calendar.url}}</a></p>{% endif %}
     </div>
     <div id='clear'></div>
 </div>
