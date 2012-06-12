@@ -7,6 +7,11 @@ body {
     background: #fff;
 }
 
+table {
+    width: 100%;
+}
+
+
 /*------------------------- Font ------------------------*/ 
 @font-face {
     font-family: 'Quattrocento Sans', sans-serif;

@@ -1,11 +1,13 @@
 {% extends "template.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="{{MEDIA_URL}}css/jquery.dataTables.css" type="text/css" />
+<!--link rel="stylesheet" href="{{MEDIA_URL}}css/jquery.dataTables.css" type="text/css" /-->
+<link rel="stylesheet" href="{{MEDIA_URL}}css/themeroller/smoothness/jquery-ui-1.8.21.custom.css" type="text/css" />
 <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#calendar_table').dataTable({
+        "bJQueryUI": true,
         "iDisplayLength": 20,
         "aLengthMenu": [[1, 20, 50, -1], [1, 20, 50, "All"]],
         "sPaginationType": "full_numbers",
