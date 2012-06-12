@@ -401,3 +401,9 @@ div#page-sub-menu span {
 }
 
 div#page-sub-menu span:hover { color: #000; }
+
+/* CALENDAR EDIT PAGE */
+div#upcoming-bookings { display: none; }
+div#schedule { display: none; }
+div#booking-types { display: none; }
+div#calendar-details { display: none; }

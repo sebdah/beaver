@@ -28,12 +28,10 @@ $(document).ready(function() {
         "bFilter": false,
     });
     
-    /* Hide tabs per default */
-    $('div#upcoming-bookings').hide();
-    $('div#schedule').hide();
-    $('div#booking-types').hide();
+    /* Fade in initial view */
+    $('div#calendar-details').fadeIn(300);
     
-    /* Toggle the tabs*/
+    /* Toggle the tabs */
     function toggle_tab(tab_name) {
         $('div#calendar-details').hide();
         $('div#schedule').hide();
@@ -45,6 +43,11 @@ $(document).ready(function() {
     $('span#show-schedule').click(function() { toggle_tab('schedule'); });
     $('span#show-booking-types').click(function() { toggle_tab('booking-types'); });
     $('span#show-upcoming-bookings').click(function() { toggle_tab('upcoming-bookings'); });
+    
+    /* Update the URL as the user types */
+    $('input#id_slug').keyup(function(){
+        $('span#calendar-url').html($('input#id_slug').val());
+    });
     
 } );
 </script>
@@ -70,7 +73,7 @@ $(document).ready(function() {
                         <th>{{field.label}}</th>
                         <td>
                             {% if field.label == 'URL' %}
-                                {{external_url}}{{field}}
+                                {{field}} {{external_url}}<span id="calendar-url">{{field.value}}</span>
                             {% else %}
                                 {% if field.label == 'Logo' %}
                                     {% if field.value %}<img src="{{media_url}}{{field.value}}" />{% endif %}
