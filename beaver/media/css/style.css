@@ -9,16 +9,16 @@ body {
 
 /*------------------------- Font ------------------------*/ 
 @font-face {
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
 }
 
 /*------------------------- Header ------------------------*/ 
 .header {
-    background: #fff;
+    background: #eee;
     width: 940px;
     margin: 0 auto;
     height: 60px;
-    padding: 36px 10px 0;
+    padding: 0px 10px 0;
 }
 .header a#logo {
     display: block;
@@ -31,12 +31,12 @@ body {
 .header ul {
     margin: 0;
     list-style: none;
-    padding: 13px 0 0;
+    padding: 10px 0 0;
     float: right;
 }
-.header ul li{
-    float:left;
-    margin:0 0 0 63px;
+.header ul li {
+    float: left;
+    margin: 0 0 0 35px;
 }
 .header ul li.selected a,.header ul li a:hover {
     color: #f78117;
@@ -44,8 +44,8 @@ body {
 .header ul li a {
     font-size: 1em;
     text-decoration: none;
-    color: #5e5e5e;
-    font-family: 'Pontano Sans', sans-serif;
+    color: #000000;
+    font-family: 'Quattrocento Sans', sans-serif;
     outline: none;
 }
 
@@ -62,33 +62,33 @@ body {
 .body div#content h1 {
     color: #f78117;
     font-size: 1.4em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-weight: normal;
 }
 .body div#content h2 {
     color:#f78117;
     font-size: 1.2em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     margin: 30px 0 5px;
     font-weight:normal;
 }
 .body div#content h3{
     color:#f78117;
     font-size: 1.1em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     margin: 30px 0 5px;
     font-weight:normal;
 }
 .body div#content p{
-    color: #5d5d5d;
-    font-family: 'Pontano Sans', sans-serif;
+    color: #000000;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-size: 1em;
     text-shadow: 0 1px 0 #fcfcfc;
     text-align: justify;
 }
 .body div#content input {
     width: 260px;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     color: #000;
     font-size: 1em;
     margin: 0px 0px 0px 0px;
@@ -129,26 +129,26 @@ body {
 .body div#content input#id_sunday_not_bookable_from, 
 .body div#content input#id_sunday_not_bookable_to {
     width: 50px;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     color: #000;
     margin: 0px 0px 0px 0px;
 }
 .body div#content textarea{
     height: 140px;
     width: 400px;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     color: #000;
     font-size: 1em;
     margin: 0px 0px 0px 0px;
 }
 .body div#content th{
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     text-align: left;
     color: #000;
     font-size: 1em;
 }
 .body div#content td{
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     color: #000;
     font-size: 1em;
 }
@@ -169,8 +169,8 @@ body {
 .body div#content ul li a {
     font-size: 1em;
     text-decoration: none;
-    color: #5e5e5e;
-    font-family: 'Pontano Sans', sans-serif;
+    color: #000000;
+    font-family: 'Quattrocento Sans', sans-serif;
     outline: none;
 }
 .body div#featured {
@@ -180,7 +180,7 @@ body {
 .body div#featured h1 {
     color: #f78117;
     font-size: 1.4em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     margin: 0 0 30px;
     width: 490px;
     padding: 30px 0 0;
@@ -189,7 +189,7 @@ body {
 .body div#featured h2{
     color: #f78117;
     font-size: 1.2em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     margin: 0 0 30px;
     width: 490px;
     padding: 30px 0 0;
@@ -198,7 +198,7 @@ body {
 .body div#featured h3{
     color: #f78117;
     font-size: 1.1em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     margin: 0 0 30px;
     width: 490px;
     padding: 30px 0 0;
@@ -206,21 +206,21 @@ body {
 }
 .body div#featured p{
     width: 480px;
-    color: #5d5d5d;
-    font-family: 'Pontano Sans', sans-serif;
+    color: #000000;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-size: 1em;
     text-shadow: 0 1px 0 #fcfcfc;
     text-align: justify;
 }
 .body h3{
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-size: 1em;
     font-weight:bold;
     color:#636363;
     margin:15px 0 0;
 }
 .body p{
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-size: 1em;
     text-align:justify;
     color:#636363;
@@ -270,7 +270,7 @@ body {
     clear:both;
     display:block;
     font-size: 1em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     text-decoration:none;
     color:#8a8889;
     font-weight:bold;
@@ -282,11 +282,11 @@ body {
     margin:0;
     font-size: 1em;
     font-weight:bold;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     color:#f28220;
 }
 .body ul li div p{
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-size: 1em;
     color: #5D5D5D;
     padding: 0 0 90px;
@@ -304,7 +304,7 @@ body {
 .footer p {
     color: #5b5b5b;
     font-size: 0.7em;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-weight: bold;
     float: left;
     margin: 6px 0 0 100px;
@@ -323,7 +323,7 @@ div#left-side-content {
     CALENDAR
 *************************/
 div#left-side-content div#calendar {
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     text-align: left;
     color: #000;
     font-size: 1em;
@@ -388,7 +388,7 @@ div#left-side-content div#day div#timeslot.not-bookable {
 }
 
 div#page-sub-menu {
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Quattrocento Sans', sans-serif;
     font-size: 1em;
     
     margin-bottom: 20px;
