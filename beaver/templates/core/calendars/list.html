@@ -30,19 +30,27 @@ $(document).ready(function() {
                 <thead>
                     <tr>
                         <th>Calendar</th>
+                        <th>Cancellations allowed</th>
                         <th>Published?</th>
                         <th>Public link</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for calendar in calendars %}
                         <tr>
                             <td><a href='/calendars/{{calendar.id}}/edit'>{{calendar.title}}</a></td>
+                            {% if calendar.cancellations_allowed %}
+                                <td>Yes ({{calendar.cancellations_hours}} hours in advance)</td>
+                            {% else %}
+                                <td>No</td>
+                            {% endif %}
                             {% if calendar.enabled %}
                                 <td>Yes</td><td><a href='{{external_url}}{{calendar.slug}}'>public link</a></td>
                             {% else %}
                                 <td>No</td><td>&nbsp;</td>
                             {% endif %}
+                            <td><a href='/calendars/{{calendar.id}}/edit'>Edit</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
